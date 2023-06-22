@@ -1,5 +1,6 @@
 "use client";
 import { useSession, signIn, signOut } from "next-auth/react";
+import { FaFacebookF } from "react-icons/fa";
 
 export function Facebook() {
   const { data: session } = useSession();
@@ -17,8 +18,9 @@ export function Facebook() {
       <button
         type="button"
         onClick={() => signIn("facebook")}
-        className="h-10 bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded my-1 items-center inline-flex"
+        className="h-10 bg-white hover:bg-slate-100 text-black py-2 px-4 rounded my-1 items-center inline-flex gap-1"
       >
+        <FaFacebookF />
         <span>使用 Facebook 账号登入</span>
       </button>
     </>
