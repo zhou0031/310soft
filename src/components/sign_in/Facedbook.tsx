@@ -1,14 +1,13 @@
 "use client";
 import { useSession, signIn, signOut } from "next-auth/react";
 
-export function Google() {
+export function Facebook() {
   const { data: session } = useSession();
-
   if (session) {
     return (
       <>
         <button type="button" onClick={() => signOut()}>
-          登出 Google
+          登出 Facebook
         </button>
       </>
     );
@@ -17,10 +16,10 @@ export function Google() {
     <>
       <button
         type="button"
-        onClick={() => signIn("google")}
-        className="h-10 bg-white hover:bg-slate-100 text-black py-2 px-4 rounded my-1 items-center inline-flex"
+        onClick={() => signIn("facebook")}
+        className="h-10 bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded my-1 items-center inline-flex"
       >
-        <span>使用 Google 账号登入</span>
+        <span>使用 Facebook 账号登入</span>
       </button>
     </>
   );

@@ -16,6 +16,7 @@ export function Email() {
           type="text"
           id="email"
           name="email"
+          className="h-10"
           onInput={(e) => checkEmailFormat(e.currentTarget.value)}
         />
         <div
