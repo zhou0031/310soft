@@ -12,14 +12,14 @@ export default function Index() {
           <h1 className="text-2xl mb-2">登陆</h1>
         </header>
         <div className="flex flex-col gap-2">
-          <form className="flex flex-col  gap-6">
+          <form className="flex flex-col gap-3">
             <Email />
             <Password />
-            <div className="flex justify-end gap-2">
-              <Link href=".." className="font-sans">
-                取消
-              </Link>
-              <button type="submit" className="font-sans">
+            <div className="flex justify-end gap-3 items-center">
+              <button
+                type="submit"
+                className="w-full font-sans bg-slate-500 hover:bg-slate-400 text-white font-thin py-1 px-4 rounded"
+              >
                 登入
               </button>
             </div>

@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { RiLockPasswordLine, RiLockPasswordFill } from "react-icons/ri";
 
 export function Password() {
   const [input, setInput] = useState({
@@ -41,43 +42,42 @@ export function Password() {
 
   return (
     <>
-      <div className="flex flex-col relative">
-        <div className="flex gap-3 justify-end items-center ">
-          <label htmlFor="password_1">密码:</label>
+      <div className="flex flex-col">
+        <label htmlFor="password_1">密码</label>
+        <div className="relative">
+          <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+            <RiLockPasswordLine />
+          </div>
           <input
             type="password"
             id="password_1"
             name="password_1"
             value={input.password_1}
             onInput={(e) => checkPassword(e)}
-            className="h-10 p-2.5"
+            className="h-10 p-2.5 pl-10"
           />
         </div>
-        <div
-          id="alert-password_1"
-          className="text-red-700 font-medium absolute left-20 top-10"
-        >
+        <div id="alert-password_1" className="text-red-700 font-medium">
           {alert.password_1}
         </div>
       </div>
 
-      <div className="flex flex-col relative">
-        <div className="flex gap-3 justify-end items-center ">
-          <label htmlFor="password_2">确认密码:</label>
+      <div className="flex flex-col">
+        <label htmlFor="password_2">确认密码</label>
+        <div className="relative">
+          <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+            <RiLockPasswordFill />
+          </div>
           <input
             type="password"
             id="password_2"
             name="password_2"
             value={input.password_2}
             onInput={(e) => checkPassword(e)}
-            className="h-10 p-2.5"
+            className="h-10 p-2.5 pl-10"
           />
         </div>
-
-        <div
-          id="alert-password_2"
-          className="text-red-700 font-medium absolute left-20 top-10"
-        >
+        <div id="alert-password_2" className="text-red-700 font-medium">
           {alert.password_2}
         </div>
       </div>
