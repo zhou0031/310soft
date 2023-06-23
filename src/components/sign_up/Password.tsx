@@ -41,34 +41,44 @@ export function Password() {
 
   return (
     <>
-      <div className="flex gap-3 justify-end">
-        <label htmlFor="password_1">密码:</label>
-        <div>
+      <div className="flex flex-col relative">
+        <div className="flex gap-3 justify-end items-center ">
+          <label htmlFor="password_1">密码:</label>
           <input
             type="password"
             id="password_1"
             name="password_1"
             value={input.password_1}
             onInput={(e) => checkPassword(e)}
+            className="h-10 p-2.5"
           />
-          <div id="alert-password_1" className="text-red-700 font-medium">
-            {alert.password_1}
-          </div>
+        </div>
+        <div
+          id="alert-password_1"
+          className="text-red-700 font-medium absolute left-20 top-10"
+        >
+          {alert.password_1}
         </div>
       </div>
-      <div className="flex gap-3 justify-end">
-        <label htmlFor="password_2">确认密码:</label>
-        <div>
+
+      <div className="flex flex-col relative">
+        <div className="flex gap-3 justify-end items-center ">
+          <label htmlFor="password_2">确认密码:</label>
           <input
             type="password"
             id="password_2"
             name="password_2"
             value={input.password_2}
             onInput={(e) => checkPassword(e)}
+            className="h-10 p-2.5"
           />
-          <div id="alert-password_2" className="text-red-700 font-medium">
-            {alert.password_2}
-          </div>
+        </div>
+
+        <div
+          id="alert-password_2"
+          className="text-red-700 font-medium absolute left-20 top-10"
+        >
+          {alert.password_2}
         </div>
       </div>
     </>

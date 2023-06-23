@@ -9,7 +9,7 @@ export default function Index() {
         <header>
           <h1 className="text-2xl mb-2">创建账户</h1>
         </header>
-        <form className="flex flex-col gap-2">
+        <form className="flex flex-col gap-6">
           <Email />
           <Password />
           <div className="flex justify-end gap-2">

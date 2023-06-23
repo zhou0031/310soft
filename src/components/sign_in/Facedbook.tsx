@@ -18,7 +18,7 @@ export function Facebook() {
       <button
         type="button"
         onClick={() => signIn("facebook")}
-        className="h-10 bg-white hover:bg-slate-100 text-black py-2 px-4 rounded my-1 items-center inline-flex gap-1"
+        className="justify-center h-8 bg-white hover:bg-slate-100 text-black py-2 px-4 rounded  items-center inline-flex gap-1"
       >
         <FaFacebookF />
         <span>使用 Facebook 账号登入</span>
