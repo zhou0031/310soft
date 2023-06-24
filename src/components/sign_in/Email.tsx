@@ -22,7 +22,7 @@ export function Email() {
             type="text"
             id="email"
             name="email"
-            className="block w-full h-10 p-2.5 pl-10"
+            className="h-10 p-2.5 pl-10 focus:outline-sky-500"
             onInput={(e) => checkEmailFormat(e.currentTarget.value)}
           />
         </div>

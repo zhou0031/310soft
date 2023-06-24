@@ -1,6 +1,7 @@
 import NextAuth from "next-auth/next";
 import GoogleProvider from "next-auth/providers/google";
 import FacebookProvider from "next-auth/providers/facebook"
+import CredentialsProvider from "next-auth/providers/credentials";
 
 const authOptions={
   providers: [
@@ -19,6 +20,7 @@ const authOptions={
       clientId:process.env.FACEBOOK_ID??"",
       clientSecret:process.env.FACEBOOK_SECRET??""
     }),
+    //CredentialsProvider({}),
    
   ],
   pages:{
