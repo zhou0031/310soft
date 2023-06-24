@@ -54,7 +54,7 @@ export function Password() {
             name="password_1"
             value={input.password_1}
             onInput={(e) => checkPassword(e)}
-            className="h-10 p-2.5 pl-10"
+            className="h-10 p-2.5 pl-10 focus:outline-sky-500"
           />
         </div>
         <div id="alert-password_1" className="text-red-700 font-medium">
@@ -74,7 +74,7 @@ export function Password() {
             name="password_2"
             value={input.password_2}
             onInput={(e) => checkPassword(e)}
-            className="h-10 p-2.5 pl-10"
+            className="h-10 p-2.5 pl-10 focus:outline-sky-500"
           />
         </div>
         <div id="alert-password_2" className="text-red-700 font-medium">

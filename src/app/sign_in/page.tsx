@@ -8,7 +8,7 @@ import { GoPerson } from "react-icons/go";
 export default function Index() {
   return (
     <>
-      <div className="w-[400px] flex flex-col items-center my-36 mx-auto py-5 bg-gray-200">
+      <div className="w-[400px] flex flex-col items-center my-28 mx-auto py-5 bg-gray-200">
         <header>
           <h1 className="text-2xl mb-2">登陆</h1>
         </header>
