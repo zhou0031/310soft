@@ -12,13 +12,13 @@ export function Password() {
     password_2: "再次确认密码",
   });
 
-  function checkPassword(e: any) {
-    const { name, value } = e.target;
+  function checkPassword(e: React.FormEvent<HTMLInputElement>) {
+    const { name, value } = e.currentTarget;
     setInput((prevInput) => ({
       ...prevInput,
       [name]: value,
     }));
-    setAlert((prevAlert: any) => {
+    setAlert((prevAlert) => {
       const alertObj = { ...prevAlert, [name]: "" };
       switch (name) {
         case "password_1":

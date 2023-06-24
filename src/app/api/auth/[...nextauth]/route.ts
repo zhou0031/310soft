@@ -24,7 +24,7 @@ const authOptions={
    
   ],
   pages:{
-    signIn:""
+    signIn:"/signin"
   },
   
   secret: process.env.JWT_SECRET ?? "",
