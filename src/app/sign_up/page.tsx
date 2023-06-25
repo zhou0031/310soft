@@ -1,9 +1,12 @@
+"use client";
 import Link from "next/link";
 import { Email } from "@/components/sign_up/Email";
 import { Password } from "@/components/sign_up/Password";
 import { GoPersonAdd } from "react-icons/go";
+import { useState } from "react";
 
 export default function Index() {
+  const [isDisabled, setDisable] = useState(true);
   return (
     <>
       <div className="w-[400px] flex flex-col items-center my-28 mx-auto py-5 bg-gray-200">
@@ -16,6 +19,7 @@ export default function Index() {
           <Password />
           <button
             type="submit"
+            disabled={isDisabled}
             className="mt-3 w-full font-sans text-lg bg-slate-500 hover:bg-slate-400 text-white font-thin py-1 px-4 rounded"
           >
             提交
@@ -25,8 +29,7 @@ export default function Index() {
           取消
         </Link>
         <div className="mt-10 font-sans font-extralight text-slate-700">
-          已有账户
-          <Link href="/sign_in">在此登陆</Link>
+          <Link href="/sign_in">已有账户在此登陆</Link>
         </div>
       </div>
     </>

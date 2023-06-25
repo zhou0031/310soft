@@ -27,7 +27,7 @@ export function Email() {
       </div>
       <div
         id="email-alert"
-        className={`${valid ? "hidden" : ""} text-red-700 font-medium `}
+        className={`${valid ? "hidden" : ""} text-red-700 font-medium`}
       >
         输入正确的email
       </div>
