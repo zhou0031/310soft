@@ -1,8 +1,8 @@
 "use client";
-import { useState } from "react";
+import { forwardRef, useImperativeHandle, useRef, useState } from "react";
 import { RiLockPasswordLine, RiLockPasswordFill } from "react-icons/ri";
 
-export function Password() {
+function Password(props: {}, passwordRef: any) {
   const [input, setInput] = useState({
     password_1: "",
     password_2: "",
@@ -11,6 +11,30 @@ export function Password() {
     password_1: "输入密码",
     password_2: "再次确认密码",
   });
+  const thisPassword_1Ref = useRef<HTMLInputElement | null>(null);
+  const thisPassword_2Ref = useRef<HTMLInputElement | null>(null);
+
+  useImperativeHandle(passwordRef, () => {
+    return {
+      isValid() {
+        if (
+          thisPassword_1Ref.current != null &&
+          thisPassword_2Ref.current != null &&
+          thisPassword_1Ref.current.value.trim().length != 0 &&
+          thisPassword_2Ref.current.value.trim().length != 0
+        )
+          return validatePasswords(
+            thisPassword_1Ref.current.value,
+            thisPassword_2Ref.current.value
+          );
+        return false;
+      },
+    };
+  });
+
+  function validatePasswords(password_1: string, password_2: string) {
+    return password_1 === password_2 ? true : false;
+  }
 
   function checkPassword(e: React.FormEvent<HTMLInputElement>) {
     const { name, value } = e.currentTarget;
@@ -49,6 +73,7 @@ export function Password() {
             <RiLockPasswordLine />
           </div>
           <input
+            ref={thisPassword_1Ref}
             type="password"
             id="password_1"
             name="password_1"
@@ -69,6 +94,7 @@ export function Password() {
             <RiLockPasswordFill />
           </div>
           <input
+            ref={thisPassword_2Ref}
             type="password"
             id="password_2"
             name="password_2"
@@ -84,3 +110,4 @@ export function Password() {
     </>
   );
 }
+export default forwardRef(Password);

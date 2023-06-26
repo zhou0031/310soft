@@ -1,12 +1,15 @@
 "use client";
 import Link from "next/link";
-import { Email } from "@/components/sign_up/Email";
-import { Password } from "@/components/sign_up/Password";
+import Email from "@/components/sign_up/Email";
+import Password from "@/components/sign_up/Password";
 import { GoPersonAdd } from "react-icons/go";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 export default function Index() {
   const [isDisabled, setDisable] = useState(true);
+  const emailRef = useRef();
+  const passwordRef = useRef();
+
   return (
     <>
       <div className="w-[400px] flex flex-col items-center my-28 mx-auto py-5 bg-gray-200">
@@ -15,8 +18,8 @@ export default function Index() {
         </header>
         <GoPersonAdd size={100} />
         <form className="flex flex-col gap-2">
-          <Email />
-          <Password />
+          <Email ref={emailRef} />
+          <Password ref={passwordRef} />
           <button
             type="submit"
             disabled={isDisabled}
