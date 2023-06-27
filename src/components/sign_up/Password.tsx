@@ -2,7 +2,7 @@
 import { forwardRef, useImperativeHandle, useRef, useState } from "react";
 import { RiLockPasswordLine, RiLockPasswordFill } from "react-icons/ri";
 
-function Password(props: {}, passwordRef: any) {
+function Password(props: any, passwordRef: any) {
   const [input, setInput] = useState({
     password_1: "",
     password_2: "",
@@ -73,11 +73,12 @@ function Password(props: {}, passwordRef: any) {
             <RiLockPasswordLine />
           </div>
           <input
+            value={props.password1}
+            onChange={props.onChange_password1}
             ref={thisPassword_1Ref}
             type="password"
             id="password_1"
             name="password_1"
-            value={input.password_1}
             onInput={(e) => checkPassword(e)}
             className="h-10 p-2.5 pl-10 focus:outline-sky-500"
           />
@@ -95,10 +96,11 @@ function Password(props: {}, passwordRef: any) {
           </div>
           <input
             ref={thisPassword_2Ref}
+            value={props.password2}
+            onChange={props.onChange_password2}
             type="password"
             id="password_2"
             name="password_2"
-            value={input.password_2}
             onInput={(e) => checkPassword(e)}
             className="h-10 p-2.5 pl-10 focus:outline-sky-500"
           />

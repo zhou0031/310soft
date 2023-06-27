@@ -4,7 +4,7 @@ import { MdOutlineEmail } from "react-icons/md";
 
 const emailRegx = /^[A-Za-z\._\-0-9]*[@][A-Za-z0-9]*[\.][a-z]{2,9}$/;
 
-function Email(props: {}, emailRef: any) {
+function Email(props: any, emailRef: any) {
   const [valid, setValid] = useState(false);
   const thisEmailRef = useRef<HTMLInputElement | null>(null);
 
@@ -34,6 +34,7 @@ function Email(props: {}, emailRef: any) {
           <MdOutlineEmail />
         </div>
         <input
+          {...props}
           ref={thisEmailRef}
           type="text"
           id="email"

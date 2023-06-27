@@ -3,12 +3,22 @@ import Link from "next/link";
 import Email from "@/components/sign_up/Email";
 import Password from "@/components/sign_up/Password";
 import { GoPersonAdd } from "react-icons/go";
-import { useState, useRef } from "react";
+import { useState, useRef, useLayoutEffect, useEffect } from "react";
 
 export default function Index() {
   const [isDisabled, setDisable] = useState(true);
-  const emailRef = useRef();
-  const passwordRef = useRef();
+  const [emailValue, setEmailValue] = useState("");
+  const [password1, setPassword1] = useState("");
+  const [password2, setPassword2] = useState("");
+  const emailRef = useRef<any>(null);
+  const passwordRef = useRef<any>(null);
+
+  useEffect(() => {
+    if (emailRef.current != null && passwordRef.current != null)
+      emailRef.current.isValid() && passwordRef.current.isValid()
+        ? setDisable(false)
+        : setDisable(true);
+  }, [emailValue, password1, password2]);
 
   return (
     <>
@@ -18,8 +28,18 @@ export default function Index() {
         </header>
         <GoPersonAdd size={100} />
         <form className="flex flex-col gap-2">
-          <Email ref={emailRef} />
-          <Password ref={passwordRef} />
+          <Email
+            ref={emailRef}
+            value={emailValue}
+            onChange={(e: any) => setEmailValue(e.target.value)}
+          />
+          <Password
+            ref={passwordRef}
+            password1={password1}
+            password2={password2}
+            onChange_password1={(e: any) => setPassword1(e.target.value)}
+            onChange_password2={(e: any) => setPassword2(e.target.value)}
+          />
           <button
             type="submit"
             disabled={isDisabled}
