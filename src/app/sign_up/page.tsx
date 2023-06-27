@@ -3,7 +3,7 @@ import Link from "next/link";
 import Email from "@/components/sign_up/Email";
 import Password from "@/components/sign_up/Password";
 import { GoPersonAdd } from "react-icons/go";
-import { useState, useRef, useLayoutEffect, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 
 export default function Index() {
   const [isDisabled, setDisable] = useState(true);
