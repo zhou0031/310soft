@@ -20,6 +20,10 @@ export default function Index() {
         : setDisable(true);
   }, [emailValue, password1, password2]);
 
+  function handleSubmit(e: React.SyntheticEvent) {
+    e.preventDefault();
+  }
+
   return (
     <>
       <div className="w-[400px] flex flex-col items-center my-28 mx-auto py-5 bg-gray-200">
@@ -27,7 +31,7 @@ export default function Index() {
           <h1 className="text-2xl mb-2">创建账户</h1>
         </header>
         <GoPersonAdd size={100} />
-        <form className="flex flex-col gap-2">
+        <form className="flex flex-col gap-2" onSubmit={(e) => handleSubmit(e)}>
           <Email
             ref={emailRef}
             value={emailValue}
