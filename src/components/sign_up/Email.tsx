@@ -23,6 +23,7 @@ function Email(props: any, emailRef: any) {
           return validateEmail(thisEmailRef.current.value);
         return false;
       },
+      value: thisEmailRef.current?.value,
     };
   });
 
