@@ -22,7 +22,7 @@ export default function Index() {
 
   function handleSubmit(e: React.SyntheticEvent) {
     e.preventDefault();
-    console.log(emailRef.current.value);
+    console.log(emailValue);
   }
 
   return (
