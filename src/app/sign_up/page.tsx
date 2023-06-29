@@ -10,19 +10,28 @@ export default function Index() {
   const [emailValue, setEmailValue] = useState("");
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const emailRef = useRef<any>(null);
   const passwordRef = useRef<any>(null);
 
   useEffect(() => {
+    setErrorMessage("");
     if (emailRef.current != null && passwordRef.current != null)
       emailRef.current.isValid() && passwordRef.current.isValid()
         ? setDisable(false)
         : setDisable(true);
   }, [emailValue, password1, password2]);
 
-  function handleSubmit(e: React.SyntheticEvent) {
+  async function handleSubmit(e: React.SyntheticEvent) {
     e.preventDefault();
-    console.log(emailValue);
+
+    const res = await fetch("/api/user/sign_up", {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify({ emailValue, password1, password2 }),
+    });
+    const { user, error } = await res.json();
+    error ? setErrorMessage(error) : setErrorMessage("");
   }
 
   return (
@@ -52,6 +61,9 @@ export default function Index() {
           >
             提交
           </button>
+          <div id="error" className="text-red-700 font-medium">
+            {errorMessage}
+          </div>
         </form>
         <Link href=".." className="font-sans text-xs mt-3">
           取消
