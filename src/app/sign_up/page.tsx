@@ -15,7 +15,6 @@ export default function Index() {
   const passwordRef = useRef<any>(null);
 
   useEffect(() => {
-    setErrorMessage("");
     if (emailRef.current != null && passwordRef.current != null)
       emailRef.current.isValid() && passwordRef.current.isValid()
         ? setDisable(false)
@@ -24,14 +23,20 @@ export default function Index() {
 
   async function handleSubmit(e: React.SyntheticEvent) {
     e.preventDefault();
+    setErrorMessage("");
 
     const res = await fetch("/api/user/sign_up", {
       method: "POST",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify({ emailValue, password1, password2 }),
     });
+
     const { user, error } = await res.json();
-    error ? setErrorMessage(error) : setErrorMessage("");
+
+    if (error) {
+      setErrorMessage(error);
+      return;
+    }
   }
 
   return (
