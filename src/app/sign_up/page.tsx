@@ -11,7 +11,6 @@ export default function Index() {
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [field, setField] = useState({ disabled: false, opacity: 100 });
   const emailRef = useRef<any>(null);
   const passwordRef = useRef<any>(null);
 
@@ -25,17 +24,12 @@ export default function Index() {
   async function handleSubmit(e: React.SyntheticEvent) {
     e.preventDefault();
     setErrorMessage("");
-    setField((prevField) => ({ ...prevField, disabled: true, opacity: 50 }));
-    setDisable(true);
 
     const res = await fetch("/api/user/sign_up", {
       method: "POST",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify({ emailValue, password1, password2 }),
     });
-
-    setField((prevField) => ({ ...prevField, disabled: false, opacity: 100 }));
-    setDisable(false);
 
     const { user, error } = await res.json();
 
@@ -47,10 +41,7 @@ export default function Index() {
 
   return (
     <>
-      <fieldset
-        disabled={field.disabled}
-        className={`opacity-${field.opacity} w-[400px] flex flex-col items-center my-28 mx-auto py-5 bg-gray-200`}
-      >
+      <div className="w-[400px] flex flex-col items-center my-28 mx-auto py-5 bg-gray-200">
         <header>
           <h1 className="text-2xl mb-2">创建账户</h1>
         </header>
@@ -85,7 +76,7 @@ export default function Index() {
         <div className="mt-10 font-sans font-extralight text-slate-700">
           <Link href="/sign_in">已有账户在此登陆</Link>
         </div>
-      </fieldset>
+      </div>
     </>
   );
 }
