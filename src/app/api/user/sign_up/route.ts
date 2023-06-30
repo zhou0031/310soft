@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server"
-import { PrismaClient } from "@prisma/client"
+import prisma from "@/components/prismaDB"
 import bcrypt from 'bcrypt'
-
-const prisma = new PrismaClient()
 
 async function isUserExisted(email:string){
     const user = await prisma.user.findUnique({where:{email:email}}) 
