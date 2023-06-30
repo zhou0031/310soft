@@ -26,6 +26,7 @@ export default function Index() {
     e.preventDefault();
     setErrorMessage("");
     setField((prevField) => ({ ...prevField, disabled: true, opacity: 50 }));
+    setDisable(true);
 
     const res = await fetch("/api/user/sign_up", {
       method: "POST",
@@ -34,6 +35,7 @@ export default function Index() {
     });
 
     setField((prevField) => ({ ...prevField, disabled: false, opacity: 100 }));
+    setDisable(false);
 
     const { user, error } = await res.json();
 
