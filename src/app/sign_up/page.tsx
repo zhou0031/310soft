@@ -36,6 +36,7 @@ export default function Index() {
       setErrorMessage(error);
       return;
     }
+    //login after user is created
   }
 
   return (
