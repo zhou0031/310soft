@@ -11,6 +11,7 @@ export default function Index() {
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+
   const emailRef = useRef<any>(null);
   const passwordRef = useRef<any>(null);
 
@@ -23,7 +24,6 @@ export default function Index() {
 
   async function handleSubmit(e: React.SyntheticEvent) {
     e.preventDefault();
-    setErrorMessage("");
 
     const res = await fetch("/api/user/sign_up", {
       method: "POST",
@@ -32,7 +32,6 @@ export default function Index() {
     });
 
     const { user, error } = await res.json();
-
     if (error) {
       setErrorMessage(error);
       return;
@@ -66,6 +65,7 @@ export default function Index() {
           >
             提交
           </button>
+
           <div id="error" className="text-red-700 font-medium">
             {errorMessage}
           </div>
