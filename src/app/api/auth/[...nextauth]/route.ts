@@ -20,11 +20,11 @@ const authOptions={
       clientId:process.env.FACEBOOK_ID??"",
       clientSecret:process.env.FACEBOOK_SECRET??""
     }),
-    //CredentialsProvider({}),
+    
    
   ],
   pages:{
-    signIn:"/signin"
+    signIn:"/sign_in"
   },
   secret: process.env.JWT_SECRET ?? "",
 }
