@@ -1,16 +1,15 @@
 "use client";
-import { useEffect, useState, forwardRef } from "react";
+import { useState, useEffect } from "react";
 import { MdOutlineEmail } from "react-icons/md";
 
 const emailRegx = /^[A-Za-z\._\-0-9]*[@][A-Za-z0-9]*[\.][a-z]{2,9}$/;
 
-function Email(props: any, emailRef: any) {
+function Email(props: any) {
   const [valid, setValid] = useState(false);
-  const [email, setEmail] = useState("");
 
   useEffect(() => {
-    email.match(emailRegx) ? setValid(true) : setValid(false);
-  }, [email]);
+    props.email.match(emailRegx) ? setValid(true) : setValid(false);
+  }, [props.email]);
 
   return (
     <div className="flex flex-col">
@@ -22,12 +21,10 @@ function Email(props: any, emailRef: any) {
           </div>
           <input
             {...props}
-            ref={emailRef}
             type="text"
             id="email"
             name="email"
             className="h-10 p-2.5 pl-10 focus:outline-sky-500"
-            onChange={(e) => setEmail(e.currentTarget.value)}
           />
         </div>
       </div>
@@ -40,4 +37,4 @@ function Email(props: any, emailRef: any) {
     </div>
   );
 }
-export default forwardRef(Email);
+export default Email;

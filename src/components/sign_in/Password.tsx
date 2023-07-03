@@ -1,14 +1,13 @@
 "use client";
 import { RiLockPasswordLine } from "react-icons/ri";
-import { useEffect, useState, forwardRef } from "react";
+import { useEffect, useState } from "react";
 
-function Password(props: any, passwordRef: any) {
+function Password(props: any) {
   const [valid, setValid] = useState(false);
-  const [password, setPassword] = useState("");
 
   useEffect(() => {
-    password.trim().length > 0 ? setValid(true) : setValid(false);
-  }, [password]);
+    props.password.trim().length > 0 ? setValid(true) : setValid(false);
+  }, [props.password]);
 
   return (
     <>
@@ -19,8 +18,6 @@ function Password(props: any, passwordRef: any) {
             <RiLockPasswordLine />
           </div>
           <input
-            onChange={(e) => setPassword(e.currentTarget.value)}
-            ref={passwordRef}
             {...props}
             type="password"
             id="password"
@@ -38,4 +35,4 @@ function Password(props: any, passwordRef: any) {
     </>
   );
 }
-export default forwardRef(Password);
+export default Password;
