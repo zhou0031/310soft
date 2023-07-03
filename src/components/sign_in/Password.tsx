@@ -1,8 +1,15 @@
 "use client";
 import { RiLockPasswordLine } from "react-icons/ri";
-import { ForwardedRef, forwardRef } from "react";
+import { useEffect, useState, forwardRef } from "react";
 
 function Password(props: any, passwordRef: any) {
+  const [valid, setValid] = useState(false);
+  const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    password.trim().length > 0 ? setValid(true) : setValid(false);
+  }, [password]);
+
   return (
     <>
       <div className="flex flex-col">
@@ -12,6 +19,7 @@ function Password(props: any, passwordRef: any) {
             <RiLockPasswordLine />
           </div>
           <input
+            onChange={(e) => setPassword(e.currentTarget.value)}
             ref={passwordRef}
             {...props}
             type="password"
@@ -19,6 +27,12 @@ function Password(props: any, passwordRef: any) {
             name="password"
             className="h-10 p-2.5 pl-10 focus:outline-sky-500"
           />
+        </div>
+        <div
+          id="alert-password"
+          className={`${valid ? "hidden" : ""} text-red-700 font-medium`}
+        >
+          输入密码
         </div>
       </div>
     </>

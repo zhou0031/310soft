@@ -27,6 +27,7 @@ export default function Index() {
         password: password,
         redirect: false,
       });
+      console.log(res);
     }
     return;
   }
@@ -42,17 +43,15 @@ export default function Index() {
           <form className="flex flex-col gap-3">
             <Email ref={emailRef} />
             <Password ref={passwordRef} />
-            <div className="flex justify-end gap-3 items-center">
-              <button
-                onClick={(e) => {
-                  handleSignIn(e, emailRef, passwordRef);
-                }}
-                type="submit"
-                className="w-full font-sans bg-slate-500 hover:bg-slate-400 text-white font-thin py-1 px-4 rounded"
-              >
-                登入
-              </button>
-            </div>
+            <button
+              onClick={(e) => {
+                handleSignIn(e, emailRef, passwordRef);
+              }}
+              type="submit"
+              className="w-full font-sans bg-slate-500 hover:bg-slate-400 text-white font-thin py-1 px-4 rounded"
+            >
+              登入
+            </button>
           </form>
 
           <Link
