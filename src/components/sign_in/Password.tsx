@@ -1,7 +1,8 @@
 "use client";
 import { RiLockPasswordLine } from "react-icons/ri";
+import { ForwardedRef, forwardRef } from "react";
 
-export function Password() {
+function Password(props: any, passwordRef: any) {
   return (
     <>
       <div className="flex flex-col">
@@ -11,6 +12,8 @@ export function Password() {
             <RiLockPasswordLine />
           </div>
           <input
+            ref={passwordRef}
+            {...props}
             type="password"
             id="password"
             name="password"
@@ -21,3 +24,4 @@ export function Password() {
     </>
   );
 }
+export default forwardRef(Password);

@@ -1,10 +1,10 @@
 "use client";
-import { useState } from "react";
+import { useState, forwardRef } from "react";
 import { MdOutlineEmail } from "react-icons/md";
 
 const emailRegx = /^[A-Za-z\._\-0-9]*[@][A-Za-z0-9]*[\.][a-z]{2,9}$/;
 
-export function Email() {
+function Email(props: any, emailRef: any) {
   const [valid, setValid] = useState(false);
   function checkEmailFormat(email: string) {
     email.match(emailRegx) ? setValid(true) : setValid(false);
@@ -19,6 +19,8 @@ export function Email() {
             <MdOutlineEmail />
           </div>
           <input
+            {...props}
+            ref={emailRef}
             type="text"
             id="email"
             name="email"
@@ -36,3 +38,4 @@ export function Email() {
     </div>
   );
 }
+export default forwardRef(Email);
