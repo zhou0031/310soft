@@ -22,8 +22,13 @@ export default function Index() {
     if (emailRef.current != null) {
       const email = emailRef.current.value;
       const password = passwordRef.current.value;
-      signIn("credentials", { email: email, password: password });
+      const res = await signIn("credentials", {
+        email: email,
+        password: password,
+        redirect: false,
+      });
     }
+    return;
   }
 
   return (
