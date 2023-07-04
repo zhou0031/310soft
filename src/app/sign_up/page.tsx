@@ -25,6 +25,8 @@ export default function Index() {
   async function handleSubmit(e: React.SyntheticEvent) {
     e.preventDefault();
 
+    setErrorMessage("");
+
     const res = await fetch("/api/user/sign_up", {
       method: "POST",
       headers: { "Content-type": "application/json" },

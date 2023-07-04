@@ -12,6 +12,7 @@ export default function Index() {
   const [disabled, setDisabled] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   async function handleSignIn(
     e: React.MouseEvent<HTMLButtonElement>,
@@ -20,18 +21,20 @@ export default function Index() {
   ) {
     e.preventDefault();
 
+    setErrorMessage("");
+
     const res = await signIn("credentials", {
       email: email,
       password: password,
       redirect: false,
     });
-    console.log(res);
-
+    res?.error ? setErrorMessage(res.error) : setErrorMessage("");
     return;
   }
 
   useEffect(() => {
     const emailRegx = /^[A-Za-z\._\-0-9]*[@][A-Za-z0-9]*[\.][a-z]{2,9}$/;
+    setErrorMessage("");
     email.match(emailRegx) && password.trim().length > 0
       ? setDisabled(false)
       : setDisabled(true);
@@ -64,6 +67,9 @@ export default function Index() {
             >
               登入
             </button>
+            <div id="error" className="text-red-700 font-medium">
+              {errorMessage}
+            </div>
           </form>
 
           <Link
