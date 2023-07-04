@@ -27,7 +27,7 @@ export default function Index() {
 
     setErrorMessage("");
 
-    const res = await fetch("/api/user/sign_up", {
+    const res = await fetch("/api/auth/sign_up", {
       method: "POST",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify({ emailValue, password1, password2 }),

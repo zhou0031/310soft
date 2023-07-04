@@ -22,7 +22,7 @@ function Password(props: any) {
             type="password"
             id="password"
             name="password"
-            className="h-10 p-2.5 pl-10 focus:outline-sky-500"
+            className="w-full h-10 p-2.5 pl-10 focus:outline-sky-500"
           />
         </div>
         <div

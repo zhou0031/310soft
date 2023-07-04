@@ -1,11 +1,12 @@
 "use client";
 import Link from "next/link";
+import Script from "next/script";
 import Email from "@/components/sign_in/Email";
 import Password from "@/components/sign_in/Password";
 import { Google } from "@/components/sign_in/Google";
 import { Facebook } from "@/components/sign_in/Facedbook";
 import { GoPerson } from "react-icons/go";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { signIn } from "next-auth/react";
 
 export default function Index() {
@@ -13,6 +14,7 @@ export default function Index() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const formRef = useRef<any>();
 
   async function handleSignIn(
     e: React.MouseEvent<HTMLButtonElement>,
@@ -20,15 +22,33 @@ export default function Index() {
     password: string
   ) {
     e.preventDefault();
-
+    setDisabled(true);
     setErrorMessage("");
 
+    /**** Cloudflare Turnstile *******/
+    const formData = new FormData(formRef.current);
+    const token = formData.get("cf-turnstile-response");
+
+    const turnstile_res = await fetch("/api/cloudflare/verify", {
+      method: "POST",
+      body: JSON.stringify({ token }),
+      headers: {
+        "content-type": "application/json",
+      },
+    });
+    const data = await turnstile_res.json();
+
+    // the token has been validated
+    if (data.success) {
+    }
+    /**** Sign In ********/
     const res = await signIn("credentials", {
       email: email,
       password: password,
       redirect: false,
     });
     res?.error ? setErrorMessage(res.error) : setErrorMessage("");
+    setDisabled(false);
     return;
   }
 
@@ -42,13 +62,19 @@ export default function Index() {
 
   return (
     <>
-      <div className="w-[400px] flex flex-col items-center my-28 mx-auto py-5 bg-gray-200">
+      <Script
+        src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+        async
+        defer
+      ></Script>
+
+      <div className="w-[400px] flex flex-col items-center my-20 mx-auto py-5 bg-gray-200">
         <header>
           <h1 className="text-2xl mb-2">登陆</h1>
         </header>
         <GoPerson size={100} />
         <div className="flex flex-col gap-2">
-          <form className="flex flex-col gap-3">
+          <form className="flex flex-col gap-3" ref={formRef}>
             <Email
               email={email}
               onChange={(e: any) => setEmail(e.currentTarget.value)}
@@ -57,6 +83,14 @@ export default function Index() {
               password={password}
               onChange={(e: any) => setPassword(e.currentTarget.value)}
             />
+
+            <div
+              className="cf-turnstile"
+              data-sitekey={process.env.CLOUDFLARE_SITE}
+              data-theme="light"
+              data-language="zh"
+            ></div>
+
             <button
               disabled={disabled}
               onClick={(e) => {
