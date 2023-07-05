@@ -1,5 +1,6 @@
+"use server"
 import { NextResponse } from "next/server"
-import {prisma} from "@/components/prismaDB"
+import { prisma } from "@/prismaDB"
 import bcrypt from 'bcrypt'
 
 async function isUserExisted(email:string){
