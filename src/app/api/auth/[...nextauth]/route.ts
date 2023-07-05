@@ -39,7 +39,7 @@ const authOptions={
           return user
         
       }catch(e ){
-       
+        
         if (e instanceof Error){
           switch (e.message){
             case 'email':
