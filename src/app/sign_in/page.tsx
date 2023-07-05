@@ -40,7 +40,7 @@ export default function Index() {
 
     // the token did't go through
     if (!data.success) {
-      const error = "真人验证为通过，稍后再试";
+      const error = "真人验证未通过，稍后再试";
       setErrorMessage(error);
       setDisabled(false);
       return;
