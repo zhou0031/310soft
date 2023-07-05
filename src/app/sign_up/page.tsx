@@ -77,7 +77,7 @@ export default function Index() {
           取消
         </Link>
         <div className="mt-10 font-sans font-extralight text-slate-700">
-          <Link href="/sign_in">已有账户在此登陆</Link>
+          <a href="/sign_in">已有账户在此登陆</a>
         </div>
       </div>
     </>
