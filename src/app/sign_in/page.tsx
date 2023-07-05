@@ -38,9 +38,14 @@ export default function Index() {
     });
     const data = await turnstile_res.json();
 
-    // the token has been validated
-    if (data.success) {
+    // the token did't go through
+    if (!data.success) {
+      const error = "真人验证为通过，稍后再试";
+      setErrorMessage(error);
+      setDisabled(false);
+      return;
     }
+
     /**** Sign In ********/
     const res = await signIn("credentials", {
       email: email,
