@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server"
+import 'server-only'
 
 export async function POST(req:Request){
     const url = "https://challenges.cloudflare.com/turnstile/v0/siteverify"

@@ -1,4 +1,4 @@
-"use server"
+import 'server-only'
 import { NextResponse } from "next/server"
 import { prisma } from "@/prismaDB"
 import bcrypt from 'bcrypt'
