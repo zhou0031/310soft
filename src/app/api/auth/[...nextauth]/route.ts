@@ -59,7 +59,7 @@ const authOptions={
   pages:{
     signIn:"/sign_in"
   },
-  secret: process.env.JWT_SECRET ?? "",
+  
 }
 
 const handler=NextAuth(authOptions);
