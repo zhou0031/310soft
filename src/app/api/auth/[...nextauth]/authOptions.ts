@@ -5,14 +5,10 @@ import FacebookProvider from "next-auth/providers/facebook"
 import CredentialsProvider from "next-auth/providers/credentials";
 import { prisma } from "@/prismaDB";
 import bcrypt from 'bcrypt'
-import { Session } from 'inspector';
-import { NextAuthOptions } from 'next-auth';
-import { NextMiddlewareWithAuth } from 'next-auth/middleware';
-import { NextAuthHandlerParams } from 'next-auth/core';
-import { DO_NOT_USE_OR_YOU_WILL_BE_FIRED_EXPERIMENTAL_FORM_ACTIONS } from 'react';
+import type { NextAuthOptions } from 'next-auth'
 
 
-const authOptions={
+const authOptions:NextAuthOptions={
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_ID ?? "",
@@ -64,19 +60,7 @@ const authOptions={
   pages:{
     signIn:"/sign_in"
   },
-  callbacks:{
-    async session({ session, token }:any) {
-      session.user=token.user
-      return session
-    },
-    async jwt({token,user}:any){
-      if(user)token.user=user
-      return token
-    }
-  },
-
+  
 }
 
-const handler=NextAuth(authOptions);
-
-export {handler as GET, handler as POST}
+export default NextAuth(authOptions);
