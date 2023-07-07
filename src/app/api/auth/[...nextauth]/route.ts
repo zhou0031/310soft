@@ -74,6 +74,9 @@ const authOptions={
       return token
     }
   },
+  session:{
+    maxAge:24*60*60*3
+  }
 
 }
 
