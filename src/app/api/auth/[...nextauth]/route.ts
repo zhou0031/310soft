@@ -70,7 +70,10 @@ const authOptions={
       return session
     },
     async jwt({token,user}:any){
-      if(user)token.user=user
+      if(user){
+        delete user['password']
+        token.user=user
+      }
       return token
     }
   },
