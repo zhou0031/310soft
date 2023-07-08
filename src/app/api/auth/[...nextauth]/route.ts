@@ -5,11 +5,6 @@ import FacebookProvider from "next-auth/providers/facebook"
 import CredentialsProvider from "next-auth/providers/credentials";
 import { prisma } from "@/prismaDB";
 import bcrypt from 'bcrypt'
-import { Session } from 'inspector';
-import { NextAuthOptions } from 'next-auth';
-import { NextMiddlewareWithAuth } from 'next-auth/middleware';
-import { NextAuthHandlerParams } from 'next-auth/core';
-import { DO_NOT_USE_OR_YOU_WILL_BE_FIRED_EXPERIMENTAL_FORM_ACTIONS } from 'react';
 
 
 const authOptions={
@@ -23,7 +18,7 @@ const authOptions={
           access_type: "offline",
           response_type: "code"
         }
-      }
+      },
     }),
     FacebookProvider({
       clientId:process.env.FACEBOOK_ID??"",
@@ -62,9 +57,54 @@ const authOptions={
    
   ],
   pages:{
-    signIn:"/sign_in"
+    signIn:"/sign_in",
   },
   callbacks:{
+    async signIn({ user,account}:any){
+    
+     /******* Google *******/ 
+     if(account.provider=='google'){
+      //is google user existed
+      let googleUser = await prisma.googleUser.findFirst({where:{email:user.email}})
+      //if google user doesn't exist
+      if(!googleUser){
+        googleUser=await prisma.googleUser.create({
+          data:{
+              email:user.email,
+              name:user.name
+          }
+        })  
+      }
+      user.isAllowed=googleUser.isAllowed
+     }
+
+     /******* Facebook ***********/
+     if(account.provider=='facebook'){
+      //is facebook user existed
+      let facebookUser = await prisma.facebookUser.findFirst({where:{email:user.email}})
+      //if facebook user doesn't exist
+      if(!facebookUser){
+        facebookUser=await prisma.facebookUser.create({
+          data:{
+              email:user.email,
+              name:user.name
+          }
+        })  
+      }
+      user.isAllowed=facebookUser.isAllowed
+     }
+
+     /******* Credential ********/
+     //if credential user is blocked 
+     if (!user.isAllowed) throw new Error("此账户被禁用")
+     
+     //all good, proceed
+     return true
+    },
+    async redirect({baseUrl}:any){
+      return `${baseUrl}/dashboard`
+    },
+
     async session({ session, token }:any) {
       session.user=token.user
       return session
@@ -78,7 +118,7 @@ const authOptions={
     }
   },
   session:{
-    maxAge:24*60*60*3
+    maxAge:24*60*60*7
   }
 
 }

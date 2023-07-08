@@ -52,9 +52,12 @@ export default function Index() {
       password: password,
       redirect: false,
     });
-    res?.error ? setErrorMessage(res.error) : setErrorMessage("");
-    setDisabled(false);
-    return;
+    if (res?.error) {
+      setErrorMessage(res.error);
+      setDisabled(false);
+      return;
+    }
+    window.location.replace("/dashboard");
   }
 
   useEffect(() => {
