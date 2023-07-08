@@ -38,7 +38,9 @@ export default function Index() {
       setErrorMessage(error);
       return;
     }
-    //login after user is created
+
+    //redirect to login after user is created
+    window.location.replace("/sign_in");
   }
 
   return (
