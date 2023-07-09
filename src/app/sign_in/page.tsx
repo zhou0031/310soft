@@ -62,6 +62,12 @@ export default function Index() {
   }
 
   useEffect(() => {
+    if (session?.user && status === "authenticated") {
+      window.location.replace("/dashboard");
+    }
+  }, [status, session?.user]);
+
+  useEffect(() => {
     const emailRegx = /^[A-Za-z\._\-0-9]*[@][A-Za-z0-9]*[\.][a-z]{2,9}$/;
     setErrorMessage("");
     email.match(emailRegx) && password.trim().length > 0
