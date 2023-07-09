@@ -65,7 +65,7 @@ const authOptions={
      /******* Google *******/ 
      if(account.provider=='google'){
       //is google user existed
-      let googleUser = await prisma.googleUser.findFirst({where:{email:user.email}})
+      let googleUser = await prisma.googleUser.findUnique({where:{email:user.email}})
       //if google user doesn't exist
       if(!googleUser){
         googleUser=await prisma.googleUser.create({
@@ -75,13 +75,13 @@ const authOptions={
           }
         })  
       }
-      user.isAllowed=googleUser.isAllowed
+      user=googleUser
      }
-
+     
      /******* Facebook ***********/
      if(account.provider=='facebook'){
       //is facebook user existed
-      let facebookUser = await prisma.facebookUser.findFirst({where:{email:user.email}})
+      let facebookUser = await prisma.facebookUser.findUnique({where:{email:user.email}})
       //if facebook user doesn't exist
       if(!facebookUser){
         facebookUser=await prisma.facebookUser.create({
@@ -89,15 +89,15 @@ const authOptions={
               email:user.email,
               name:user.name
           }
-        })  
+        }) 
       }
-      user.isAllowed=facebookUser.isAllowed
+      user=facebookUser
      }
-
+  
      /******* Credential ********/
      //if credential user is blocked 
      if (!user.isAllowed) throw new Error("此账户被禁用")
-     
+
      //all good, proceed
      return true
     },
@@ -109,10 +109,23 @@ const authOptions={
       session.user=token.user
       return session
     },
-    async jwt({token,user}:any){
+
+    async jwt({token,user,account}:any){
       if(user){
-        delete user['password']
-        token.user=user
+        switch(account.provider){
+          case 'google':
+            token.user=await prisma.googleUser.findUnique({where:{email:user.email}})
+            token.user.image=user.image
+            break;
+          case 'facebook':
+            token.user=await prisma.facebookUser.findUnique({where:{email:user.email}})
+            token.user.image=user.image
+            break;
+          default:
+            delete user['password']
+            token.user=user
+            break;
+        }
       }
       return token
     }

@@ -7,7 +7,7 @@ import { Google } from "@/components/sign_in/Google";
 import { Facebook } from "@/components/sign_in/Facedbook";
 import { GoPerson } from "react-icons/go";
 import { useState, useEffect, useRef } from "react";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 
 export default function Index() {
   const [disabled, setDisabled] = useState(true);
@@ -15,6 +15,7 @@ export default function Index() {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const formRef = useRef<any>();
+  const { data: session, status } = useSession();
 
   async function handleSignIn(
     e: React.MouseEvent<HTMLButtonElement>,

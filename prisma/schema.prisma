@@ -31,7 +31,6 @@ model GoogleUser {
   email     String   @unique
   role      Role     @default(USER)
   isAllowed Boolean  @default(true)
-  verified  Boolean  @default(false)
   address   Address?
   createdAt DateTime @default(now()) @db.Timestamptz()
   updatedAt DateTime @updatedAt @db.Timestamptz()
@@ -45,7 +44,6 @@ model FacebookUser {
   email     String   @unique
   role      Role     @default(USER)
   isAllowed Boolean  @default(true)
-  verified  Boolean  @default(false)
   address   Address?
   createdAt DateTime @default(now()) @db.Timestamptz()
   updatedAt DateTime @updatedAt @db.Timestamptz()
