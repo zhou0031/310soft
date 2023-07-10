@@ -58,6 +58,7 @@ const authOptions={
   ],
   pages:{
     signIn:"/sign_in",
+    error:"/sign_in",
   },
   callbacks:{
     async signIn({ user,account}:any){
@@ -96,8 +97,16 @@ const authOptions={
   
      /******* Credential ********/
      //if credential user is blocked 
-     if (!user.isAllowed) throw new Error("此账户被禁用")
-
+     if (!user.isAllowed) {
+      switch(account.provider){
+        case 'google':
+          throw new Error(encodeURIComponent("此账户被禁用"))
+        case 'facebook':
+          throw new Error(encodeURIComponent("此账户被禁用"))
+        default:
+          throw new Error("此账户被禁用")
+        }
+      }
      //all good, proceed
      return true
     },

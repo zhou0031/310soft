@@ -8,6 +8,7 @@ import { Facebook } from "../../../components/sign_in/Facedbook";
 import { GoPerson } from "react-icons/go";
 import { useState, useEffect, useRef } from "react";
 import { signIn, useSession } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
 
 export default function Index() {
   const [disabled, setDisabled] = useState(true);
@@ -16,6 +17,8 @@ export default function Index() {
   const [errorMessage, setErrorMessage] = useState("");
   const formRef = useRef<any>();
   const { data: session, status } = useSession();
+  const searchParams = useSearchParams();
+  const error = searchParams.get("error");
 
   async function handleSignIn(
     e: React.MouseEvent<HTMLButtonElement>,
@@ -65,7 +68,8 @@ export default function Index() {
     if (session?.user && status === "authenticated") {
       window.location.replace("/dashboard");
     }
-  }, [status, session?.user]);
+    if (error) setErrorMessage(error);
+  }, [status, session?.user, error]);
 
   useEffect(() => {
     const emailRegx = /^[A-Za-z\._\-0-9]*[@][A-Za-z0-9]*[\.][a-z]{2,9}$/;

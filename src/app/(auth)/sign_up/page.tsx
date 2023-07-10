@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
-import Email from "@/components/sign_up/Email";
-import Password from "@/components/sign_up/Password";
+import Email from "../../../components/sign_up/Email";
+import Password from "../../../components/sign_up/Password";
 import { GoPersonAdd } from "react-icons/go";
 import { useState, useRef, useEffect } from "react";
 
