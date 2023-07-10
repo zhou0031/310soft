@@ -1,10 +1,10 @@
 "use client";
 import Link from "next/link";
 import Script from "next/script";
-import Email from "@/components/sign_in/Email";
-import Password from "@/components/sign_in/Password";
-import { Google } from "@/components/sign_in/Google";
-import { Facebook } from "@/components/sign_in/Facedbook";
+import Email from "../../../components/sign_in/Email";
+import Password from "../../../components/sign_in/Password";
+import { Google } from "../../../components/sign_in/Google";
+import { Facebook } from "../../../components/sign_in/Facedbook";
 import { GoPerson } from "react-icons/go";
 import { useState, useEffect, useRef } from "react";
 import { signIn, useSession } from "next-auth/react";
