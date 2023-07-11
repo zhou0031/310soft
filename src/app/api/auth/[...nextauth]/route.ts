@@ -135,6 +135,7 @@ const authOptions={
             token.user=user
             break;
         }
+        token.user.provider=account.provider
       }
       return token
     }
