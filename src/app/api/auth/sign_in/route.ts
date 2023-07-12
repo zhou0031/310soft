@@ -1,36 +1,24 @@
 import 'server-only'
 import { NextResponse } from "next/server"
 import { prisma } from '../../../../prismaDB'
-import {cookies} from 'next/headers'
 
-export async function POST(req:Request){
-    const res = await req.json()
-    let user, error    
-    console.log(res)
-    /*    
-    switch (res.provider){
+export async function POST(req){
+   
+    const user = await req.json()
+    let res
+
+    switch (user.provider){
         case 'google':
-            user = await prisma.googleUser.findUnique({where:{email:res.email}})
+            res = await prisma.googleUser.findUnique({where:{email:user.email}})
             break;
         case 'facebook':
-            user = await prisma.facebookUser.findUnique({where:{email:res.email}})
+            res = await prisma.facebookUser.findUnique({where:{email:user.email}})
             break;
         case 'credentials':
-            user = await prisma.user.findUnique({where:{email:res.email}})
+            res = await prisma.user.findUnique({where:{email:user.email}})
             break;
     }
-   
-    if(!user.isAllowed) {
-        cookies().set({
-            name: 'next-auth.session-token',
-            value: '',
-            expires:0,
-            path: '/',
-          })
-        error="此账户被禁用"
-    }
     
-    return NextResponse.json({stat:user.isAllowed,err:error})
-    */
-    return NextResponse.json({})
+    return NextResponse.json(res)
+    
 }
