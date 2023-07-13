@@ -1,3 +1,6 @@
+import jwt from "jsonwebtoken";
+import { NextResponse } from "next/server";
+
 async function isUserSuspended(token, req: Request) {
   const reqUrl = new URL("/api/auth/sign_in", req.url).toString();
 
@@ -14,4 +17,16 @@ async function isUserSuspended(token, req: Request) {
   return user.isAllowed;
 }
 
-export { isUserSuspended };
+async function decodeJWT(token) {
+  const decoded = await fetch("/api/jwt/decode", {
+    method: "POST",
+    body: JSON.stringify(token),
+    headers: {
+      "content-type": "application/json",
+    },
+  });
+  const res = await decoded.json();
+  return res;
+}
+
+export { isUserSuspended, decodeJWT };

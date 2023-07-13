@@ -5,7 +5,7 @@ import FacebookProvider from "next-auth/providers/facebook"
 import CredentialsProvider from "next-auth/providers/credentials";
 import { prisma } from '../../../../prismaDB';
 import bcrypt from 'bcrypt'
-
+import jwt from 'jsonwebtoken'
 
 const authOptions={
   providers: [
@@ -100,11 +100,12 @@ const authOptions={
      if (!user.isAllowed) {
       switch(account.provider){
         case 'google':
-          throw new Error(encodeURIComponent("此账户被禁用"))
         case 'facebook':
-          throw new Error(encodeURIComponent("此账户被禁用"))
+          //error message in url parameter
+          const errorToken= await jwt.sign({error:"此账户被禁用"},process.env.JWT_SECRET)           
+          throw new Error(errorToken)
         default:
-          throw new Error("此账户被禁用")
+          throw new Error("此账户被禁用") //this is in a message
         }
       }
      //all good, proceed

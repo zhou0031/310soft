@@ -9,6 +9,7 @@ import { GoPerson } from "react-icons/go";
 import { useState, useEffect, useRef } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
+import { decodeJWT } from "../../../helper";
 
 export default function Index() {
   const [disabled, setDisabled] = useState(true);
@@ -68,7 +69,9 @@ export default function Index() {
     if (session?.user && status === "authenticated") {
       window.location.replace("/dashboard");
     }
-    if (error) setErrorMessage(error);
+    if (error) {
+      decodeJWT(error).then((res) => setErrorMessage(res.error));
+    }
   }, [status, session?.user, error]);
 
   useEffect(() => {
