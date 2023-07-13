@@ -5,7 +5,7 @@ import ProviderWrapper from "./ProviderWrapper";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Auth",
+  title: "310 Soft",
 };
 
 export default function RootLayout({
