@@ -1,15 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Ad() {
+export default function Logo() {
   return (
-    <Link href="#">
+    <Link href="/">
       <Image
-        alt="310 soft ad"
+        alt="310 soft"
         className="rounded-lg"
-        src="https://placehold.jp/100x150.png"
+        src="https://placehold.jp/100x50.png"
         width={100}
-        height={150}
+        height={50}
         loading="lazy"
       />
     </Link>
