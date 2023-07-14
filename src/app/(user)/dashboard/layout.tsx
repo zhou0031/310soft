@@ -1,5 +1,5 @@
 "use client";
-import Sidebar from "../../../components/dashboard/sidebar";
+import Sidebar from "../../../components/dashboard/(sidebar)/sidebar";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 
@@ -13,8 +13,8 @@ export default function DashboardLayout({ children }) {
 
   return (
     <>
-      <div className="rounded-lg w-10/12 flex my-9 mx-auto p-5 bg-slate-100">
-        <Sidebar />
+      <div className="rounded-lg  w-10/12 flex my-9 mx-auto p-5 bg-slate-100">
+        <Sidebar session={session} />
         {children}
       </div>
     </>
