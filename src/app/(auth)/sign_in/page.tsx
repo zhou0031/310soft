@@ -72,6 +72,9 @@ export default function Index() {
     if (error) {
       decodeJWT(error).then((res) => setErrorMessage(res.error));
     }
+    return () => {
+      setErrorMessage("");
+    };
   }, [status, session?.user, error]);
 
   useEffect(() => {
