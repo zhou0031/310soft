@@ -28,7 +28,7 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "src/components/dashboard/(sidebar)/ad_admin.js"  ],
   "exclude": [
     "node_modules"
   ]

@@ -115,11 +115,6 @@ const authOptions={
       return `${baseUrl}/dashboard`
     },
 
-    async session({ session, token }:any) {
-      session.user=token.user
-      return session
-    },
-
     async jwt({token,user,account}:any){
       if(user){
         switch(account.provider){
@@ -139,7 +134,12 @@ const authOptions={
         token.user.provider=account.provider
       }
       return token
-    }
+    },
+
+    async session({ session, token }:any) {
+      session.user=token.user
+      return session
+    },
   },
   session:{
     maxAge:24*60*60*7

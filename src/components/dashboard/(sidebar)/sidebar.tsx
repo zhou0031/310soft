@@ -1,22 +1,21 @@
 import Logout from "./logout";
 import Help from "./help";
 import Ad_Admin from "./ad_admin";
-import Nav from "./navgation/nav";
+import Setting from "./setting";
 import Logo from "./logo";
-import { usePathname } from "next/navigation";
+import Home from "./home";
+import Dashboard from "./dashboard";
 
-export default function Sidebar({ session }) {
-  const pathName = usePathname();
-
+export default function Sidebar() {
   return (
     <>
       <div className="flex flex-col items-start gap-6 text-gray-400 text-sm">
         <Logo />
-
-        <Nav />
-        <Ad_Admin session={session} />
+        <Home />
+        <Dashboard />
+        <Setting />
         <Help />
-
+        <Ad_Admin />
         <Logout />
       </div>
     </>
