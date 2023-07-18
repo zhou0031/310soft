@@ -9,7 +9,7 @@ import Dashboard from "./dashboard";
 export default function Sidebar() {
   return (
     <>
-      <div className="flex flex-col items-start gap-6 text-gray-400 text-sm">
+      <div className="flex flex-col items-start gap-6 text-gray-400 text-sm font-medium">
         <Logo />
         <Home />
         <Dashboard />
