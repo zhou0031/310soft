@@ -8,10 +8,12 @@ export default function Admin() {
   const router = useRouter();
 
   useEffect(() => {
-    // @ts-ignore
-    if (session?.user?.role !== "ADMIN") router.push("/");
+    if (session?.user && status === "authenticated") {
+      // @ts-ignore
+      if (session?.user?.role !== "ADMIN") router.push("/");
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [session?.user, status]);
 
   return <>Admin</>;
 }
