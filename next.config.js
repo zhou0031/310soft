@@ -7,7 +7,25 @@ const nextConfig = {
                 hostname:'placehold.jp',
                 port:'',
                 pathname:'/**'
-            }
+            },
+            {
+                protocol:'https',
+                hostname:'placehold.co',
+                port:'',
+                pathname:'/**'
+            },
+            {
+                protocol:'https',
+                hostname:'**.googleusercontent.com',
+                port:'',
+                pathname:'/**'
+            },
+            {
+                protocol:'https',
+                hostname:'**.fbcdn.net',
+                port:'',
+                pathname:'/**'
+            },
         ]
     }
 }
