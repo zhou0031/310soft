@@ -15,6 +15,9 @@ export default function ProfileCard() {
         />
       )}
       <div className="font-sans">{session?.user.name}</div>
+      <div className="font-sans text-xs text-slate-400">
+        {session?.user.email}
+      </div>
     </div>
   );
 }
