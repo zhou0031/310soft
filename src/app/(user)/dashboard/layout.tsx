@@ -18,8 +18,8 @@ export default function DashboardLayout({ children }) {
         <div className="max-lg:hidden">
           <Sidebar />
         </div>
-        <div className="max-sm:hidden">{children}</div>
-        <div className="max-sm:w-full">
+        <div className="max-md:hidden">{children}</div>
+        <div className="max-md:w-full">
           <Rightbar />
         </div>
       </div>
