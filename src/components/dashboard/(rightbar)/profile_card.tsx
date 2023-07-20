@@ -19,8 +19,10 @@ export default function ProfileCard() {
           className="rounded-full  border-2 border-cyan-50"
         />
       )}
-      <div className="font-sans">{session?.user.name}</div>
-      <div className="font-sans text-xs text-slate-400">
+      <div className="w-full text-center whitespace-nowrap font-sans text-ellipsis overflow-hidden ...">
+        {session?.user.name}
+      </div>
+      <div className="w-full text-center whitespace-nowrap font-sans text-ellipsis overflow-hidden ... text-xs text-slate-400">
         {session?.user.email}
       </div>
       <div className="flex gap-5 mt-2 max-md:hidden">

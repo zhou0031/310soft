@@ -15,11 +15,11 @@ export default function DashboardLayout({ children }) {
   return (
     <>
       <div className="flex justify-between gap-10 rounded-lg w-5/6 h-[53rem] max-lg:w-full max-lg:h-full p-5 bg-white">
-        <div className="max-lg:hidden">
+        <div className="max-lg:hidden w-2/12">
           <Sidebar />
         </div>
-        <div className="max-md:hidden">{children}</div>
-        <div className="max-md:w-full">
+        <div className="max-md:hidden w-7/12">{children}</div>
+        <div className="max-md:w-full w-3/12">
           <Rightbar />
         </div>
       </div>
