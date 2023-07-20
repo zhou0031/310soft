@@ -2,7 +2,9 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { PiDotsThreeOutlineVerticalFill } from "react-icons/pi";
 import { RiDashboardFill } from "react-icons/ri";
+import { FaSignOutAlt } from "react-icons/fa";
 import Link from "next/link";
+import { signOut } from "next-auth/react";
 
 export default function ProfileCard() {
   const { data: session, status } = useSession();
@@ -35,6 +37,12 @@ export default function ProfileCard() {
         >
           <PiDotsThreeOutlineVerticalFill />
         </Link>
+        <button
+          className="rounded-full bg-white p-2 hover:bg-slate-300"
+          onClick={() => signOut()}
+        >
+          <FaSignOutAlt />
+        </button>
       </div>
     </div>
   );
