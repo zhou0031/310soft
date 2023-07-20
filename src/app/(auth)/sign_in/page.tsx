@@ -93,7 +93,7 @@ export default function Index() {
         defer
       ></Script>
 
-      <div className="w-[400px] flex flex-col items-center my-20 mx-auto py-5 bg-gray-200">
+      <div className="flex flex-col items-center max-w-fit mx-auto m-auto p-10 bg-gray-200">
         <header>
           <h1 className="text-2xl mb-2">登陆</h1>
         </header>

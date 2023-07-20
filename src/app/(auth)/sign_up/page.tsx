@@ -45,7 +45,7 @@ export default function Index() {
 
   return (
     <>
-      <div className="w-[400px] flex flex-col items-center my-28 mx-auto py-5 bg-gray-200">
+      <div className="flex flex-col items-center max-w-fit mx-auto p-10 bg-gray-200">
         <header>
           <h1 className="text-2xl mb-2">创建账户</h1>
         </header>
