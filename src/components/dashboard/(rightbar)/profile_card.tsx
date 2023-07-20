@@ -9,7 +9,7 @@ import { signOut } from "next-auth/react";
 export default function ProfileCard() {
   const { data: session, status } = useSession();
   return (
-    <div className="flex flex-col gap-2 items-center bg-slate-200 rounded-lg py-8 px-10">
+    <div className="flex flex-col gap-2 items-center bg-slate-200 rounded-lg p-8">
       {session?.user.image && (
         <Image
           src={session?.user.image}

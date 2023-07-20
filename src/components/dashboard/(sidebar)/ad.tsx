@@ -7,8 +7,8 @@ export default function Ad() {
       <Image
         alt="310 soft ad"
         className="rounded-lg"
-        src="https://placehold.jp/100x150.png"
-        width={100}
+        src="https://placehold.jp/120x150.png"
+        width={120}
         height={150}
         loading="lazy"
       />
