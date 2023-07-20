@@ -1,6 +1,6 @@
 export default function Activity() {
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex flex-col w-full gap-2">
       <h3 className="text-center text-sm font-serif font-medium">近期事件</h3>
       <div className="text-sm">
         Russia is introducing a notification procedure for movement through the
