@@ -8,10 +8,15 @@ export default function Activity() {
         </span>
       </h3>
 
-      <div className="text-sm">
-        Russia is introducing a notification procedure for movement through the
-        territory of Russia for employees of British diplomatic missions, the
-        Russian Foreign Ministry said in a statement on Thursday.
+      <div className="text-sm flex flex-col gap-5 items-center">
+        <p className="w-full text-center whitespace-nowrap font-sans text-ellipsis overflow-hidden ...">
+          Russia is introducing a notification procedure for movement through
+          the territory of Russia for employees of British diplomatic missions,
+          the Russian Foreign Ministry said in a statement on Thursday.
+        </p>
+        <p className="w-full text-center whitespace-nowrap font-sans text-ellipsis overflow-hidden ...">
+          周一早晨的一句“早上坏”，短短三字便浓缩了对过去周五的无限怀念，没有好好享受周末时光的懊恼与悔恨，以及一种“我不是自愿去上学”的鲜明态度
+        </p>
       </div>
     </div>
   );
