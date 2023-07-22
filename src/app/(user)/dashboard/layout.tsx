@@ -18,7 +18,7 @@ export default function DashboardLayout({ children }) {
         <div className="max-lg:hidden ">
           <Sidebar />
         </div>
-        <div className="max-md:hidden ">{children}</div>
+        <div className="max-md:hidden w-7/12">{children}</div>
         <div className="max-md:w-full w-3/12">
           <Rightbar />
         </div>
