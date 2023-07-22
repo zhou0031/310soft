@@ -113,7 +113,7 @@ export default function Index() {
               className="cf-turnstile"
               data-sitekey={process.env.CLOUDFLARE_SITE}
               data-theme="light"
-              data-language="zh"
+              data-language="zh-cn"
             ></div>
 
             <button
