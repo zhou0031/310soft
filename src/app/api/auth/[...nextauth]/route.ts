@@ -7,7 +7,7 @@ import { prisma } from '../../../../prismaDB';
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
-const authOptions={
+export const authOptions={
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_ID ?? "",
