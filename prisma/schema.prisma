@@ -18,6 +18,7 @@ model User {
   address   Address?
   createdAt DateTime @default(now()) @db.Timestamptz()
   updatedAt DateTime @updatedAt @db.Timestamptz()
+  contact   Contact?
 
   @@unique([id, email])
 }
@@ -31,6 +32,7 @@ model GoogleUser {
   address   Address?
   createdAt DateTime @default(now()) @db.Timestamptz()
   updatedAt DateTime @updatedAt @db.Timestamptz()
+  contact   Contact?
 
   @@unique([id, email])
 }
@@ -44,8 +46,23 @@ model FacebookUser {
   address   Address?
   createdAt DateTime @default(now()) @db.Timestamptz()
   updatedAt DateTime @updatedAt @db.Timestamptz()
+  contact   Contact?
 
   @@unique([id, email])
+}
+
+model Contact {
+  id    String @id @default(uuid())
+  phone String
+
+  user   User?   @relation(fields: [userId], references: [id])
+  userId String? @unique
+
+  googleUser   GoogleUser? @relation(fields: [googleUserId], references: [id])
+  googleUserId String?     @unique
+
+  facebookUser   FacebookUser? @relation(fields: [facebookUserId], references: [id])
+  facebookUserId String?       @unique
 }
 
 model Address {

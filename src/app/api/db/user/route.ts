@@ -9,13 +9,35 @@ export async function POST(req){
     
     switch (user.provider){
         case 'google':
-            res = await prisma.googleUser.findUnique({where:{email:user.email},include:{address:{select:{street:true,city:true,state:true,country:true,zip:true,googleUserId:true,id:true}}}})
+            res = await prisma.googleUser.findUnique(
+                {
+                    where:{email:user.email},
+                    include:{
+                        address:{select:{street:true,city:true,state:true,country:true,zip:true,googleUserId:true,id:true}},
+                        contact:true
+                    },
+                    
+                })
             break;
         case 'facebook':
-            res = await prisma.facebookUser.findUnique({where:{email:user.email},include:{address:{select:{street:true,city:true,state:true,country:true,zip:true,facebookUserId:true,id:true}}}})
+            res = await prisma.facebookUser.findUnique(
+                {
+                    where:{email:user.email},
+                    include:{
+                        address:{select:{street:true,city:true,state:true,country:true,zip:true,facebookUserId:true,id:true}},
+                        contact:true
+                    }
+                })
             break;
         case 'credentials':
-            res = await prisma.user.findUnique({where:{email:user.email},include:{address:{select:{street:true,city:true,state:true,country:true,zip:true,userId:true,id:true}}}})
+            res = await prisma.user.findUnique(
+                {
+                    where:{email:user.email},
+                    include:{
+                        address:{select:{street:true,city:true,state:true,country:true,zip:true,userId:true,id:true}},
+                        contact:true
+                    }
+                })
             break;
     }
     

@@ -4,7 +4,7 @@ export default function Activity() {
       <h3 className="w-full relative inline-flex items-center justify-center text-sm font-serif font-medium">
         <hr className="w-full  my-4" />
         <span className="absolute px-3 font-medium -translate-x-1/2 bg-white left-1/2">
-          近期事件
+          近期活动
         </span>
       </h3>
 
