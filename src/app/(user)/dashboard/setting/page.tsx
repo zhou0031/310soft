@@ -5,8 +5,28 @@ import Loading from "../loading";
 
 export default function Setting() {
   const [loading, setLoading] = useState(true);
-  const [userInfo, setUserInfo] = useState<any>();
   const { data: session, status } = useSession();
+  const [formData, setFormData] = useState<any>({
+    name: "",
+    phone: "",
+    street: "",
+    city: "",
+    state: "",
+    country: "",
+    zip: "",
+  });
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    return;
+  }
+
+  function handleChange(e) {
+    e.preventDefault();
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    return;
+  }
 
   useEffect(() => {
     if (session?.user && status === "authenticated") {
@@ -19,10 +39,20 @@ export default function Setting() {
       })
         .then((d) => d.json())
         .then((data) => {
-          setUserInfo(data);
+          setFormData({
+            ...formData,
+            name: data.name,
+            phone: data.contact.phone,
+            street: data.address.street,
+            city: data.address.city,
+            state: data.address.state,
+            country: data.address.country,
+            zip: data.address.zip,
+          });
           setLoading(false);
         });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session?.user, status]);
 
   if (loading)
@@ -35,21 +65,27 @@ export default function Setting() {
   return (
     <>
       <h2>设置</h2>
-      <form className="flex flex-col mt-5">
+      <form
+        autoComplete="off"
+        className="flex flex-col mt-5"
+        onSubmit={(e) => handleSubmit(e)}
+        onChange={(e) => handleChange(e)}
+      >
         <div className="flex gap-5">
           <div className="relative z-0 w-1/2 mb-6 group">
             <input
               type="text"
-              name="full_name"
-              id="full_name"
+              name="name"
+              id="name"
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
+              value={formData.name}
             />
             <label
-              htmlFor="full_name"
+              htmlFor="name"
               className="w-full whitespace-nowrap text-ellipsis overflow-hidden ... peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >
-              全名 {`${userInfo && userInfo?.name ? userInfo.name : ""}`}
+              全名
             </label>
           </div>
           <div className="relative z-0 w-1/2 mb-6 group">
@@ -59,13 +95,13 @@ export default function Setting() {
               id="phone"
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
+              value={formData.phone}
             />
             <label
               htmlFor="phone"
               className="w-full whitespace-nowrap text-ellipsis overflow-hidden ... peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >
-              电话{" "}
-              {`${userInfo && userInfo?.contact ? userInfo.contact.phone : ""}`}
+              电话
             </label>
           </div>
         </div>
@@ -77,15 +113,13 @@ export default function Setting() {
               id="street"
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
+              value={formData.street}
             />
             <label
               htmlFor="street"
               className="w-full whitespace-nowrap text-ellipsis overflow-hidden ... peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >
-              门牌，楼号，街名{" "}
-              {`${
-                userInfo && userInfo?.address ? userInfo.address.street : ""
-              }`}
+              门牌，楼号，街名
             </label>
           </div>
           <div className="relative z-0 w-1/2 mb-6 group">
@@ -95,13 +129,13 @@ export default function Setting() {
               id="city"
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
+              value={formData.city}
             />
             <label
               htmlFor="city"
               className="w-full whitespace-nowrap text-ellipsis overflow-hidden ... peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >
-              城市{" "}
-              {`${userInfo && userInfo?.address ? userInfo.address.city : ""}`}
+              城市
             </label>
           </div>
         </div>
@@ -113,13 +147,13 @@ export default function Setting() {
               id="state"
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
+              value={formData.state}
             />
             <label
               htmlFor="state"
               className="w-full whitespace-nowrap text-ellipsis overflow-hidden ... peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >
-              州/省{" "}
-              {`${userInfo && userInfo?.address ? userInfo.address.state : ""}`}
+              州/省
             </label>
           </div>
           <div className="relative z-0 w-1/3 mb-6 group">
@@ -129,15 +163,13 @@ export default function Setting() {
               id="country"
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
+              value={formData.country}
             />
             <label
               htmlFor="country"
               className="w-full whitespace-nowrap text-ellipsis overflow-hidden ... peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >
-              国家{" "}
-              {`${
-                userInfo && userInfo?.address ? userInfo.address.country : ""
-              }`}
+              国家
             </label>
           </div>
           <div className="relative z-0 w-1/3 mb-6 group">
@@ -147,15 +179,24 @@ export default function Setting() {
               id="zip"
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
+              value={formData.zip}
             />
             <label
               htmlFor="zip"
               className="w-full whitespace-nowrap text-ellipsis overflow-hidden ... peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >
-              邮编{" "}
-              {`${userInfo && userInfo?.address ? userInfo.address.zip : ""}`}
+              邮编
             </label>
           </div>
+        </div>
+        <div className="flex items-center justify-end gap-5">
+          <div className="text-red-700 font-medium">Error</div>
+          <button
+            type="submit"
+            className="p-5 w-1/4 font-sans bg-slate-500 hover:bg-slate-400 text-white font-thin py-1 px-4 rounded"
+          >
+            保存
+          </button>
         </div>
       </form>
     </>
