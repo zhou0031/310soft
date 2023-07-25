@@ -39,15 +39,16 @@ export default function Setting() {
       })
         .then((d) => d.json())
         .then((data) => {
+          console.log(data);
           setFormData({
             ...formData,
             name: data.name,
-            phone: data.contact.phone,
-            street: data.address.street,
-            city: data.address.city,
-            state: data.address.state,
-            country: data.address.country,
-            zip: data.address.zip,
+            phone: data.contact?.phone,
+            street: data.address?.street,
+            city: data.address?.city,
+            state: data.address?.state,
+            country: data.address?.country,
+            zip: data.address?.zip,
           });
           setLoading(false);
         });

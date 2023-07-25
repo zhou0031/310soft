@@ -6,7 +6,7 @@ export async function POST(req){
     
     const user = await req.json()
     let res
-    
+   
     switch (user.provider){
         case 'google':
             res = await prisma.googleUser.findUnique(
@@ -38,6 +38,7 @@ export async function POST(req){
                         contact:true
                     }
                 })
+            delete res.password      
             break;
     }
     
