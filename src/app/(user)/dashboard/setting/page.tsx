@@ -2,8 +2,10 @@
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import Loading from "../loading";
+import Spinner from "./spinner";
 
 export default function Setting() {
+  const [saveDisabled, setSaveDisabled] = useState(false);
   const [loading, setLoading] = useState(true);
   const { data: session, status } = useSession();
   const [formData, setFormData] = useState<any>({
@@ -18,6 +20,14 @@ export default function Setting() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    setSaveDisabled(true);
+    fetch("/api/db/user/update", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ formData, session }),
+    });
 
     return;
   }
@@ -191,8 +201,9 @@ export default function Setting() {
           </div>
         </div>
         <div className="flex items-center justify-end gap-5">
-          <div className="text-red-700 font-medium">Error</div>
+          <div className="">Error</div>
           <button
+            disabled={saveDisabled}
             type="submit"
             className="p-5 w-1/4 font-sans bg-slate-500 hover:bg-slate-400 text-white font-thin py-1 px-4 rounded"
           >

@@ -14,7 +14,7 @@ async function isUserSuspended(token, req: Request) {
 
   const user = await res.json();
 
-  return user.isAllowed;
+  return user?.isAllowed ? user.isAllowed : false;
 }
 
 async function decodeJWT(token) {

@@ -1,7 +1,7 @@
 export default function Loading() {
   return (
     <>
-      <span>数据加载...</span>
+      <span>数据加载 ...</span>
       <div role="status" className="space-y-2.5 animate-pulse w-full">
         <div className="flex items-center w-full space-x-2">
           <div className="h-2.5 bg-gray-200 rounded-full dark:bg-slate-300 w-32"></div>
