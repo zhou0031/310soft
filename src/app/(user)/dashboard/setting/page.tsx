@@ -2,11 +2,11 @@
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import Loading from "../loading";
-import Spinner from "./spinner";
 
 export default function Setting() {
   const [saveDisabled, setSaveDisabled] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [message, setMessage] = useState({ class: "", content: "" });
   const { data: session, status } = useSession();
   const [formData, setFormData] = useState<any>({
     name: "",
@@ -18,16 +18,26 @@ export default function Setting() {
     zip: "",
   });
 
-  async function handleSubmit(e) {
+  function handleSubmit(e) {
     e.preventDefault();
     setSaveDisabled(true);
     fetch("/api/db/user/update", {
       method: "PUT",
       headers: {
-        "Content-Type": "application/json",
+        "content-type": "application/json",
       },
       body: JSON.stringify({ formData, session }),
-    });
+    })
+      .then((res) => res.json())
+      .then((d) => {
+        setSaveDisabled(false);
+        setMessage({
+          class: d.error
+            ? "text-red-500 text-sm font-thin"
+            : "text-green-500 text-sm font-thin",
+          content: d.error ? d.error : "保存成功",
+        });
+      });
 
     return;
   }
@@ -49,7 +59,6 @@ export default function Setting() {
       })
         .then((d) => d.json())
         .then((data) => {
-          console.log(data);
           setFormData({
             ...formData,
             name: data.name,
@@ -63,6 +72,18 @@ export default function Setting() {
           setLoading(false);
         });
     }
+    return () => {
+      setMessage({ class: "", content: "" });
+      setFormData({
+        name: "",
+        phone: "",
+        street: "",
+        city: "",
+        state: "",
+        country: "",
+        zip: "",
+      });
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session?.user, status]);
 
@@ -76,12 +97,7 @@ export default function Setting() {
   return (
     <>
       <h2>设置</h2>
-      <form
-        autoComplete="off"
-        className="flex flex-col mt-5"
-        onSubmit={(e) => handleSubmit(e)}
-        onChange={(e) => handleChange(e)}
-      >
+      <form autoComplete="off" className="flex flex-col mt-5">
         <div className="flex gap-5">
           <div className="relative z-0 w-1/2 mb-6 group">
             <input
@@ -90,7 +106,8 @@ export default function Setting() {
               id="name"
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
-              value={formData.name}
+              value={formData.name || ""}
+              onChange={(e) => handleChange(e)}
             />
             <label
               htmlFor="name"
@@ -106,7 +123,8 @@ export default function Setting() {
               id="phone"
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
-              value={formData.phone}
+              value={formData.phone || ""}
+              onChange={(e) => handleChange(e)}
             />
             <label
               htmlFor="phone"
@@ -124,7 +142,8 @@ export default function Setting() {
               id="street"
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
-              value={formData.street}
+              value={formData.street || ""}
+              onChange={(e) => handleChange(e)}
             />
             <label
               htmlFor="street"
@@ -140,7 +159,8 @@ export default function Setting() {
               id="city"
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
-              value={formData.city}
+              value={formData.city || ""}
+              onChange={(e) => handleChange(e)}
             />
             <label
               htmlFor="city"
@@ -158,7 +178,8 @@ export default function Setting() {
               id="state"
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
-              value={formData.state}
+              value={formData.state || ""}
+              onChange={(e) => handleChange(e)}
             />
             <label
               htmlFor="state"
@@ -174,7 +195,8 @@ export default function Setting() {
               id="country"
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
-              value={formData.country}
+              value={formData.country || ""}
+              onChange={(e) => handleChange(e)}
             />
             <label
               htmlFor="country"
@@ -190,7 +212,8 @@ export default function Setting() {
               id="zip"
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
-              value={formData.zip}
+              value={formData.zip || ""}
+              onChange={(e) => handleChange(e)}
             />
             <label
               htmlFor="zip"
@@ -201,11 +224,13 @@ export default function Setting() {
           </div>
         </div>
         <div className="flex items-center justify-end gap-5">
-          <div className="">Error</div>
+          <div className={`${message.class}`}>{message.content}</div>
+
           <button
             disabled={saveDisabled}
             type="submit"
-            className="p-5 w-1/4 font-sans bg-slate-500 hover:bg-slate-400 text-white font-thin py-1 px-4 rounded"
+            onClick={(e) => handleSubmit(e)}
+            className="w-1/4 font-sans bg-slate-500 hover:bg-slate-400 text-white font-thin py-1 px-4 rounded"
           >
             保存
           </button>
