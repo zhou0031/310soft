@@ -115,7 +115,11 @@ export const authOptions={
       return `${baseUrl}/dashboard`
     },
 
-    async jwt({token,user,account}:any){
+    async jwt({token,user,account,trigger,session}:any){
+      if (trigger === "update" && session?.name)
+        token.user.name=session.name
+      
+
       if(user){
         switch(account.provider){
           case 'google':
