@@ -1,25 +1,19 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useSession } from "next-auth/react";
 import Loading from "../loading";
+import { Context } from "../layout";
 
 export default function Setting() {
   const [saveDisabled, setSaveDisabled] = useState(false);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState({ class: "", content: "" });
-  const { data: session, status } = useSession();
-  const [formData, setFormData] = useState<any>({
-    name: "",
-    phone: "",
-    street: "",
-    city: "",
-    state: "",
-    country: "",
-    zip: "",
-  });
+  const { data: session, status, update } = useSession();
+  const { formData, setFormData } = useContext(Context);
 
   function handleSubmit(e) {
     e.preventDefault();
+    setMessage({ class: "", content: "" });
     setSaveDisabled(true);
     fetch("/api/db/user/update", {
       method: "PUT",
@@ -31,6 +25,7 @@ export default function Setting() {
       .then((res) => res.json())
       .then((d) => {
         setSaveDisabled(false);
+        if (!d.error) update({ name: formData.name });
         setMessage({
           class: d.error
             ? "text-red-500 text-sm font-thin"
@@ -72,18 +67,7 @@ export default function Setting() {
           setLoading(false);
         });
     }
-    return () => {
-      setMessage({ class: "", content: "" });
-      setFormData({
-        name: "",
-        phone: "",
-        street: "",
-        city: "",
-        state: "",
-        country: "",
-        zip: "",
-      });
-    };
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session?.user, status]);
 

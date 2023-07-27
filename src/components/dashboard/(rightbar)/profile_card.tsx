@@ -5,9 +5,12 @@ import { RiDashboardFill } from "react-icons/ri";
 import { FaSignOutAlt } from "react-icons/fa";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
+import { Context } from "../../../app/(user)/dashboard/layout";
+import { useContext } from "react";
 
 export default function ProfileCard() {
   const { data: session, status } = useSession();
+  const { formData } = useContext(Context);
   return (
     <div className="flex flex-col gap-2 items-center bg-slate-200 rounded-lg p-8">
       {session?.user.image && (
@@ -20,7 +23,7 @@ export default function ProfileCard() {
         />
       )}
       <div className="w-full text-center whitespace-nowrap font-sans text-ellipsis overflow-hidden ...">
-        {session?.user.name}
+        {formData.name || session?.user.name}
       </div>
       <div className="w-full text-center whitespace-nowrap font-sans text-ellipsis overflow-hidden ... text-xs text-slate-400">
         {session?.user.email}
