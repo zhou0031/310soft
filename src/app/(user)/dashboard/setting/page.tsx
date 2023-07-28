@@ -7,6 +7,7 @@ import { Context } from "../layout";
 export default function Setting() {
   const [saveDisabled, setSaveDisabled] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState({ class: "", content: "" });
   const { data: session, status, update } = useSession();
   const { formData, setFormData } = useContext(Context);
@@ -15,6 +16,7 @@ export default function Setting() {
     e.preventDefault();
     setMessage({ class: "", content: "" });
     setSaveDisabled(true);
+    setSaving(true);
     fetch("/api/db/user/update", {
       method: "PUT",
       headers: {
@@ -24,6 +26,7 @@ export default function Setting() {
     })
       .then((res) => res.json())
       .then((d) => {
+        setSaving(false);
         setSaveDisabled(false);
         if (!d.error) update({ name: formData.name });
         setMessage({
@@ -209,7 +212,7 @@ export default function Setting() {
         </div>
         <div className="flex items-center justify-end gap-5">
           <div className={`${message.class}`}>{message.content}</div>
-
+          {saving ? "保存中 ..." : ""}
           <button
             disabled={saveDisabled}
             type="submit"
