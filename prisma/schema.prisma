@@ -15,6 +15,7 @@ model User {
   role      Role     @default(USER)
   isAllowed Boolean  @default(true)
   verified  Boolean  @default(false)
+  image     String?
   address   Address?
   createdAt DateTime @default(now()) @db.Timestamptz()
   updatedAt DateTime @updatedAt @db.Timestamptz()
@@ -29,6 +30,7 @@ model GoogleUser {
   email     String   @unique
   role      Role     @default(USER)
   isAllowed Boolean  @default(true)
+  image     String?
   address   Address?
   createdAt DateTime @default(now()) @db.Timestamptz()
   updatedAt DateTime @updatedAt @db.Timestamptz()
@@ -43,6 +45,7 @@ model FacebookUser {
   email     String   @unique
   role      Role     @default(USER)
   isAllowed Boolean  @default(true)
+  image     String?
   address   Address?
   createdAt DateTime @default(now()) @db.Timestamptz()
   updatedAt DateTime @updatedAt @db.Timestamptz()
