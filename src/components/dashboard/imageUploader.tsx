@@ -8,15 +8,6 @@ export default function ImageUploader() {
   const MAX_SIZE = 2 * 1024 * 1024;
   const [selectedImage, setSelectedImage] = useState(null);
 
-  const handleDrop = (acceptedFiles) => {
-    // Handle the dropped file here
-    if (acceptedFiles && acceptedFiles.length > 0) {
-      const file = acceptedFiles[0];
-      if (file.size <= MAX_SIZE) setSelectedImage(URL.createObjectURL(file));
-      else alert("Please select an image smaller than 2MB");
-    }
-  };
-
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: handleDrop,
     maxFiles: 1, // Limit to one file
@@ -27,30 +18,47 @@ export default function ImageUploader() {
     },
   });
 
+  function handleDrop(acceptedFiles) {
+    // Handle the dropped file here
+    if (acceptedFiles && acceptedFiles.length > 0) {
+      const file = acceptedFiles[0];
+      if (file.size <= MAX_SIZE) setSelectedImage(URL.createObjectURL(file));
+      else alert("Please select an image smaller than 2MB");
+    }
+  }
+
   return (
     <>
-      <div className="flex flex-col gap-5 font-serif text-sm">
-        <p>上传头像 (JPEG, PNG, 不超过2MB)</p>
-
+      <div className="flex flex-col gap-5">
         <div
           {...getRootProps()}
-          className={`dropzone ${
-            isDragActive ? "active" : ""
-          } flex items-center justify-center gap-5`}
+          className={`dropzone ${isDragActive ? "active" : ""}`}
         >
           <input {...getInputProps()} />
+
+          <div className="flex justify-center items-center gap-5 p-10 bg-slate-200 text-slate-400 rounded-lg hover:text-black cursor-pointer">
+            <PiUploadLight size={50} />
+            <div className="flex flex-col">
+              <p className="font-serif text-sm">
+                上传头像 (JPEG, PNG, 不超过2MB)
+              </p>
+              <p className="font-serif text-sm">点击上传或图片拖放至此</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex w-full h-[15rem]">
           {selectedImage ? (
             <Image
               src={selectedImage}
               alt="image_uploading"
-              width={400}
-              height={400}
+              quality={60}
+              width={250}
+              height={250}
+              style={{ objectFit: "contain" }}
             />
           ) : (
-            <div className="text-slate-400">
-              <PiUploadLight size={80} />
-              点击上传或图片拖放至此
-            </div>
+            ""
           )}
         </div>
       </div>
