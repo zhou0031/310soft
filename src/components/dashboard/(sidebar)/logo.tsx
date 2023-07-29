@@ -7,7 +7,7 @@ export default function Logo() {
       <Image
         alt="310 soft"
         className="rounded-lg"
-        src="https://placehold.jp/100x50.png"
+        src="/logo.jpg"
         width={100}
         height={50}
         loading="lazy"

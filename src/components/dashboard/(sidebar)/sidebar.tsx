@@ -15,7 +15,7 @@ export default function Sidebar() {
         <Dashboard />
         <Setting />
         <Help />
-        <div className="grow h-80"></div>
+        <div className="grow h-[18rem]"></div>
         <Ad_Admin />
         <Logout />
       </div>
