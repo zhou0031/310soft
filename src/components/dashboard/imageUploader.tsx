@@ -1,13 +1,16 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import Image from "next/image";
 import { PiUploadLight } from "react-icons/pi";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
+import { Context } from "../../app/(user)/dashboard/layout";
+import { useContext } from "react";
 
 export default function ImageUploader() {
   const MAX_SIZE = 2 * 1024 * 1024;
-  const [selectedImage, setSelectedImage] = useState(null);
+  //const [selectedImage, setSelectedImage] = useState(null);
+  const { selectedImage, setSelectedImage } = useContext(Context);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: handleDrop,

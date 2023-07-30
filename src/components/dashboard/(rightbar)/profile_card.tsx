@@ -10,18 +10,33 @@ import { useContext } from "react";
 
 export default function ProfileCard() {
   const { data: session, status } = useSession();
-  const { formData } = useContext(Context);
+  const { formData, selectedImage } = useContext(Context);
   return (
     <div className="flex flex-col gap-2 items-center bg-slate-200 rounded-lg p-8">
-      {session?.user.image && (
-        <Image
-          src={session?.user.image}
-          width={80}
-          height={80}
-          alt={session?.user.name}
-          className="rounded-full  border-2 border-cyan-50"
-        />
-      )}
+      <div className="flex h-[5rem]">
+        {(selectedImage && (
+          <Image
+            src={selectedImage}
+            quality={50}
+            width={80}
+            height={80}
+            alt={session?.user.name}
+            style={{ objectFit: "cover" }}
+            className="rounded-full  border-2 border-cyan-50"
+          />
+        )) ||
+          (session?.user.image && (
+            <Image
+              src={session?.user.image}
+              quality={50}
+              width={80}
+              height={80}
+              alt={session?.user.name}
+              style={{ objectFit: "cover" }}
+              className="rounded-full  border-2 border-cyan-50"
+            />
+          ))}
+      </div>
       <div className="w-full text-center whitespace-nowrap font-sans text-ellipsis overflow-hidden ...">
         {formData.name || session?.user.name}
       </div>

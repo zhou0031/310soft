@@ -8,6 +8,7 @@ export const Context = createContext(null);
 
 export default function DashboardLayout({ children }) {
   const { data: session, status } = useSession();
+  const [selectedImage, setSelectedImage] = useState(null);
   const [formData, setFormData] = useState<any>({
     name: "",
     phone: "",
@@ -26,7 +27,9 @@ export default function DashboardLayout({ children }) {
   return (
     <>
       <div className="flex justify-between rounded-lg w-5/6 h-[53rem] max-lg:w-full max-lg:h-full p-5 bg-white">
-        <Context.Provider value={{ formData, setFormData }}>
+        <Context.Provider
+          value={{ formData, setFormData, selectedImage, setSelectedImage }}
+        >
           <div className="max-lg:hidden ">
             <Sidebar />
           </div>
