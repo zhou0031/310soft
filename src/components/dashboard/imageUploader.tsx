@@ -1,17 +1,15 @@
 "use client";
-import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import Image from "next/image";
 import { PiUploadLight } from "react-icons/pi";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { Context } from "../../app/(user)/dashboard/layout";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 export default function ImageUploader() {
   const MAX_SIZE = 2 * 1024 * 1024;
-  //const [selectedImage, setSelectedImage] = useState(null);
   const { selectedImage, setSelectedImage } = useContext(Context);
-
+  const [message, setMessage] = useState<any>();
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: handleDrop,
     maxFiles: 1, // Limit to one file
@@ -22,18 +20,38 @@ export default function ImageUploader() {
     },
   });
 
-  function handleDrop(acceptedFiles) {
+  async function handleDrop(acceptedFiles) {
     // Handle the dropped file here
+    setSelectedImage("");
     if (acceptedFiles && acceptedFiles.length > 0) {
       const file = acceptedFiles[0];
-      if (file.size <= MAX_SIZE) setSelectedImage(URL.createObjectURL(file));
-      else alert("Please select an image smaller than 2MB");
+      if (file.size > MAX_SIZE) {
+        setMessage({ class: "text-red-700", content: "图片大小不超过2MB" });
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("image", file);
+      try {
+        setMessage({ content: "保存中 ..." });
+        const response = await fetch("/api/image/profile/upload", {
+          method: "POST",
+          body: formData,
+        });
+        if (response.ok) {
+          setSelectedImage(URL.createObjectURL(file));
+          return;
+        }
+        setMessage({ class: "text-red-700", content: "保存失败" });
+      } catch (e) {
+        setMessage({ class: "text-red-700", content: "保存失败" });
+      }
     }
   }
 
   return (
     <>
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-3">
         <div {...getRootProps()}>
           <input {...getInputProps()} />
           <div className="flex justify-center items-center gap-5 p-10 bg-slate-200 text-slate-400 rounded-lg hover:text-black cursor-pointer">
@@ -60,7 +78,9 @@ export default function ImageUploader() {
               style={{ objectFit: "contain" }}
             />
           ) : (
-            ""
+            <p className={`${message?.class} text-sm font-sans`}>
+              {message?.content || ""}
+            </p>
           )}
         </div>
       </div>

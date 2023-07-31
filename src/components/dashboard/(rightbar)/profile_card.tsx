@@ -13,8 +13,8 @@ export default function ProfileCard() {
   const { formData, selectedImage } = useContext(Context);
   return (
     <div className="flex flex-col gap-2 items-center bg-slate-200 rounded-lg p-8">
-      <div className="flex h-[5rem]">
-        {(selectedImage && (
+      {(selectedImage && (
+        <div className="flex h-[5rem]">
           <Image
             src={selectedImage}
             quality={50}
@@ -24,8 +24,10 @@ export default function ProfileCard() {
             style={{ objectFit: "cover" }}
             className="rounded-full  border-2 border-cyan-50"
           />
-        )) ||
-          (session?.user.image && (
+        </div>
+      )) ||
+        (session?.user.image && (
+          <div className="flex h-[5rem]">
             <Image
               src={session?.user.image}
               quality={50}
@@ -35,8 +37,9 @@ export default function ProfileCard() {
               style={{ objectFit: "cover" }}
               className="rounded-full  border-2 border-cyan-50"
             />
-          ))}
-      </div>
+          </div>
+        ))}
+
       <div className="w-full text-center whitespace-nowrap font-sans text-ellipsis overflow-hidden ...">
         {formData.name || session?.user.name}
       </div>
