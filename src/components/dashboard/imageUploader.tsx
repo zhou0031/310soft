@@ -54,7 +54,7 @@ export default function ImageUploader() {
       <div className="flex flex-col gap-3">
         <div {...getRootProps()}>
           <input {...getInputProps()} />
-          <div className="flex justify-center items-center gap-5 p-10 bg-slate-200 text-slate-400 rounded-lg hover:text-black cursor-pointer">
+          <div className="flex justify-center items-center gap-5 p-10 bg-slate-200 text-slate-400 rounded-lg hover:text-black border-2 border-dashed border-blue-400 cursor-pointer">
             {isDragActive ? (
               <IoMdCheckmarkCircleOutline size={50} />
             ) : (
