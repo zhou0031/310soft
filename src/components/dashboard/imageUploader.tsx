@@ -13,7 +13,6 @@ export default function ImageUploader() {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: handleDrop,
     maxFiles: 1, // Limit to one file
-    maxSize: MAX_SIZE,
     multiple: false,
     accept: {
       "image/*": [],
@@ -32,6 +31,7 @@ export default function ImageUploader() {
 
       const formData = new FormData();
       formData.append("image", file);
+
       try {
         setMessage({ content: "保存中 ..." });
         const response = await fetch("/api/image/profile/upload", {
