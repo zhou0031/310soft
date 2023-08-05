@@ -1,5 +1,5 @@
 import "server-only"
-import { prisma } from "../../../../../prismaDB";
+import { prisma } from "../../../../../../prismaDB";
 import { NextResponse } from "next/server";
 
 export async function PUT(req){

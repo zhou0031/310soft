@@ -18,7 +18,7 @@ export default function Setting() {
     setMessage({ class: "", content: "" });
     setSaveDisabled(true);
     setSaving(true);
-    fetch("/api/db/user/update", {
+    fetch("/api/db/user/update/profile", {
       method: "PUT",
       headers: {
         "content-type": "application/json",

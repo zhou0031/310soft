@@ -28,7 +28,13 @@ export default function DashboardLayout({ children }) {
     <>
       <div className="flex justify-between rounded-lg w-5/6 h-[53rem] max-lg:w-full max-lg:h-full p-5 bg-white">
         <Context.Provider
-          value={{ formData, setFormData, selectedImage, setSelectedImage }}
+          value={{
+            formData,
+            setFormData,
+            selectedImage,
+            setSelectedImage,
+            session,
+          }}
         >
           <div className="max-lg:hidden ">
             <Sidebar />

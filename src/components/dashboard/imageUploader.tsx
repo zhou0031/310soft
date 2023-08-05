@@ -8,7 +8,7 @@ import { useContext, useState } from "react";
 
 export default function ImageUploader() {
   const MAX_SIZE = 2 * 1024 * 1024;
-  const { selectedImage, setSelectedImage } = useContext(Context);
+  const { selectedImage, setSelectedImage, session } = useContext(Context);
   const [message, setMessage] = useState<any>();
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: handleDrop,
@@ -41,7 +41,7 @@ export default function ImageUploader() {
           body: formData,
         });
 
-        const { error } = await response.json();
+        const { error, path } = await response.json();
         if (error) {
           setMessage({ class: "text-red-700", content: "保存失败" });
           return;
