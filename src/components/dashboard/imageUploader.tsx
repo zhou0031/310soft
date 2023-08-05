@@ -40,11 +40,15 @@ export default function ImageUploader() {
           method: "POST",
           body: formData,
         });
-        if (response.ok) {
-          setSelectedImage(URL.createObjectURL(file));
+
+        const { error } = await response.json();
+        if (error) {
+          setMessage({ class: "text-red-700", content: "保存失败" });
           return;
         }
-        setMessage({ class: "text-red-700", content: "保存失败" });
+
+        setSelectedImage(URL.createObjectURL(file));
+        setMessage({});
       } catch (e) {
         setMessage({ class: "text-red-700", content: "保存失败" });
       }
