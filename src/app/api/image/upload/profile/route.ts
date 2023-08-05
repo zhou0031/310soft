@@ -4,7 +4,6 @@ import { NextResponse,NextRequest } from 'next/server';
 import { join } from 'path';
 import { fileTypeFromBuffer } from 'file-type';
 import cryptoRandomString from 'crypto-random-string';
-import { prisma } from '../../../../../prismaDB';
 
 
 export async function POST(req:NextRequest){
