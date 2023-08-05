@@ -14,3 +14,6 @@ npx prisma generate
 openssl rand -base64 32
 
 
+
+ln -s ~/Desktop/images/profile/ /public/images/profile
+
