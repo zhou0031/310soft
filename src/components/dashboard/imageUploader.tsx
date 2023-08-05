@@ -5,11 +5,14 @@ import { PiUploadLight } from "react-icons/pi";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { Context } from "../../app/(user)/dashboard/layout";
 import { useContext, useState } from "react";
+import { useSession } from "next-auth/react";
 
 export default function ImageUploader() {
   const MAX_SIZE = 2 * 1024 * 1024;
   const { selectedImage, setSelectedImage, session } = useContext(Context);
   const [message, setMessage] = useState<any>();
+  const { update } = useSession();
+  let response;
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: handleDrop,
     maxFiles: 1, // Limit to one file
@@ -34,19 +37,35 @@ export default function ImageUploader() {
       const formData = new FormData();
       formData.set("image", file);
 
+      let response;
+
       try {
         setMessage({ content: "保存中 ..." });
-        const response = await fetch("/api/image/upload/profile", {
+        response = await fetch("/api/image/upload/profile", {
           method: "POST",
           body: formData,
         });
 
-        const { error, path } = await response.json();
+        let { error, path } = await response.json();
         if (error) {
           setMessage({ class: "text-red-700", content: "保存失败" });
           return;
         }
 
+        response = await fetch("/api/db/user/update/image", {
+          method: "PUT",
+          body: JSON.stringify({ user: session.user, path: path }),
+          headers: {
+            "content-type": "application/json",
+          },
+        });
+
+        let { updateUserError } = await response.json();
+        if (updateUserError) {
+          setMessage({ class: "text-red-700", content: "保存失败" });
+          return;
+        }
+        update({ image: path }); //update current session user
         setSelectedImage(URL.createObjectURL(file));
         setMessage({});
       } catch (e) {

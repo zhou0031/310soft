@@ -35,6 +35,7 @@ export async function POST(req:NextRequest){
     const path=join("/","/home/ryan/Desktop/images/profile",fileName)
     await writeFile(path,buffer)   
 
-    return NextResponse.json({path:path})
+    const nextPath=join("/","/images/profile",fileName)
+    return NextResponse.json({path:nextPath})
 }
 

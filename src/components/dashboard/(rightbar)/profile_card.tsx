@@ -1,4 +1,3 @@
-import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { PiDotsThreeOutlineVerticalFill } from "react-icons/pi";
 import { RiDashboardFill } from "react-icons/ri";
@@ -9,8 +8,7 @@ import { Context } from "../../../app/(user)/dashboard/layout";
 import { useContext } from "react";
 
 export default function ProfileCard() {
-  const { data: session, status } = useSession();
-  const { formData, selectedImage } = useContext(Context);
+  const { formData, selectedImage, session } = useContext(Context);
   return (
     <div className="flex flex-col gap-2 items-center bg-slate-200 rounded-lg p-8">
       {(selectedImage && (

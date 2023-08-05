@@ -119,16 +119,18 @@ export const authOptions={
       if (trigger === "update" && session?.name)
         token.user.name=session.name
       
-
+      if (trigger === "update" && session?.image)
+        token.user.image=session.image  
+      
       if(user){
         switch(account.provider){
           case 'google':
             token.user=await prisma.googleUser.findUnique({where:{email:user.email}})
-            token.user.image=user.image
+            if(!token.user.image) token.user.image=user.image
             break;
           case 'facebook':
             token.user=await prisma.facebookUser.findUnique({where:{email:user.email}})
-            token.user.image=user.image
+            if(!token.user.image) token.user.image=user.image
             break;
           default:
             delete user['password']
