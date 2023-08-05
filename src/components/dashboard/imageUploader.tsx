@@ -15,7 +15,9 @@ export default function ImageUploader() {
     maxFiles: 1, // Limit to one file
     multiple: false,
     accept: {
-      "image/*": [],
+      "image/jpg": [],
+      "image/jpeg": [],
+      "image/png": [],
     },
   });
 
@@ -30,11 +32,11 @@ export default function ImageUploader() {
       }
 
       const formData = new FormData();
-      formData.append("image", file);
+      formData.set("image", file);
 
       try {
         setMessage({ content: "保存中 ..." });
-        const response = await fetch("/api/image/profile/upload", {
+        const response = await fetch("/api/image/upload/profile", {
           method: "POST",
           body: formData,
         });
