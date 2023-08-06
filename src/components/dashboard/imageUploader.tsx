@@ -41,6 +41,8 @@ export default function ImageUploader() {
 
       try {
         setMessage({ content: "保存中 ..." });
+        const imageToDelete = session?.user.image;
+
         response = await fetch("/api/image/upload/profile", {
           method: "POST",
           body: formData,
@@ -68,6 +70,14 @@ export default function ImageUploader() {
         update({ image: path }); //update current session user
         setSelectedImage(URL.createObjectURL(file));
         setMessage({});
+
+        //delete exising photo on hard drive
+        response = await fetch(
+          `/api/image/delete/profile/image?image=${imageToDelete}`,
+          {
+            method: "DELETE",
+          }
+        );
       } catch (e) {
         setMessage({ class: "text-red-700", content: "保存失败" });
       }
