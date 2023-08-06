@@ -8,9 +8,10 @@ import { useContext, useState } from "react";
 import { useSession } from "next-auth/react";
 
 export default function ImageUploader() {
-  const MAX_SIZE = 2 * 1024 * 1024;
+  const MAX_SIZE = 1 * 1024 * 1024;
   const { selectedImage, setSelectedImage, session } = useContext(Context);
   const [message, setMessage] = useState<any>();
+
   const { update } = useSession();
   let response;
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -30,7 +31,7 @@ export default function ImageUploader() {
     if (acceptedFiles && acceptedFiles.length > 0) {
       const file = acceptedFiles[0];
       if (file.size > MAX_SIZE) {
-        setMessage({ class: "text-red-700", content: "图片大小不超过2MB" });
+        setMessage({ class: "text-red-700", content: "图片大小不超过1MB" });
         return;
       }
 
@@ -96,7 +97,7 @@ export default function ImageUploader() {
               <PiUploadLight size={50} />
             )}
             <div className="flex flex-col break-all font-serif text-sm">
-              <p>上传头像 (JPEG, PNG, 不超过2MB)</p>{" "}
+              <p>上传头像 (JPEG, PNG, 不超过1MB)</p>{" "}
               <p>点击上传或图片拖放至此</p>
             </div>
           </div>

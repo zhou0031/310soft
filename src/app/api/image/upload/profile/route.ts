@@ -9,7 +9,7 @@ import cryptoRandomString from 'crypto-random-string';
 export async function POST(req:NextRequest){
     const allowed_types=['image/png','image/jpeg','image/jpg']
     const allowed_extensions=['png','jpeg','jpg']
-    const MAX_SIZE=2*1024*1024
+    const MAX_SIZE=1*1024*1024
     const data=await req.formData()    
     const image:File|null = data.get('image') as unknown as File
     const file_extension=image.name.slice(((image.name.lastIndexOf('.')-1)>>>0)+2)
