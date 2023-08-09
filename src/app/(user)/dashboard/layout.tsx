@@ -26,7 +26,7 @@ export default function DashboardLayout({ children }) {
 
   return (
     <>
-      <div className="flex justify-between rounded-lg w-5/6 h-[53rem] max-lg:w-full max-lg:h-full p-5 bg-white">
+      <div className="flex justify-between rounded-lg w-5/6 h-[53rem] max-lg:w-full max-lg:h-full p-5 overflow-hidden bg-white">
         <Context.Provider
           value={{
             formData,
@@ -36,11 +36,11 @@ export default function DashboardLayout({ children }) {
             session,
           }}
         >
-          <div className="max-lg:hidden ">
+          <div className="max-lg:hidden">
             <Sidebar />
           </div>
-          <div className="max-md:hidden w-7/12">{children}</div>
-          <div className="max-md:w-full w-3/12">
+          <div className="w-7/12 max-md:hidden">{children}</div>
+          <div className="w-3/12 max-md:w-full">
             <Rightbar />
           </div>
         </Context.Provider>

@@ -1,0 +1,26 @@
+"use server"
+import multer from 'multer';
+import { Readable } from 'stream';
+import fs from 'fs';
+import { NextApiRequest, NextApiResponse } from 'next';
+import path from 'path';
+import cryptoRandomString from 'crypto-random-string';
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+    cb(null, 'public/'); // Set the destination directory
+    },
+    filename: (req, file, cb) => {
+    const fileName = `${cryptoRandomString({ length: 32, type: 'alphanumeric' })}.png`
+    cb(null, fileName); // Set the file name
+    },
+});
+
+const upload = multer({ storage });
+
+export const config = {
+    api: {
+      bodyParser: false,
+    },
+  };
+

@@ -13,7 +13,7 @@ export default function ImageUploader() {
   const [message, setMessage] = useState<any>();
 
   const { update } = useSession();
-  let response;
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: handleDrop,
     maxFiles: 1, // Limit to one file
@@ -37,13 +37,14 @@ export default function ImageUploader() {
 
       const formData = new FormData();
       formData.set("image", file);
+      formData.set("delete", session?.user.image);
 
       let response;
 
       try {
         setMessage({ content: "保存中 ..." });
-        const imageToDelete = session?.user.image;
 
+        //upload image
         response = await fetch("/api/image/upload/profile", {
           method: "POST",
           body: formData,
@@ -55,6 +56,7 @@ export default function ImageUploader() {
           return;
         }
 
+        //update database image field
         response = await fetch("/api/db/user/update/image", {
           method: "PUT",
           body: JSON.stringify({ user: session.user, path: path }),
@@ -71,14 +73,6 @@ export default function ImageUploader() {
         update({ image: path }); //update current session user
         setSelectedImage(URL.createObjectURL(file));
         setMessage({});
-
-        //delete exising photo on hard drive
-        response = await fetch(
-          `/api/image/delete/profile/image?image=${imageToDelete}`,
-          {
-            method: "DELETE",
-          }
-        );
       } catch (e) {
         setMessage({ class: "text-red-700", content: "保存失败" });
       }

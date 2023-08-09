@@ -1,9 +1,10 @@
 import "server-only"
+import { writeFile } from 'fs/promises';
 import { NextResponse,NextRequest } from 'next/server';
 import { join } from 'path'
 import { fileTypeFromBuffer } from 'file-type';
 import cryptoRandomString from 'crypto-random-string';
-import fs from 'fs'
+import fs from 'fs/promises'
 
 
 export async function POST(req:NextRequest){
@@ -31,18 +32,22 @@ export async function POST(req:NextRequest){
     if(!allowed_types.includes(signature?.mime))
         return NextResponse.json({error:true})
     
-    const fileName=`${cryptoRandomString({ length: 30, type: 'alphanumeric' })}.png`
+    const fileName=`${cryptoRandomString({ length: 32, type: 'alphanumeric' })}.png`
 
     const path=join("public/images/profile",fileName)
     
     /************************************ */
     try{
-        fs.unlink(toDelete,async (error)=>{
-            let writeableStream = fs.createWriteStream(path)
-            writeableStream.write(buffer)
-            
+        fs.unlink(toDelete)
+        .then(async ()=>{
+            await writeFile(path,buffer)
         })
-        //await writeFile(path,buffer)
+        .catch(async (error)=>{
+            if(error.code!=='ENOENT'){
+                console.error('Error deleting file:', error);
+            }
+            await writeFile(path,buffer)
+        })   
     }catch(e){
         return NextResponse.json({error:true})
     }
