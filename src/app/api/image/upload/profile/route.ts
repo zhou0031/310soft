@@ -3,18 +3,19 @@ import { NextResponse,NextRequest } from 'next/server';
 import { join } from 'path'
 import { fileTypeFromBuffer } from 'file-type';
 import cryptoRandomString from 'crypto-random-string';
-import fs from 'fs'
+import fs  from 'fs' 
 
 
 export async function POST(req:NextRequest){
     const allowed_types=['image/png','image/jpeg','image/jpg']
     const allowed_extensions=['png','jpeg','jpg']
     const MAX_SIZE=1*1024*1024
-    const data=await req.formData()    
+    const data = await req.formData()    
     const image:File|null = data.get('image') as unknown as File
-    const toDelete = join("public/",data.get('delete').toString())
+    const toDelete = join("public/",data.get("toDelete").toString())
     const file_extension=image.name.slice(((image.name.lastIndexOf('.')-1)>>>0)+2)
-    
+        
+
     if(!image)
         return NextResponse.json({error:true})
 
@@ -29,25 +30,49 @@ export async function POST(req:NextRequest){
    
     const signature=await fileTypeFromBuffer(buffer)
     if(!allowed_types.includes(signature?.mime))
-        return NextResponse.json({error:true})
+        return NextResponse.json({error:true}) 
     
-    const fileName=`${cryptoRandomString({ length: 30, type: 'alphanumeric' })}.png`
-
-    const path=join("public/images/profile",fileName)
-    
-    /************************************ */
-    try{
-        fs.unlink(toDelete,async (error)=>{
-            let writeableStream = fs.createWriteStream(path)
-            writeableStream.write(buffer)
-            
+    let fileName=`${cryptoRandomString({ length: 30, type: 'alphanumeric' })}.png`
+    const savingPath=join("public/images/profile",fileName)
+    const nextPath=join("/images/profile",fileName)
+    /************** Save image ************* */
+    //if user.image is not null, delete image,then upload  
+    /*      
+    if(toDelete){
+         fs.unlink(toDelete,async (e)=>{
+               if(!e){
+                let writeableStream =  fs.createWriteStream(savingPath)
+                writeableStream.write(buffer)
+                
+                return NextResponse.json({path:nextPath})
+               }
+               
+               return NextResponse.json({error:true})
         })
-        //await writeFile(path,buffer)
+    }
+    
+    //if toDelete (user image) is null, inster image directly
+    try{
+        let writeableStream = fs.createWriteStream(savingPath)
+        writeableStream.write(buffer)
     }catch(e){
         return NextResponse.json({error:true})
     }
-    /**************************************** */    
-    const nextPath=join("/","/images/profile",fileName)
+    */
+   /*
+    let promise = new Promise(function(resolve,reject){
+      fs.unlink(toDelete,(error)=>{!error?resolve(false):reject(true)})
+    })
+    promise
+    .then(d=>{
+        let writeableStream = fs.createWriteStream(savingPath)
+        writeableStream.write(buffer)
+    })
+    .catch(e=>{
+        return NextResponse.json({error:true}) 
+    })
+    */
+    
     return NextResponse.json({path:nextPath})
 }
 

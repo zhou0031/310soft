@@ -1,6 +1,6 @@
 import "server-only"
 import { NextResponse } from 'next/server';
-import fs from 'fs'
+import fs from 'fs/promises'
 import path from "path";
 
 export async function DELETE(req){ 
@@ -17,15 +17,11 @@ export async function DELETE(req){
 }
 
 export async function deleteFile(filePath){
-    try{  
-         fs.access(filePath, fs.constants.F_OK,(error)=>{
-            if(error)return
-            fs.unlink(filePath,(error)=>{
-                if(error)return
-            })
-         }) 
-        return
-    }catch(e){
+    try{
+        await fs.unlink(filePath)
+    }
+    catch(e){
+        
         throw e
     }
 }

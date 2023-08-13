@@ -23,7 +23,7 @@ export async function PUT(req){
     return NextResponse.json({updatedUser:updatedUser})
 }
 
-async function updateGoogleUser(user,path){
+export async function updateGoogleUser(user,path){
     try{
     const updatedUser = await prisma.googleUser.update({
             where:{
@@ -40,7 +40,7 @@ async function updateGoogleUser(user,path){
     }
 }
 
-async function updateFacebookUser(user,path){
+export async function updateFacebookUser(user,path){
     try{
     const updatedUser = await prisma.facebookUser.update({
         where:{
@@ -56,7 +56,7 @@ async function updateFacebookUser(user,path){
     }
 }
 
-async function updateCredientialUser(user,path){
+export async function updateCredientialUser(user,path){
     try{
     const updatedUser = await prisma.user.update({
             where:{

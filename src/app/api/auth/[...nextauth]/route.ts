@@ -126,11 +126,11 @@ export const authOptions={
         switch(account.provider){
           case 'google':
             token.user=await prisma.googleUser.findUnique({where:{email:user.email}})
-            if(!token.user.image) token.user.image=user.image
+            token.user.external_image=user.image
             break;
           case 'facebook':
             token.user=await prisma.facebookUser.findUnique({where:{email:user.email}})
-            if(!token.user.image) token.user.image=user.image
+            token.user.external_image=user.image
             break;
           default:
             delete user['password']

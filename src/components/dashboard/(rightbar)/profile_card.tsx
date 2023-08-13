@@ -36,6 +36,19 @@ export default function ProfileCard() {
               className="rounded-full  border-2 border-cyan-50"
             />
           </div>
+        )) ||
+        (session?.user.external_image && (
+          <div className="flex h-[5rem]">
+            <Image
+              src={session?.user.external_image}
+              quality={50}
+              width={80}
+              height={80}
+              alt={session?.user.name}
+              style={{ objectFit: "cover" }}
+              className="rounded-full  border-2 border-cyan-50"
+            />
+          </div>
         ))}
 
       <div className="w-full text-center whitespace-nowrap font-sans text-ellipsis overflow-hidden ...">

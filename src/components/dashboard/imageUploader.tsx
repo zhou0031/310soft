@@ -34,10 +34,11 @@ export default function ImageUploader() {
         setMessage({ class: "text-red-700", content: "图片大小不超过1MB" });
         return;
       }
-
+      setSelectedImage(URL.createObjectURL(file));
+      /*
       const formData = new FormData();
       formData.set("image", file);
-      formData.set("delete", session?.user.image);
+      formData.set("toDelete", session?.user.image);
 
       let response;
 
@@ -70,12 +71,14 @@ export default function ImageUploader() {
           setMessage({ class: "text-red-700", content: "保存失败" });
           return;
         }
-        update({ image: path }); //update current session user
+        //update current session user
+        update({ image: path });
         setSelectedImage(URL.createObjectURL(file));
         setMessage({});
       } catch (e) {
         setMessage({ class: "text-red-700", content: "保存失败" });
       }
+      */
     }
   }
 
