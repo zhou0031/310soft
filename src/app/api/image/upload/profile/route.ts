@@ -4,6 +4,7 @@ import { join } from 'path'
 import { fileTypeFromBuffer } from 'file-type';
 import cryptoRandomString from 'crypto-random-string';
 import fs  from 'fs' 
+import mv from 'mv'
 
 
 export async function POST(req:NextRequest){
@@ -12,7 +13,6 @@ export async function POST(req:NextRequest){
     const MAX_SIZE=1*1024*1024
     const data = await req.formData()    
     const image:File|null = data.get('image') as unknown as File
-    const toDelete = join("public/",data.get("toDelete").toString())
     const file_extension=image.name.slice(((image.name.lastIndexOf('.')-1)>>>0)+2)
         
 
@@ -37,7 +37,7 @@ export async function POST(req:NextRequest){
     const nextPath=join("/images/profile",fileName)
     /************** Save image ************* */
     //if user.image is not null, delete image,then upload  
-    /*      
+    /*    
     if(toDelete){
          fs.unlink(toDelete,async (e)=>{
                if(!e){
@@ -58,8 +58,8 @@ export async function POST(req:NextRequest){
     }catch(e){
         return NextResponse.json({error:true})
     }
-    */
-   /*
+    
+   
     let promise = new Promise(function(resolve,reject){
       fs.unlink(toDelete,(error)=>{!error?resolve(false):reject(true)})
     })
@@ -71,8 +71,11 @@ export async function POST(req:NextRequest){
     .catch(e=>{
         return NextResponse.json({error:true}) 
     })
-    */
+    */    
     
+
+   
+
     return NextResponse.json({path:nextPath})
 }
 

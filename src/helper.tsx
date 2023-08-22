@@ -1,6 +1,5 @@
 import jwt from "jsonwebtoken";
 import { NextResponse } from "next/server";
-import fs from "fs";
 
 async function isUserSuspended(token, req: Request) {
   const reqUrl = new URL("/api/auth/sign_in", req.url).toString();
@@ -30,12 +29,4 @@ async function decodeJWT(token) {
   return res;
 }
 
-function isFileExisted(path) {
-  let isExisted;
-  fs.access(path, fs.constants.F_OK, (err) => {
-    isExisted = err ? true : false;
-  });
-  return isExisted;
-}
-
-export { isUserSuspended, isFileExisted, decodeJWT };
+export { isUserSuspended, decodeJWT };

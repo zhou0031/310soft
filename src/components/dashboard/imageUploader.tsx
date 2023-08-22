@@ -27,18 +27,17 @@ export default function ImageUploader() {
 
   async function handleDrop(acceptedFiles) {
     // Handle the dropped file here
-    setSelectedImage("");
     if (acceptedFiles && acceptedFiles.length > 0) {
       const file = acceptedFiles[0];
       if (file.size > MAX_SIZE) {
+        setSelectedImage("");
         setMessage({ class: "text-red-700", content: "图片大小不超过1MB" });
         return;
       }
       setSelectedImage(URL.createObjectURL(file));
       /*
       const formData = new FormData();
-      formData.set("image", file);
-      formData.set("toDelete", session?.user.image);
+      formData.append("image", file);
 
       let response;
 
@@ -73,7 +72,7 @@ export default function ImageUploader() {
         }
         //update current session user
         update({ image: path });
-        setSelectedImage(URL.createObjectURL(file));
+       
         setMessage({});
       } catch (e) {
         setMessage({ class: "text-red-700", content: "保存失败" });
@@ -102,14 +101,22 @@ export default function ImageUploader() {
 
         <div className="flex w-full h-[15rem]">
           {selectedImage ? (
-            <Image
-              src={selectedImage}
-              alt="image_uploading"
-              quality={60}
-              width={250}
-              height={250}
-              style={{ objectFit: "contain" }}
-            />
+            <div className="flex gap-2">
+              <div className="flex flex-col gap-2">
+                <Image
+                  src={selectedImage}
+                  alt="image_uploading"
+                  quality={60}
+                  width={150}
+                  height={150}
+                  style={{ objectFit: "contain" }}
+                />
+                <button className="btn font-sans bg-slate-500 hover:bg-slate-400 text-white font-thin py-1 px-4 rounded">
+                  保存
+                </button>
+              </div>
+              <div>Progrress Bar</div>
+            </div>
           ) : (
             <p className={`${message?.class} text-sm font-sans`}>
               {message?.content || ""}
