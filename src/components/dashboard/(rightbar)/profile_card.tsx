@@ -28,6 +28,7 @@ export default function ProfileCard() {
         (session?.user.image && (
           <div className="flex h-[5rem]">
             <Image
+              priority={true}
               src={imageSource}
               onError={() => setImageSource(session?.user.external_image)}
               quality={50}
