@@ -21,7 +21,7 @@ export default function ProfileCard() {
             height={80}
             alt={session?.user.name}
             style={{ objectFit: "cover" }}
-            className="rounded-full  border-2 border-cyan-50"
+            className="rounded-full border-2 border-cyan-50"
           />
         </div>
       )) ||

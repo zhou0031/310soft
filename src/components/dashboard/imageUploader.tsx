@@ -31,6 +31,7 @@ export default function ImageUploader() {
 
       const formData = new FormData();
       formData.append("image", imageFile);
+      setMessage({ class: "text-black-700", content: "保存中 ..." });
       const response = await axios.post("/api/image/upload/profile", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -42,18 +43,15 @@ export default function ImageUploader() {
           setProgress(progress);
         },
       });
+      if (response.data?.error) throw new Error();
 
       setSelectedImage(response.data.imgUrl);
+      setMessage({ class: "text-green-700", content: "保存成功" });
     } catch (e) {
-      console.log(e);
       setMessage({ class: "text-red-700", content: "保存失败" });
     } finally {
       setDisableDrag(false);
     }
-
-    //setSelectedImage();
-    //update current session user
-    // update({ image: path });
   }
 
   function handleDragOver(e) {

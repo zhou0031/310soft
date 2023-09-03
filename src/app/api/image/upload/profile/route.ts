@@ -43,7 +43,7 @@ export async function POST(req:NextRequest){
    
     return NextResponse.json({name:key,imgUrl:signedUrl})
   }catch(e){
-    console.log("Error: ",e)
+    
     return NextResponse.json({error:true})
   }
 }
