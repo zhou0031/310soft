@@ -8,7 +8,6 @@ export const Context = createContext(null);
 
 export default function DashboardLayout({ children }) {
   const { data: session, status } = useSession();
-  const [selectedImage, setSelectedImage] = useState(null);
   const [formData, setFormData] = useState<any>({
     name: "",
     phone: "",
@@ -31,8 +30,7 @@ export default function DashboardLayout({ children }) {
           value={{
             formData,
             setFormData,
-            selectedImage,
-            setSelectedImage,
+
             session,
           }}
         >

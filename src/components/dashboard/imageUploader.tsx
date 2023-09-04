@@ -44,8 +44,6 @@ export default function ImageUploader() {
         },
       });
       if (response.data?.error) throw new Error();
-
-      setSelectedImage(response.data.imgUrl);
       setMessage({ class: "text-green-500", content: "保存成功" });
     } catch (e) {
       setMessage({ class: "text-red-700", content: "保存失败" });

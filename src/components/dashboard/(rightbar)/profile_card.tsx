@@ -5,11 +5,10 @@ import { FaSignOutAlt } from "react-icons/fa";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
 import { Context } from "../../../app/(user)/dashboard/layout";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 
 export default function ProfileCard() {
-  const { formData, selectedImage, session } = useContext(Context);
-  const [imageSource, setImageSource] = useState(session?.user.image);
+  const { formData, session } = useContext(Context);
   return (
     <div className="flex flex-col gap-2 items-center bg-slate-200 rounded-lg p-8">
       {session?.user.image && (
@@ -17,7 +16,6 @@ export default function ProfileCard() {
           <Image
             priority={true}
             src={session?.user.image}
-            onError={() => setImageSource("https://placehold.co/80X80.png")}
             quality={50}
             width={80}
             height={80}
