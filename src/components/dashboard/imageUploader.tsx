@@ -46,11 +46,12 @@ export default function ImageUploader() {
       if (response.data?.error) throw new Error();
 
       setSelectedImage(response.data.imgUrl);
-      setMessage({ class: "text-green-700", content: "保存成功" });
+      setMessage({ class: "text-green-500", content: "保存成功" });
     } catch (e) {
       setMessage({ class: "text-red-700", content: "保存失败" });
     } finally {
       setDisableDrag(false);
+      setProgress(0);
     }
   }
 
@@ -66,6 +67,7 @@ export default function ImageUploader() {
   return (
     <>
       <div className="flex flex-col gap-3">
+        <label className="text-sm font-serif">上传头像</label>
         <div
           className="flex items-center justify-center w-full"
           onDragOver={handleDragOver}
