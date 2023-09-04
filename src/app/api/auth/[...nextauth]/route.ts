@@ -72,7 +72,8 @@ export const authOptions={
         googleUser=await prisma.googleUser.create({
           data:{
               email:user.email,
-              name:user.name
+              name:user.name,
+              image:user.image
           }
         })  
       }
@@ -88,7 +89,8 @@ export const authOptions={
         facebookUser=await prisma.facebookUser.create({
           data:{
               email:user.email,
-              name:user.name
+              name:user.name,
+              image:user.image
           }
         }) 
       }
@@ -126,11 +128,11 @@ export const authOptions={
         switch(account.provider){
           case 'google':
             token.user=await prisma.googleUser.findUnique({where:{email:user.email}})
-            token.user.external_image=user.image
+          
             break;
           case 'facebook':
             token.user=await prisma.facebookUser.findUnique({where:{email:user.email}})
-            token.user.external_image=user.image
+            
             break;
           default:
             delete user['password']
