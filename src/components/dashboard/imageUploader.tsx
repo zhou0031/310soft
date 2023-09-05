@@ -16,7 +16,40 @@ export default function ImageUploader() {
   const { update } = useSession();
 
   async function handleInput(e) {
-    //console.log(e.target.files[0]);
+    e.preventDefault();
+    setIsDraged(false);
+    if (disableDrag) return;
+
+    const imageFile = e.target.files[0];
+
+    try {
+      setDisableDrag(true);
+
+      const formData = new FormData();
+      formData.append("image", imageFile);
+      setMessage({ class: "text-black-700", content: "保存中 ..." });
+      const response = await axios.post("/api/image/upload/profile", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        onUploadProgress: (progressEvent) => {
+          const progress = Math.round(
+            (progressEvent.loaded / progressEvent.total) * 100
+          );
+          setProgress(progress);
+        },
+      });
+      if (response.data?.error) throw new Error();
+
+      update({ image: response.data.imgUrl });
+
+      setMessage({ class: "text-green-500", content: "保存成功" });
+    } catch (e) {
+      setMessage({ class: "text-red-700", content: "保存失败" });
+    } finally {
+      setDisableDrag(false);
+      setProgress(0);
+    }
   }
 
   async function handleDrop(e) {
@@ -44,6 +77,9 @@ export default function ImageUploader() {
         },
       });
       if (response.data?.error) throw new Error();
+
+      update({ image: response.data.imgUrl });
+
       setMessage({ class: "text-green-500", content: "保存成功" });
     } catch (e) {
       setMessage({ class: "text-red-700", content: "保存失败" });
