@@ -1,9 +1,11 @@
 import "server-only"
 import { prisma } from "../../../../../../prismaDB";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function PUT(req){
-    const {user,path} = await req.json()
+export async function PUT(req:NextRequest){
+    
+    const {user,path,key} = await req.json()
+  
     let updatedUser
     try{    
         switch(user.provider){
@@ -18,9 +20,10 @@ export async function PUT(req){
             break;
         }
     }catch(e){
-        return NextResponse.json({updateUserError:true})
+        return NextResponse.json({error:true,name:key})
     }
-    return NextResponse.json({updatedUser:updatedUser})
+    delete updatedUser['password']
+    return NextResponse.json({user:updatedUser,imgUrl:path,name:key})
 }
 
 export async function updateGoogleUser(user,path){

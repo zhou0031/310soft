@@ -8,7 +8,7 @@ import { useSession } from "next-auth/react";
 import axios from "axios";
 
 export default function ImageUploader() {
-  const { setSelectedImage, session } = useContext(Context);
+  const { session } = useContext(Context);
   const [isDraged, setIsDraged] = useState(false);
   const [disableDrag, setDisableDrag] = useState(false);
   const [message, setMessage] = useState<any>();
@@ -28,7 +28,7 @@ export default function ImageUploader() {
       const formData = new FormData();
       formData.append("image", imageFile);
       setMessage({ class: "text-black-700", content: "保存中 ..." });
-      const response = await axios.post("/api/image/upload/profile", formData, {
+      let response = await axios.post("/api/image/upload/profile", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -41,8 +41,21 @@ export default function ImageUploader() {
       });
       if (response.data?.error) throw new Error();
 
-      update({ image: response.data.imgUrl });
+      //save image name into user table
+      response = await axios.put("/api/db/user/update/image", {
+        user: session.user,
+        path: response.data.imgUrl,
+        key: response.data.name,
+      });
+      //in case saving into db gives error, remove image from cloudlflare R2
+      if (response.data?.error) {
+        await axios.delete(`/api/image/delete/profile/${response.data.name}`, {
+          data: { image: response.data.name },
+        });
+        throw new Error();
+      }
 
+      update({ image: response.data.imgUrl });
       setMessage({ class: "text-green-500", content: "保存成功" });
     } catch (e) {
       setMessage({ class: "text-red-700", content: "保存失败" });
@@ -65,7 +78,7 @@ export default function ImageUploader() {
       const formData = new FormData();
       formData.append("image", imageFile);
       setMessage({ class: "text-black-700", content: "保存中 ..." });
-      const response = await axios.post("/api/image/upload/profile", formData, {
+      let response = await axios.post("/api/image/upload/profile", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -78,8 +91,21 @@ export default function ImageUploader() {
       });
       if (response.data?.error) throw new Error();
 
-      update({ image: response.data.imgUrl });
+      //save image name into user table
+      response = await axios.put("/api/db/user/update/image", {
+        user: session.user,
+        path: response.data.imgUrl,
+        key: response.data.name,
+      });
+      //in case saving into db gives error, remove image from cloudlflare R2
+      if (response.data?.error) {
+        await axios.delete(`/api/image/delete/profile/${response.data.name}`, {
+          data: { image: response.data.name },
+        });
+        throw new Error();
+      }
 
+      update({ image: response.data.imgUrl });
       setMessage({ class: "text-green-500", content: "保存成功" });
     } catch (e) {
       setMessage({ class: "text-red-700", content: "保存失败" });

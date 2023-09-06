@@ -39,8 +39,8 @@ export async function POST(req:NextRequest){
       Bucket:process.env.CLOUDFLARE_R2_BUCKET,
       Key:key
     })
+    
     const signedUrl = await getSignedUrl(S3, getObjectCommand)
-   
     return NextResponse.json({name:key,imgUrl:signedUrl})
   }catch(e){
     
