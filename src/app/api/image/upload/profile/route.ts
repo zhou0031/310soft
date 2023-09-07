@@ -65,8 +65,3 @@ async function isValidImage(image){
   
   return buffer
 }
-function encode(image){
-  const buf = Buffer.from(image);
-  const base64 = buf.toString("base64");
-  return base64;
-}

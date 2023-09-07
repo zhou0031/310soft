@@ -21,7 +21,7 @@ export default function ImageUploader() {
     if (disableDrag) return;
 
     const imageFile = e.target.files[0];
-    const deleteImage = getLastItem(session.user.image);
+    const deleteImage = session.user.image;
 
     try {
       setDisableDrag(true);

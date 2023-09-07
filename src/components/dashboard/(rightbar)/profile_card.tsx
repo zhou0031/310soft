@@ -12,7 +12,8 @@ export default function ProfileCard() {
   const [imgSource, setImgSource] = useState(session?.user.image);
 
   useEffect(() => {
-    if (session?.user.image != null) setImgSource(session?.user.image);
+    if (session?.user.image != null && isHttpValid(session?.user.image))
+      setImgSource(session?.user.image);
   }, [session?.user?.image]);
 
   return (
@@ -60,4 +61,12 @@ export default function ProfileCard() {
       </div>
     </div>
   );
+}
+function isHttpValid(str) {
+  try {
+    const newUrl = new URL(str);
+    return newUrl.protocol === "http:" || newUrl.protocol === "https:";
+  } catch (err) {
+    return false;
+  }
 }

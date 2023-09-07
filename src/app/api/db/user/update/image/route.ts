@@ -10,13 +10,13 @@ export async function PUT(req:NextRequest){
     try{    
         switch(user.provider){
             case 'google':
-                updatedUser=await updateGoogleUser(user,path)
+                updatedUser=await updateGoogleUser(user,key)
                 break;
             case 'facebook':
-                updatedUser=await updateFacebookUser(user,path)
+                updatedUser=await updateFacebookUser(user,key)
                 break;
             default:
-                updatedUser=await updateCredientialUser(user,path)
+                updatedUser=await updateCredientialUser(user,key)
             break;
         }
     }catch(e){
