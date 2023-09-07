@@ -21,10 +21,12 @@ export default function ImageUploader() {
     if (disableDrag) return;
 
     const imageFile = e.target.files[0];
+    const deleteImage = getLastItem(session.user.image);
 
     try {
       setDisableDrag(true);
 
+      /***************************************** */
       const formData = new FormData();
       formData.append("image", imageFile);
       setMessage({ class: "text-black-700", content: "保存中 ..." });
@@ -39,6 +41,7 @@ export default function ImageUploader() {
           setProgress(progress);
         },
       });
+      /***************************************** */
       if (response.data?.error) throw new Error();
 
       //save image name into user table
@@ -60,6 +63,10 @@ export default function ImageUploader() {
     } catch (e) {
       setMessage({ class: "text-red-700", content: "保存失败" });
     } finally {
+      //delete exisitng image from Cloudlfare R2
+      await axios.delete(`/api/image/delete/profile/${deleteImage}`, {
+        data: { image: deleteImage },
+      });
       setDisableDrag(false);
       setProgress(0);
     }
@@ -71,10 +78,12 @@ export default function ImageUploader() {
     if (disableDrag) return;
 
     const imageFile = e.dataTransfer.files[0];
+    const deleteImage = getLastItem(session.user.image);
 
     try {
       setDisableDrag(true);
 
+      /************************************** */
       const formData = new FormData();
       formData.append("image", imageFile);
       setMessage({ class: "text-black-700", content: "保存中 ..." });
@@ -89,6 +98,7 @@ export default function ImageUploader() {
           setProgress(progress);
         },
       });
+      /*************************************** */
       if (response.data?.error) throw new Error();
 
       //save image name into user table
@@ -110,6 +120,10 @@ export default function ImageUploader() {
     } catch (e) {
       setMessage({ class: "text-red-700", content: "保存失败" });
     } finally {
+      //delete exisitng image from Cloudlfare R2
+      await axios.delete(`/api/image/delete/profile/${deleteImage}`, {
+        data: { image: deleteImage },
+      });
       setDisableDrag(false);
       setProgress(0);
     }
@@ -174,4 +188,8 @@ export default function ImageUploader() {
       </div>
     </>
   );
+}
+
+function getLastItem(url) {
+  return url.substring(url.lastIndexOf("/") + 1).split("?")[0];
 }

@@ -25,7 +25,7 @@ export async function POST(req:NextRequest){
     const image:File|null = data.get('image') as unknown as File
     const imageBuffer=await isValidImage(image)
     
-    const key=`${cryptoRandomString({ length: 30, type: 'alphanumeric' })}.png`
+    const key=`profile/${cryptoRandomString({ length: 30, type: 'alphanumeric' })}.png`
   
     const SaveObjectCommand = new PutObjectCommand({
       Bucket:process.env.CLOUDFLARE_R2_BUCKET,
