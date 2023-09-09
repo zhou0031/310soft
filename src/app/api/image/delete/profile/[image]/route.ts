@@ -16,7 +16,7 @@ const S3 = new S3Client({
 });
 
 export async function DELETE(req:NextRequest,{params}){ 
-  console.log(222222)
+  
   const {image}=params
   const deleteObjectConfig = {
     Bucket:process.env.CLOUDFLARE_R2_BUCKET,

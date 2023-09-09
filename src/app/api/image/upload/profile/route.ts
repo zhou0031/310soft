@@ -5,8 +5,8 @@ import {
     S3Client,
     PutObjectCommand,
   } from "@aws-sdk/client-s3";
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { NextRequest, NextResponse } from "next/server";
+import path from "path"
 
   const S3 = new S3Client({
     region: "auto",
@@ -24,7 +24,7 @@ export async function POST(req:NextRequest){
     const image:File|null = data.get('image') as unknown as File
     const imageBuffer=await isValidImage(image)
     
-    const key=`profile/${cryptoRandomString({ length: 30, type: 'alphanumeric' })}.png`
+    const key=path.join('profile',`${cryptoRandomString({ length: 30, type: 'alphanumeric' })}.png}`)
   
     const SaveObjectCommand = new PutObjectCommand({
       Bucket:process.env.CLOUDFLARE_R2_BUCKET,
