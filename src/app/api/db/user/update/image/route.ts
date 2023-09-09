@@ -10,13 +10,13 @@ export async function PUT(req:NextRequest){
     try{    
         switch(user.provider){
             case 'google':
-                updatedUser=await updateGoogleUser(user,path)
+                updatedUser=await updateGoogleUser(user,path,key)
                 break;
             case 'facebook':
-                updatedUser=await updateFacebookUser(user,path)
+                updatedUser=await updateFacebookUser(user,path,key)
                 break;
             default:
-                updatedUser=await updateCredientialUser(user,path)
+                updatedUser=await updateCredientialUser(user,path,key)
             break;
         }
     }catch(e){
@@ -26,14 +26,15 @@ export async function PUT(req:NextRequest){
     return NextResponse.json({user:updatedUser,imgUrl:path,name:key})
 }
 
-export async function updateGoogleUser(user,path){
+export async function updateGoogleUser(user,path,key){
     try{
     const updatedUser = await prisma.googleUser.update({
             where:{
                 email:user.email,
             },
             data:{
-                image:path,  
+                image:path,
+                key:key,  
             },
         }
     )
@@ -43,14 +44,15 @@ export async function updateGoogleUser(user,path){
     }
 }
 
-export async function updateFacebookUser(user,path){
+export async function updateFacebookUser(user,path,key){
     try{
     const updatedUser = await prisma.facebookUser.update({
         where:{
             email:user.email,
         },
         data:{
-            image:path,  
+            image:path,
+            key:key,  
         },   
     })
     return updatedUser
@@ -59,14 +61,15 @@ export async function updateFacebookUser(user,path){
     }
 }
 
-export async function updateCredientialUser(user,path){
+export async function updateCredientialUser(user,path,key){
     try{
     const updatedUser = await prisma.user.update({
             where:{
                 email:user.email,
             },
             data:{
-                image:path,  
+                image:path,
+                key:key,  
             },
         }
     )
