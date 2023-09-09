@@ -3,7 +3,6 @@ import { fileTypeFromBuffer } from 'file-type';
 import cryptoRandomString from 'crypto-random-string';
 import {
     S3Client,
-    GetObjectCommand,
     PutObjectCommand,
   } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
@@ -34,14 +33,8 @@ export async function POST(req:NextRequest){
     })    
 
     await S3.send(SaveObjectCommand);
-    
-    const getObjectCommand=new GetObjectCommand({
-      Bucket:process.env.CLOUDFLARE_R2_BUCKET,
-      Key:key
-    })
-    
-    const signedUrl = await getSignedUrl(S3, getObjectCommand)
-    return NextResponse.json({name:key,imgUrl:signedUrl})
+        
+    return NextResponse.json({name:key,imgUrl:process.env.CLOUDFLARE_R2_CUSTOM_DOMAIN+key})
   }catch(e){
     
     return NextResponse.json({error:true})

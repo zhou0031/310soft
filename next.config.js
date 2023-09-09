@@ -28,12 +28,12 @@ const nextConfig = {
             },
             {
                 protocol:'https',
-                hostname:'**.r2.cloudflarestorage.com',
+                hostname:'r2.310soft.com',
                 port:'',
                 pathname:'/**'
             }
         ]
-    }
+    },
 }
 
 module.exports = nextConfig

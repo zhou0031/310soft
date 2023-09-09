@@ -50,6 +50,7 @@ export default function ImageUploader() {
         path: response.data.imgUrl,
         key: response.data.name,
       });
+
       //in case saving into db gives error, remove image from cloudlflare R2
       if (response.data?.error) {
         await axios.delete(`/api/image/delete/profile/${response.data.name}`, {
@@ -64,9 +65,11 @@ export default function ImageUploader() {
       setMessage({ class: "text-red-700", content: "保存失败" });
     } finally {
       //delete exisitng image from Cloudlfare R2
+      /*
       await axios.delete(`/api/image/delete/profile/${deleteImage}`, {
         data: { image: deleteImage },
       });
+      */
       setDisableDrag(false);
       setProgress(0);
     }
@@ -78,7 +81,7 @@ export default function ImageUploader() {
     if (disableDrag) return;
 
     const imageFile = e.dataTransfer.files[0];
-    const deleteImage = getLastItem(session.user.image);
+    const deleteImage = session.user.image;
 
     try {
       setDisableDrag(true);
@@ -121,9 +124,11 @@ export default function ImageUploader() {
       setMessage({ class: "text-red-700", content: "保存失败" });
     } finally {
       //delete exisitng image from Cloudlfare R2
+      /*
       await axios.delete(`/api/image/delete/profile/${deleteImage}`, {
         data: { image: deleteImage },
       });
+      */
       setDisableDrag(false);
       setProgress(0);
     }
@@ -188,8 +193,4 @@ export default function ImageUploader() {
       </div>
     </>
   );
-}
-
-function getLastItem(url) {
-  return url.substring(url.lastIndexOf("/") + 1).split("?")[0];
 }
