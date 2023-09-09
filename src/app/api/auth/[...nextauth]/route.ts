@@ -121,9 +121,11 @@ export const authOptions={
       if (trigger === "update" && session?.name)
         token.user.name=session.name
       
-      if (trigger === "update" && session?.image)
-        token.user.image=session.image  
-      
+      if (trigger === "update" && session?.image && session?.key){
+        token.user.image  = session.image 
+        token.user.key    = session.key
+      }
+
       if(user){
         switch(account.provider){
           case 'google':

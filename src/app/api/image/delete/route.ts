@@ -15,14 +15,15 @@ const S3 = new S3Client({
   },
 });
 
-export async function DELETE(req:NextRequest,{params}){ 
+export async function DELETE(req:NextRequest){   
+  const key= req.nextUrl.searchParams.get("key")
   
-  const {image}=params
   const deleteObjectConfig = {
     Bucket:process.env.CLOUDFLARE_R2_BUCKET,
-    Key:image
+    Key:key
   }
   const command = new DeleteObjectCommand(deleteObjectConfig)
   await S3.send(command)  
+  
   return NextResponse.json({})
 }
