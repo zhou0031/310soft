@@ -58,18 +58,12 @@ export default function ImageUploader() {
         });
         throw new Error();
       }
-
+      /***************************************** */
       update({ image: response.data.imgUrl });
       setMessage({ class: "text-green-500", content: "保存成功" });
     } catch (e) {
       setMessage({ class: "text-red-700", content: "保存失败" });
     } finally {
-      //delete exisitng image from Cloudlfare R2
-      /*
-      await axios.delete(`/api/image/delete/profile/${deleteImage}`, {
-        data: { image: deleteImage },
-      });
-      */
       setDisableDrag(false);
       setProgress(0);
     }
@@ -117,18 +111,12 @@ export default function ImageUploader() {
         });
         throw new Error();
       }
-
+      /************************************* */
       update({ image: response.data.imgUrl });
       setMessage({ class: "text-green-500", content: "保存成功" });
     } catch (e) {
       setMessage({ class: "text-red-700", content: "保存失败" });
     } finally {
-      //delete exisitng image from Cloudlfare R2
-      /*
-      await axios.delete(`/api/image/delete/profile/${deleteImage}`, {
-        data: { image: deleteImage },
-      });
-      */
       setDisableDrag(false);
       setProgress(0);
     }

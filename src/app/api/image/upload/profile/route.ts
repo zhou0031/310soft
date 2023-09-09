@@ -24,7 +24,7 @@ export async function POST(req:NextRequest){
     const image:File|null = data.get('image') as unknown as File
     const imageBuffer=await isValidImage(image)
     
-    const key=path.join('profile',`${cryptoRandomString({ length: 30, type: 'alphanumeric' })}.png}`)
+    const key=path.join('profile',`${cryptoRandomString({ length: 30, type: 'alphanumeric' })}.png`)
   
     const SaveObjectCommand = new PutObjectCommand({
       Bucket:process.env.CLOUDFLARE_R2_BUCKET,
@@ -34,7 +34,7 @@ export async function POST(req:NextRequest){
 
     await S3.send(SaveObjectCommand);
         
-    return NextResponse.json({name:key,imgUrl:process.env.CLOUDFLARE_R2_CUSTOM_DOMAIN+key})
+    return NextResponse.json({name:key,imgUrl:path.join(process.env.CLOUDFLARE_R2_CUSTOM_DOMAIN,key)})
   }catch(e){
     
     return NextResponse.json({error:true})
