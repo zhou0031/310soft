@@ -27,6 +27,8 @@ export default function ImageUploader() {
       /***************************************** */
       const formData = new FormData();
       formData.append("image", imageFile);
+      formData.append("user", session.user.email);
+      formData.append("provider", session.user.provider);
       setMessage({ class: "text-black-700", content: "保存中 ..." });
       let response = await axios.post("/api/image/upload/profile", formData, {
         headers: {
@@ -74,6 +76,8 @@ export default function ImageUploader() {
       /************************************** */
       const formData = new FormData();
       formData.append("image", imageFile);
+      formData.append("user", session.user.email);
+      formData.append("provider", session.user.provider);
       setMessage({ class: "text-black-700", content: "保存中 ..." });
       let response = await axios.post("/api/image/upload/profile", formData, {
         headers: {

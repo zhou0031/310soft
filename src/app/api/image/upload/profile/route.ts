@@ -26,10 +26,17 @@ export async function POST(req:NextRequest){
     
     const key=path.join('profile',`${cryptoRandomString({ length: 30, type: 'alphanumeric' })}.png`)
   
+    const user=data.get("user").toString()
+    const provider=data.get("provider").toString()
+    
     const SaveObjectCommand = new PutObjectCommand({
       Bucket:process.env.CLOUDFLARE_R2_BUCKET,
       Key: key,
-      Body: imageBuffer,
+      Body: imageBuffer, 
+      Metadata:{
+        "user":user,
+        "provider":provider
+      }
     })    
 
     await S3.send(SaveObjectCommand);
