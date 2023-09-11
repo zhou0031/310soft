@@ -20,7 +20,6 @@ export default function ImageUploader() {
     if (disableDrag) return;
 
     const imageFile = e.target.files[0];
-    const deleteImage = session.user.key;
 
     try {
       setDisableDrag(true);
@@ -40,9 +39,9 @@ export default function ImageUploader() {
           setProgress(progress);
         },
       });
-      /***************************************** */
-      if (response.data?.error) throw new Error();
 
+      if (response.data?.error) throw new Error();
+      /************************************************ */
       //save image name into user table
       response = await axios.put("/api/db/user/update/image", {
         user: session.user,
@@ -50,17 +49,10 @@ export default function ImageUploader() {
         key: response.data.name,
       });
 
-      //in case saving into db gives error, remove image from cloudlflare R2
-      if (response.data?.error) {
-        await axios.delete(`/api/image/delete/profile/${response.data.name}`, {
-          data: { image: response.data.key },
-        });
-        throw new Error();
-      }
+      if (response.data?.error) throw new Error();
       /***************************************** */
       update({ image: response.data.imgUrl, key: response.data.name });
       setMessage({ class: "text-green-500", content: "保存成功" });
-      await axios.delete(`/api/image/delete`, { params: { key: deleteImage } });
     } catch (e) {
       setMessage({ class: "text-red-700", content: "保存失败" });
     } finally {
@@ -75,7 +67,6 @@ export default function ImageUploader() {
     if (disableDrag) return;
 
     const imageFile = e.dataTransfer.files[0];
-    const deleteImage = session.user.key;
 
     try {
       setDisableDrag(true);
@@ -95,26 +86,19 @@ export default function ImageUploader() {
           setProgress(progress);
         },
       });
-      /*************************************** */
-      if (response.data?.error) throw new Error();
 
+      if (response.data?.error) throw new Error();
+      /**************************************** */
       //save image name into user table
       response = await axios.put("/api/db/user/update/image", {
         user: session.user,
         path: response.data.imgUrl,
         key: response.data.name,
       });
-      //in case saving into db gives error, remove image from cloudlflare R2
-      if (response.data?.error) {
-        await axios.delete(`/api/image/delete/profile/${response.data.name}`, {
-          data: { key: response.data.name },
-        });
-        throw new Error();
-      }
+      if (response.data?.error) throw new Error();
       /************************************* */
       update({ image: response.data.imgUrl, key: response.data.name });
       setMessage({ class: "text-green-500", content: "保存成功" });
-      await axios.delete(`/api/image/delete`, { params: { key: deleteImage } });
     } catch (e) {
       setMessage({ class: "text-red-700", content: "保存失败" });
     } finally {
