@@ -1,8 +1,8 @@
 "use client";
 import { PiUploadLight } from "react-icons/pi";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
-import { Context } from "../../app/(user)/dashboard/layout";
-import { useContext, useState, useRef } from "react";
+import { Context } from "../../../app/(user)/dashboard/layout";
+import { useContext, useState } from "react";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 

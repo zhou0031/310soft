@@ -3,7 +3,7 @@ import { useState, useEffect, useContext } from "react";
 import { useSession } from "next-auth/react";
 import Loading from "../loading";
 import { Context } from "../layout";
-import ImageUploader from "../../../../components/dashboard/imageUploader";
+import ImageUploader from "../../../../components/dashboard/(middle)/imageUploader";
 
 export default function Setting() {
   const [saveDisabled, setSaveDisabled] = useState(false);
