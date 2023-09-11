@@ -1,4 +1,4 @@
-import 'server-only'
+import { NextResponse } from 'next/server'
 
 export async function POST(req:Request){
     const url = "https://challenges.cloudflare.com/turnstile/v0/siteverify"
@@ -14,6 +14,10 @@ export async function POST(req:Request){
 		body: formData,
 		method: 'POST',
 	});
+    const outcome = await result.json()
     
-    return result
+    if(outcome.success)
+        return NextResponse.json({success:true})
+    else
+        return NextResponse.json({success:false})
 }
