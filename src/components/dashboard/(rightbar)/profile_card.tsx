@@ -12,15 +12,13 @@ export default function ProfileCard() {
   const [imgSource, setImgSource] = useState(session?.user.image);
 
   useEffect(() => {
-    if (session?.user.image != null && isHttpValid(session?.user.image))
-      setImgSource(session?.user.image);
+    if (session?.user.image != null) setImgSource(session?.user.image);
   }, [session?.user?.image]);
 
   return (
     <div className="flex flex-col gap-2 items-center bg-slate-200 rounded-lg p-8">
       <div className="flex h-[5rem]">
         <Image
-          priority={true}
           src={imgSource}
           onError={() => setImgSource("https://placehold.co/80x80.png")}
           quality={50}
