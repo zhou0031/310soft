@@ -6,7 +6,6 @@ import Link from "next/link";
 import { signOut } from "next-auth/react";
 import { Context } from "../../../app/(user)/dashboard/layout";
 import { useContext, useEffect, useState } from "react";
-import axios from "axios";
 
 export default function ProfileCard() {
   const { formData, session } = useContext(Context);

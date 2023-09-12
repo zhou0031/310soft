@@ -30,7 +30,6 @@ export default function DashboardLayout({ children }) {
           value={{
             formData,
             setFormData,
-
             session,
           }}
         >
