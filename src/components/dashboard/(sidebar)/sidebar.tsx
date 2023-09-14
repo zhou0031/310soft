@@ -2,6 +2,7 @@ import Logout from "./logout";
 import Help from "./help";
 import Ad_Admin from "./ad_admin";
 import Setting from "./setting";
+import Password from "./password";
 import Logo from "./logo";
 import Home from "./home";
 import Dashboard from "./dashboard";
@@ -14,8 +15,9 @@ export default function Sidebar() {
         <Home />
         <Dashboard />
         <Setting />
+        <Password />
         <Help />
-        <div className="grow h-[18rem]"></div>
+        <div className="grow h-[16rem]"></div>
         <Ad_Admin />
         <Logout />
       </div>
