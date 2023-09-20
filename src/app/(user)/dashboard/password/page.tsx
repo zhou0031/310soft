@@ -1,7 +1,8 @@
 "use client";
 import { useContext, useState, useRef } from "react";
-import { experimental_useFormStatus as useFormStatus } from "react-dom";
 import { Context } from "../layout";
+import axios from "axios";
+import { experimental_useFormStatus as useFormStatus } from "react-dom";
 
 export default function Password() {
   const { session } = useContext(Context);
@@ -15,9 +16,11 @@ export default function Password() {
     content: "",
   });
 
-  function handleSubmit(e) {
-    e.preventDefault();
+  async function handleSubmit(e) {
+    //e.preventDefault();
     //setInput(prevState=>({...prevState,[]})
+
+    console.log(await axios.post("https://httpbin.org/post"));
   }
 
   function handleChange(e) {

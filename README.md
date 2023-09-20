@@ -17,3 +17,4 @@ openssl rand -base64 32
 
 ln -s ~/Desktop/images/profile/ /public/images/profile
 
+npm i next@latest react@latest react-dom@latest eslint-config-next@latest
