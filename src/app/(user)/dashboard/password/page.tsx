@@ -1,30 +1,56 @@
 "use client";
-import { useContext, useState, useRef } from "react";
+import { useContext, useState, useEffect } from "react";
 import { Context } from "../layout";
 import axios from "axios";
-import { experimental_useFormStatus as useFormStatus } from "react-dom";
 
 export default function Password() {
   const { session } = useContext(Context);
+  const [disabled, setDisabled] = useState(true);
   const [input, setInput] = useState({
-    "old-password": "",
-    "new-password-1": "",
-    "new-password-2": "",
+    old_password: "",
+    new_password_1: "",
+    new_password_2: "",
   });
   const [message, setMessage] = useState({
     class: "",
     content: "",
   });
 
+  useEffect(() => {
+    if (
+      input.new_password_1.trim().length == 0 ||
+      input.new_password_2.trim().length == 0
+    ) {
+      setDisabled(true);
+      return;
+    }
+
+    if (input.new_password_1 !== input.new_password_2) {
+      setMessage((prevMessage) => ({
+        ...prevMessage,
+        class: "text-red-500",
+        content: "新密码不一致",
+      }));
+      setDisabled(true);
+      return;
+    }
+    setMessage((prevMessage) => ({
+      ...prevMessage,
+      class: "",
+      content: "",
+    }));
+    setDisabled(false);
+  }, [input]);
+
   async function handleSubmit(e) {
-    //e.preventDefault();
-    //setInput(prevState=>({...prevState,[]})
+    e.preventDefault();
 
     console.log(await axios.post("https://httpbin.org/post"));
   }
 
-  function handleChange(e) {
-    alert(e.target.value);
+  function handleInput(e: React.FormEvent<HTMLInputElement>) {
+    const { name, value } = e.currentTarget;
+    setInput((prevInput) => ({ ...prevInput, [name]: value }));
   }
 
   return (
@@ -40,8 +66,8 @@ export default function Password() {
           </label>
           <input
             className="w-4/5 h-10 p-2.5 pl-10 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-sky-500"
-            id="old-password"
-            name="old-password"
+            id="old_password"
+            name="old_password"
             type="password"
           ></input>
         </div>
@@ -52,10 +78,10 @@ export default function Password() {
           </label>
           <input
             className="w-4/5 h-10 p-2.5 pl-10 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-sky-500"
-            id="new-password-1"
-            name="new-password-1"
+            id="new_password_1"
+            name="new_password_1"
             type="password"
-            onChange={handleChange}
+            onInput={handleInput}
           ></input>
         </div>
         <div className="flex gap-2 w-full items-center">
@@ -64,16 +90,17 @@ export default function Password() {
           </label>
           <input
             className="w-4/5 h-10 p-2.5 pl-10 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-sky-500"
-            id="new-password-2"
-            name="new-password-2"
+            id="new_password_2"
+            name="new_password_2"
             type="password"
-            onChange={handleChange}
+            onInput={handleInput}
           ></input>
         </div>
         <div className="w-full flex items-center justify-end gap-2">
           <div className={`${message.class}`}>{message.content}</div>
           <button
             type="submit"
+            disabled={disabled}
             className="w-1/5 font-sans text-md bg-slate-500 hover:bg-slate-400 text-white font-thin py-1 px-4 rounded"
           >
             提交
