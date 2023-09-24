@@ -17,7 +17,14 @@ export default function Password() {
   });
 
   useEffect(() => {
+    setMessage((prevMessage) => ({
+      ...prevMessage,
+      class: "",
+      content: "",
+    }));
+
     if (
+      input.old_password.trim().length == 0 ||
       input.new_password_1.trim().length == 0 ||
       input.new_password_2.trim().length == 0
     ) {
@@ -34,11 +41,7 @@ export default function Password() {
       setDisabled(true);
       return;
     }
-    setMessage((prevMessage) => ({
-      ...prevMessage,
-      class: "",
-      content: "",
-    }));
+
     setDisabled(false);
   }, [input]);
 
@@ -69,6 +72,7 @@ export default function Password() {
             id="old_password"
             name="old_password"
             type="password"
+            onInput={handleInput}
           ></input>
         </div>
 

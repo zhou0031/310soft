@@ -24,7 +24,7 @@ export async function POST(req:NextRequest){
     const image:File|null = data.get('image') as unknown as File
     const imageBuffer=await isValidImage(image)
     
-    const key=path.join('profile',`${cryptoRandomString({ length: 30, type: 'alphanumeric' })}.png`)
+    const key=path.join('profile',`${cryptoRandomString({ length: 30, type: 'alphanumeric' })}.webp`)
   
     const user=data.get("user").toString()
     const provider=data.get("provider").toString()

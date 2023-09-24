@@ -20,7 +20,7 @@ export default function ProfileCard() {
       <div className="flex h-[5rem]">
         <Image
           src={imgSource}
-          onError={() => setImgSource("https://placehold.co/80x80.png")}
+          onError={() => setImgSource("https://placehold.co/80x80.webp")}
           quality={50}
           width={80}
           height={80}
