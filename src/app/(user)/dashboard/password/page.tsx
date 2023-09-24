@@ -1,6 +1,7 @@
 "use client";
 import { useContext, useState, useEffect } from "react";
 import { Context } from "../layout";
+import { signOut } from "next-auth/react";
 import axios from "axios";
 
 export default function Password() {
@@ -47,8 +48,27 @@ export default function Password() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    const res = await axios.post("/api/db/user/update/password", {
+      input: input,
+      user: session.user,
+    });
 
-    console.log(await axios.post("https://httpbin.org/post"));
+    if (res.data.error) {
+      setMessage((prevMessage) => ({
+        ...prevMessage,
+        class: "text-red-500",
+        content: "修改密码失败",
+      }));
+      return;
+    }
+
+    setMessage((prevMessage) => ({
+      ...prevMessage,
+      class: "text-green-500",
+      content: "修改成功，登出中 ...",
+    }));
+    //signout
+    signOut();
   }
 
   function handleInput(e: React.FormEvent<HTMLInputElement>) {
