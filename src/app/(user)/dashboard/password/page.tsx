@@ -2,10 +2,14 @@
 import { useContext, useState, useEffect } from "react";
 import { Context } from "../layout";
 import { signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 import axios from "axios";
 
 export default function Password() {
   const { session } = useContext(Context);
+  const router = useRouter();
+  const { status } = useSession();
   const [disabled, setDisabled] = useState(true);
   const [input, setInput] = useState({
     old_password: "",
@@ -16,6 +20,13 @@ export default function Password() {
     class: "",
     content: "",
   });
+
+  useEffect(() => {
+    if (status == "authenticated" && session?.user.provider !== "credentials") {
+      router.push("/dashboard");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [session?.user.provider, status]);
 
   useEffect(() => {
     setMessage((prevMessage) => ({

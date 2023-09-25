@@ -2,8 +2,14 @@ import { prisma } from "../../../../../../prismaDB";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from 'bcrypt'
 
+const CREDENTIAL="credentials"
+
 export async function POST(req:NextRequest){
     const {input,user}=await req.json()
+    
+    //check if user is a credential user
+    if(user.provider!==CREDENTIAL)
+        return NextResponse.json({error:true})
     
     //check user's old password
     const res = await prisma.user.findUnique({where:{email:user.email}})    
