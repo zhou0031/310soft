@@ -1,3 +1,5 @@
+import { useContext } from "react";
+import { Context } from "../../../app/(user)/dashboard/layout";
 import Logout from "./logout";
 import Help from "./help";
 import Ad_Admin from "./ad_admin";
@@ -8,6 +10,7 @@ import Home from "./home";
 import Dashboard from "./dashboard";
 
 export default function Sidebar() {
+  const { session } = useContext(Context);
   return (
     <>
       <div className="flex flex-col items-start gap-6 text-gray-400 text-sm font-medium">
@@ -15,7 +18,7 @@ export default function Sidebar() {
         <Home />
         <Dashboard />
         <Setting />
-        <Password />
+        {session?.user.provider == "credentials" && <Password />}
         <Help />
         <div className="grow h-[16rem]"></div>
         <Ad_Admin />
