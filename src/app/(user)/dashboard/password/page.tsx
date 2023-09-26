@@ -5,6 +5,7 @@ import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import axios from "axios";
+import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 
 export default function Password() {
   const { session } = useContext(Context);
@@ -16,6 +17,7 @@ export default function Password() {
     new_password_1: "",
     new_password_2: "",
   });
+  const [visible, setVisible] = useState(false);
   const [message, setMessage] = useState({
     class: "",
     content: "",
@@ -87,6 +89,10 @@ export default function Password() {
     setInput((prevInput) => ({ ...prevInput, [name]: value }));
   }
 
+  function toggleVisible() {
+    setVisible((visible) => !visible);
+  }
+
   return (
     <>
       <h2>修改密码</h2>
@@ -95,41 +101,71 @@ export default function Password() {
         onSubmit={handleSubmit}
       >
         <div className="flex gap-2 w-full items-center">
-          <label className="w-1/5 text-right text-sm" htmlFor="old-password">
+          <label className=" w-1/5 text-right text-sm" htmlFor="old-password">
             旧密码:
           </label>
-          <input
-            className="w-4/5 h-10 p-2.5 pl-10 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-sky-500"
-            id="old_password"
-            name="old_password"
-            type="password"
-            onInput={handleInput}
-          ></input>
+          <div className="relative w-4/5">
+            <div
+              onClick={toggleVisible}
+              className="absolute inset-y-0 left-0 flex items-center pl-3.5 cursor-pointer"
+            >
+              {(!visible && <AiOutlineEye size={20} />) || (
+                <AiOutlineEyeInvisible size={20} />
+              )}
+            </div>
+            <input
+              className="w-full h-10 p-2.5 pl-10 bg-gray-100 border border-gray-300 text-gray-900 text-md rounded-lg focus:outline-sky-500"
+              id="old_password"
+              name="old_password"
+              type={`${visible ? "text" : "password"}`}
+              onInput={handleInput}
+            ></input>
+          </div>
         </div>
 
         <div className="flex gap-2 w-full items-center">
           <label className="w-1/5 text-right text-sm" htmlFor="new-password-1">
             新密码:
           </label>
-          <input
-            className="w-4/5 h-10 p-2.5 pl-10 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-sky-500"
-            id="new_password_1"
-            name="new_password_1"
-            type="password"
-            onInput={handleInput}
-          ></input>
+          <div className="relative w-4/5">
+            <div
+              onClick={toggleVisible}
+              className="absolute inset-y-0 left-0 flex items-center pl-3.5 cursor-pointer"
+            >
+              {(!visible && <AiOutlineEye size={20} />) || (
+                <AiOutlineEyeInvisible size={20} />
+              )}
+            </div>
+            <input
+              className="w-full h-10 p-2.5 pl-10 bg-gray-100 border border-gray-300 text-gray-900 text-md rounded-lg focus:outline-sky-500"
+              id="new_password_1"
+              name="new_password_1"
+              type={`${visible ? "text" : "password"}`}
+              onInput={handleInput}
+            ></input>
+          </div>
         </div>
         <div className="flex gap-2 w-full items-center">
           <label className="w-1/5 text-right text-sm" htmlFor="new-password-2">
             确认新密码:
           </label>
-          <input
-            className="w-4/5 h-10 p-2.5 pl-10 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-sky-500"
-            id="new_password_2"
-            name="new_password_2"
-            type="password"
-            onInput={handleInput}
-          ></input>
+          <div className="relative w-4/5">
+            <div
+              onClick={toggleVisible}
+              className="absolute inset-y-0 left-0 flex items-center pl-3.5 cursor-pointer"
+            >
+              {(!visible && <AiOutlineEye size={20} />) || (
+                <AiOutlineEyeInvisible size={20} />
+              )}
+            </div>
+            <input
+              className="w-full h-10 p-2.5 pl-10 bg-gray-100 border border-gray-300 text-gray-900 text-md rounded-lg focus:outline-sky-500"
+              id="new_password_2"
+              name="new_password_2"
+              type={`${visible ? "text" : "password"}`}
+              onInput={handleInput}
+            ></input>
+          </div>
         </div>
         <div className="w-full flex items-center justify-end gap-2">
           <div className={`${message.class}`}>{message.content}</div>
