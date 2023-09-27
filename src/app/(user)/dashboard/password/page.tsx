@@ -61,6 +61,13 @@ export default function Password() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    setDisabled(true);
+    setMessage((prevMessage) => ({
+      ...prevMessage,
+      class: "",
+      content: "保存中 ...",
+    }));
+
     const res = await axios.post("/api/db/user/update/password", {
       input: input,
       user: session.user,
@@ -72,6 +79,7 @@ export default function Password() {
         class: "text-red-500",
         content: "修改密码失败",
       }));
+      setDisabled(false);
       return;
     }
 

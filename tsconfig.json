@@ -28,7 +28,7 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx"
-, "src/components/dashboard/(sidebar)/ad_admin.js", "src/app/(user)/dashboard/setting/page.tsx", "src/app/api/image/upload/profile/route.ts.bak2", "src/app/api/image/upload/profile/route.ts.bak1"  ],
+, "src/components/dashboard/(sidebar)/ad_admin.js", "src/app/(user)/dashboard/setting/page.tsx", "src/app/api/image/upload/profile/route.ts.bak2", "src/app/api/image/upload/profile/route.ts.bak1", "src/app/(user)/dashboard/password/page.tsx"  ],
   "exclude": [
     "node_modules"
   ]
