@@ -1,5 +1,11 @@
+import Welcome from "../../../components/dashboard/(middle)/welcome";
+
 function Dashboard() {
-  return <>Dashboard</>;
+  return (
+    <>
+      <Welcome />
+    </>
+  );
 }
 
 export default Dashboard;

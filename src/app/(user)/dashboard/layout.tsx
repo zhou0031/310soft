@@ -8,6 +8,7 @@ export const Context = createContext(null);
 
 export default function DashboardLayout({ children }) {
   const { data: session, status } = useSession();
+  const [fontSize, setFontSize] = useState("text-base");
   const [formData, setFormData] = useState<any>({
     name: "",
     phone: "",
@@ -30,14 +31,16 @@ export default function DashboardLayout({ children }) {
           value={{
             formData,
             setFormData,
+            fontSize,
+            setFontSize,
             session,
           }}
         >
           <div className="max-lg:hidden">
             <Sidebar />
           </div>
-          <div className="w-7/12 max-md:hidden">{children}</div>
-          <div className="w-3/12 max-md:w-full">
+          <div className={`${fontSize} w-7/12 max-md:hidden`}>{children}</div>
+          <div className={`${fontSize} w-3/12 max-md:w-full`}>
             <Rightbar />
           </div>
         </Context.Provider>
