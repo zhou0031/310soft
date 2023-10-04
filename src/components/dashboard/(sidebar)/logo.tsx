@@ -11,6 +11,7 @@ export default function Logo() {
         width={100}
         height={50}
         loading="lazy"
+        unoptimized
       />
     </Link>
   );

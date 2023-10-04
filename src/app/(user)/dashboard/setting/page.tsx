@@ -4,47 +4,38 @@ import { useSession } from "next-auth/react";
 import Loading from "../loading";
 import { Context } from "../layout";
 import ImageUploader from "../../../../components/dashboard/(middle)/imageUploader";
+import { experimental_useFormStatus as useFormStatus } from "react-dom";
+import axios from "axios";
 
 export default function Setting() {
-  const [saveDisabled, setSaveDisabled] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState({ class: "", content: "" });
   const { data: session, status, update } = useSession();
   const { formData, setFormData } = useContext(Context);
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    setMessage({ class: "", content: "" });
-    setSaveDisabled(true);
-    setSaving(true);
-    fetch("/api/db/user/update/profile", {
-      method: "PUT",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({ formData, session }),
-    })
-      .then((res) => res.json())
-      .then((d) => {
-        setSaving(false);
-        setSaveDisabled(false);
-        if (!d.error) update({ name: formData.name });
-        setMessage({
-          class: d.error
-            ? "text-red-500 text-sm font-thin"
-            : "text-green-500 text-sm font-thin",
-          content: d.error ? d.error : "保存成功",
-        });
-      });
+  async function handleSubmit() {
+    const res = await axios.put("/api/db/user/update/profile", {
+      formData,
+      session,
+    });
 
-    return;
+    if (!res.data.error) update({ name: formData.name });
+
+    setMessage((prevMessage) => ({
+      ...prevMessage,
+      class: res.data.error
+        ? "text-red-500 text-sm font-thin"
+        : "text-green-500 text-sm font-thin",
+      content: res.data.error ? res.data.error : "保存成功",
+    }));
   }
 
   function handleChange(e) {
     e.preventDefault();
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-    return;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [e.target.name]: e.target.value,
+    }));
   }
 
   useEffect(() => {
@@ -58,8 +49,8 @@ export default function Setting() {
       })
         .then((d) => d.json())
         .then((data) => {
-          setFormData({
-            ...formData,
+          setFormData((prevFormData) => ({
+            ...prevFormData,
             name: data.name,
             phone: data.contact?.phone,
             street: data.address?.street,
@@ -67,7 +58,7 @@ export default function Setting() {
             state: data.address?.state,
             country: data.address?.country,
             zip: data.address?.zip,
-          });
+          }));
           setLoading(false);
         });
     }
@@ -86,7 +77,11 @@ export default function Setting() {
     <>
       <h2>设置</h2>
       <div className="flex flex-col gap-5">
-        <form autoComplete="off" className="flex flex-col mt-5">
+        <form
+          autoComplete="off"
+          className="flex flex-col mt-5"
+          action={handleSubmit}
+        >
           <div className="flex gap-5">
             <div className="relative z-0 w-1/2 mb-6 group">
               <input
@@ -214,19 +209,24 @@ export default function Setting() {
           </div>
           <div className="flex items-center justify-end gap-5">
             <div className={`${message.class}`}>{message.content}</div>
-            {saving ? "保存中 ..." : ""}
-            <button
-              disabled={saveDisabled}
-              type="submit"
-              onClick={(e) => handleSubmit(e)}
-              className="w-1/4 font-sans bg-slate-500 hover:bg-slate-400 text-white font-thin py-1 px-4 rounded"
-            >
-              保存
-            </button>
+            <Submit />
           </div>
         </form>
         <ImageUploader />
       </div>
     </>
+  );
+}
+
+function Submit() {
+  const { pending } = useFormStatus();
+  return (
+    <button
+      disabled={pending}
+      type="submit"
+      className="w-1/4 font-sans bg-slate-500 hover:bg-slate-400 text-white font-thin py-1 px-4 rounded"
+    >
+      {`${pending ? "保存中 ..." : "保存"}`}
+    </button>
   );
 }

@@ -11,6 +11,7 @@ export default function Ad() {
         width={120}
         height={150}
         loading="lazy"
+        unoptimized
       />
     </Link>
   );
