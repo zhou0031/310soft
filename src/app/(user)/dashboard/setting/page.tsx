@@ -4,16 +4,27 @@ import { useSession } from "next-auth/react";
 import Loading from "../loading";
 import { Context } from "../layout";
 import ImageUploader from "../../../../components/dashboard/(middle)/imageUploader";
-import { experimental_useFormStatus as useFormStatus } from "react-dom";
+import { experimental_useOptimistic as useOptimistic } from "react";
+
 import axios from "axios";
 
 export default function Setting() {
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState({ class: "", content: "" });
+  const [pending, setPending] = useState(false);
+  const [oMessage, setOMessage] = useOptimistic(message);
   const { data: session, status, update } = useSession();
   const { formData, setFormData } = useContext(Context);
 
-  async function handleSubmit() {
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setPending(true);
+    setOMessage((prev) => ({
+      ...prev,
+      class: "",
+      content: "请稍侯 ...",
+    }));
+
     const res = await axios.put("/api/db/user/update/profile", {
       formData,
       session,
@@ -21,13 +32,12 @@ export default function Setting() {
 
     if (!res.data.error) update({ name: formData.name });
 
-    setMessage((prevMessage) => ({
-      ...prevMessage,
-      class: res.data.error
-        ? "text-red-500 text-sm font-thin"
-        : "text-green-500 text-sm font-thin",
-      content: res.data.error ? res.data.error : "保存成功",
+    setMessage((prev) => ({
+      ...prev,
+      class: res.data?.error ? "text-red-500" : "text-green-500",
+      content: res.data?.error ? res.data.error : "保存成功",
     }));
+    setPending(false);
   }
 
   function handleChange(e) {
@@ -80,7 +90,7 @@ export default function Setting() {
         <form
           autoComplete="off"
           className="flex flex-col mt-5"
-          action={handleSubmit}
+          onSubmit={handleSubmit}
         >
           <div className="flex gap-5">
             <div className="relative z-0 w-1/2 mb-6 group">
@@ -208,25 +218,18 @@ export default function Setting() {
             </div>
           </div>
           <div className="flex items-center justify-end gap-5">
-            <div className={`${message.class}`}>{message.content}</div>
-            <Submit />
+            <div className={oMessage?.class}>{oMessage?.content}</div>
+            <button
+              disabled={pending}
+              type="submit"
+              className="w-1/4 font-sans bg-slate-500 hover:bg-slate-400 text-white font-thin py-1 px-4 rounded"
+            >
+              {`${pending ? "保存中 ..." : "保存"}`}
+            </button>
           </div>
         </form>
         <ImageUploader />
       </div>
     </>
-  );
-}
-
-function Submit() {
-  const { pending } = useFormStatus();
-  return (
-    <button
-      disabled={pending}
-      type="submit"
-      className="w-1/4 font-sans bg-slate-500 hover:bg-slate-400 text-white font-thin py-1 px-4 rounded"
-    >
-      {`${pending ? "保存中 ..." : "保存"}`}
-    </button>
   );
 }
