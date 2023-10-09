@@ -26,7 +26,7 @@ export default function DashboardLayout({ children }) {
 
   return (
     <>
-      <div className="flex justify-between rounded-lg w-5/6 h-[53rem] max-lg:w-full max-lg:h-full p-5 overflow-hidden bg-white">
+      <div className="flex justify-between rounded-lg w-5/6 h-[53rem] max-lg:w-full max-lg:h-full p-5 overflow-hidden bg-white gap-2">
         <Context.Provider
           value={{
             formData,
@@ -39,8 +39,10 @@ export default function DashboardLayout({ children }) {
           <div className="max-lg:hidden">
             <Sidebar />
           </div>
-          <div className={`${fontSize} w-7/12 max-md:hidden`}>{children}</div>
-          <div className={`${fontSize} w-3/12 max-md:w-full`}>
+          <div className={`${fontSize} w-7/12 max-md:hidden max-lg:w-2/3`}>
+            {children}
+          </div>
+          <div className={`${fontSize} w-3/12 max-md:w-full max-lg:w-1/3`}>
             <Rightbar />
           </div>
         </Context.Provider>
