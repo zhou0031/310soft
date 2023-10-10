@@ -1,5 +1,6 @@
 "use client";
 import { useContext, useState, useEffect } from "react";
+import { experimental_useOptimistic as useOptimistic } from "react";
 import { Context } from "../layout";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -22,6 +23,7 @@ export default function Password() {
     class: "",
     content: "",
   });
+  const [oMessage, setOMessage] = useOptimistic(message);
 
   useEffect(() => {
     if (status == "authenticated" && session?.user.provider !== "credentials") {
@@ -62,7 +64,7 @@ export default function Password() {
   async function handleSubmit(e) {
     e.preventDefault();
     setDisabled(true);
-    setMessage((prevMessage) => ({
+    setOMessage((prevMessage) => ({
       ...prevMessage,
       class: "",
       content: "保存中 ...",
@@ -176,7 +178,7 @@ export default function Password() {
           </div>
         </div>
         <div className="w-full flex items-center justify-end gap-2">
-          <div className={`${message.class}`}>{message.content}</div>
+          <div className={`${oMessage.class}`}>{oMessage.content}</div>
           <button
             type="submit"
             disabled={disabled}
