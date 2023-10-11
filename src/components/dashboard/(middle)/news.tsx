@@ -1,11 +1,31 @@
 "use client";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 
-export default function News({ location, setLocation }) {
+export default function News({ setNewsLocation }) {
+  const newsLocations = [
+    { position: [24.796708, 176.277178], country: "China P.R" },
+    { position: [43.285203, 268.43397], country: "USA" },
+    { position: [27.945886, 40.469359], country: "Africa" },
+  ];
+
+  const [i, setI] = useState(0);
+
   useEffect(() => {
-    //setLocation((prev) => ({ ...prev, country: "China P.R" }));
+    /*
+    newsLocations.map((location) => {
+      setNewsLocation((prev) => ({ ...prev, ...location }));
+    });
+    */
+    const interval = setInterval(() => {
+      setNewsLocation((prev) => ({ ...prev, ...newsLocations[i] }));
+      if (i > 2) setI((prev) => (prev = 0));
+      else setI((prev) => prev + 1);
+    }, 1000);
+
+    //Clearing the interval
+    return () => clearInterval(interval);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [i]);
 
   return (
     <>

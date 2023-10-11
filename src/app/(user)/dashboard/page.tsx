@@ -10,16 +10,17 @@ const OpenStreetMap = dynamic(
 );
 
 function Dashboard() {
-  const [location, setLocation] = useState({
-    country: "United States",
-    position: [],
+  const [newsLocation, setNewsLocation] = useState({
+    country: "",
+    position: null,
   });
+
   return (
     <>
       <div className="flex flex-col">
         <Welcome />
-        <OpenStreetMap location={location} />
-        <News location={location} setLocation={setLocation} />
+        <OpenStreetMap newsLocation={newsLocation} />
+        <News setNewsLocation={setNewsLocation} />
       </div>
     </>
   );
