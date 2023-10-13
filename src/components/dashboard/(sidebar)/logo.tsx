@@ -10,7 +10,7 @@ export default function Logo() {
         src="/logo.jpg"
         width={100}
         height={50}
-        loading="lazy"
+        priority
         unoptimized
       />
     </Link>

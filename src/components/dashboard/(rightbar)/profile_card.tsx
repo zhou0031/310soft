@@ -27,6 +27,7 @@ export default function ProfileCard() {
           style={{ objectFit: "cover" }}
           className="rounded-full  border-2 border-cyan-50"
           unoptimized
+          priority
         />
       </div>
 

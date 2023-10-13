@@ -10,8 +10,8 @@ export default function Ad() {
         src="/ad/nyc.jpg"
         width={120}
         height={150}
-        loading="lazy"
         unoptimized
+        priority
       />
     </Link>
   );
