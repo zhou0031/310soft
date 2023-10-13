@@ -4,13 +4,16 @@ import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { Context } from "../../../app/(user)/dashboard/layout";
 import { useContext, useState } from "react";
 import { useSession } from "next-auth/react";
+import { experimental_useOptimistic as useOptimistic } from "react";
 import axios from "axios";
 
 export default function ImageUploader() {
   const { session } = useContext(Context);
   const [isDraged, setIsDraged] = useState(false);
   const [disableDrag, setDisableDrag] = useState(false);
-  const [message, setMessage] = useState<any>();
+  const [message, setMessage] = useState({ class: "", content: "" });
+  const [oMessage, setOMessage] = useOptimistic(message);
+
   const [progress, setProgress] = useState(0);
   const { update } = useSession();
 
@@ -29,7 +32,11 @@ export default function ImageUploader() {
       formData.append("image", imageFile);
       formData.append("user", session.user.email);
       formData.append("provider", session.user.provider);
-      setMessage({ class: "text-black-700", content: "保存中 ..." });
+      setOMessage((prev) => ({
+        ...prev,
+        class: "text-black-700",
+        content: "保存中 ...",
+      }));
       let response = await axios.post("/api/image/upload/profile", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -54,9 +61,17 @@ export default function ImageUploader() {
       if (response.data?.error) throw new Error();
       /***************************************** */
       update({ image: response.data.imgUrl, key: response.data.name });
-      setMessage({ class: "text-green-500", content: "保存成功" });
+      setMessage((prev) => ({
+        ...prev,
+        class: "text-green-500",
+        content: "保存成功",
+      }));
     } catch (e) {
-      setMessage({ class: "text-red-700", content: "保存失败" });
+      setMessage((prev) => ({
+        ...prev,
+        class: "text-red-700",
+        content: "保存失败",
+      }));
     } finally {
       setDisableDrag(false);
       setProgress(0);
@@ -78,7 +93,11 @@ export default function ImageUploader() {
       formData.append("image", imageFile);
       formData.append("user", session.user.email);
       formData.append("provider", session.user.provider);
-      setMessage({ class: "text-black-700", content: "保存中 ..." });
+      setOMessage((prev) => ({
+        ...prev,
+        class: "text-black-700",
+        content: "保存中 ...",
+      }));
       let response = await axios.post("/api/image/upload/profile", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -102,9 +121,17 @@ export default function ImageUploader() {
       if (response.data?.error) throw new Error();
       /************************************* */
       update({ image: response.data.imgUrl, key: response.data.name });
-      setMessage({ class: "text-green-500", content: "保存成功" });
+      setMessage((prev) => ({
+        ...prev,
+        class: "text-green-500",
+        content: "保存成功",
+      }));
     } catch (e) {
-      setMessage({ class: "text-red-700", content: "保存失败" });
+      setMessage((prev) => ({
+        ...prev,
+        class: "text-red-700",
+        content: "保存失败",
+      }));
     } finally {
       setDisableDrag(false);
       setProgress(0);
@@ -163,8 +190,8 @@ export default function ImageUploader() {
         </div>
 
         <div className="flex w-full h-[15rem]">
-          <p className={`${message?.class} text-sm font-sans`}>
-            {message?.content || ""}
+          <p className={`${oMessage?.class} text-sm font-sans`}>
+            {oMessage?.content || ""}
           </p>
         </div>
       </div>

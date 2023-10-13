@@ -11,6 +11,10 @@ export default function ProfileCard() {
   const { formData, session } = useContext(Context);
   const [imgSource, setImgSource] = useState(session?.user.image);
 
+  function handleError() {
+    setImgSource("https://placehold.co/80x80.webp");
+  }
+
   useEffect(() => {
     if (session?.user.image != null) setImgSource(session?.user.image);
   }, [session?.user?.image]);
@@ -19,7 +23,8 @@ export default function ProfileCard() {
     <div className="flex flex-col gap-2 items-center bg-slate-200 rounded-lg p-8">
       <div className="flex h-[5rem]">
         <Image
-          src={imgSource ? imgSource : "https://placehold.co/80x80.webp"}
+          src={imgSource}
+          onError={handleError}
           quality={50}
           width={80}
           height={80}

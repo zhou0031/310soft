@@ -3,7 +3,7 @@ import { prisma } from "../../../../../../prismaDB";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function PUT(req:NextRequest){
-    
+
     const {user,path,key} = await req.json()
   
     let updatedUser
