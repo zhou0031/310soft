@@ -23,14 +23,14 @@ export default function ProfileCard() {
     <div className="flex flex-col gap-2 items-center bg-slate-200 rounded-lg p-8">
       <div className="flex h-[5rem]">
         <Image
-          src={imgSource}
+          src={imgSource ? imgSource : "https://placehold.co/80x80.webp"}
           onError={handleError}
           quality={50}
           width={80}
           height={80}
           alt={session?.user.name ? session.user.name : ""}
           style={{ objectFit: "cover" }}
-          className="rounded-full  border-2 border-cyan-50"
+          className="rounded-full  border-2 border-cyan-50 h-auto"
           unoptimized
           priority
         />
