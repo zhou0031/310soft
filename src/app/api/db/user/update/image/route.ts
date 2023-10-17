@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function PUT(req:NextRequest){
 
     const {user,path,key} = await req.json()
-  
+
     let updatedUser
     try{    
         switch(user.provider){
@@ -20,6 +20,7 @@ export async function PUT(req:NextRequest){
             break;
         }
     }catch(e){
+        
         return NextResponse.json({error:true,name:key})
     }
     delete updatedUser['password']
@@ -73,8 +74,10 @@ export async function PUT(req:NextRequest){
             },
         }
     )
+
     return updatedUser
     }catch(e){
+       
         throw e
     }
 }

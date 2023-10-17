@@ -7,6 +7,7 @@ import {
   } from "@aws-sdk/client-s3";
 import { NextRequest, NextResponse } from "next/server";
 import path from "path"
+import axios from "axios";
 
   const S3 = new S3Client({
     region: "auto",
@@ -20,10 +21,10 @@ import path from "path"
   
 export async function POST(req:NextRequest){
   try{
-    const data = await req.formData()   
-    const image:File|null = data.get('image') as unknown as File
-    const imageBuffer=await isValidImage(image)
-    
+    const data = await req?.formData()   
+    const image:File|null = data?.get('image') as unknown as File
+    let imageBuffer=await isValidImage(image)
+        
     const key=path.join('profile',`${cryptoRandomString({ length: 30, type: 'alphanumeric' })}.webp`)
   
     const user=data.get("user").toString()
@@ -59,9 +60,25 @@ async function isValidImage(image){
   if(image.size>MAX_SIZE) throw new Error
 
   const bytes=await image.arrayBuffer()
-  const buffer = Buffer.from(bytes)
+  const buffer = new Uint8Array(bytes)//Buffer.from(bytes)
   const signature=await fileTypeFromBuffer(buffer)
   if(!allowed_types.includes(signature?.mime)) throw new Error
   
   return buffer
+}
+
+async function CF_isAdult(imageBuffer){
+  
+  const AI_MODEL="@cf/microsoft/resnet-50"
+  const URL=path.join(process.env.CLOUDFLARE_AI_URL,process.env.CLOUDFLARE_ACCOUNT_ID,'ai/run',AI_MODEL)
+  
+  const response= await axios.post(URL,imageBuffer,
+  {
+    headers:{
+      "Authorization": `Bearer ${process.env.CLOUDFLARE_AI_TOKEN}`,
+      "Content-Type": 'application/x-www-form-urlencoded'
+    }
+  })
+  
+  console.log(response.data)
 }

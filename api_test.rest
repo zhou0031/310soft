@@ -4,3 +4,22 @@ Content-Type: application/json
 {
     email:"ryan.z.williams@gmail.com"
 }
+###
+
+curl -X POST "https:/api.cloudflare.com/client/v4/accounts/50735a4fcbf863170a565880ad8781a6/ai/run/@cf/meta/llama-2-7b-chat-int8" \
+     -H "Authorization: Bearer qraJu6Bl0e9URSi53z5EM-4WHnRZhu4aGH6IZPIu" \
+     -d '{"message":[{"role":"system","content":"assistant"},{"role":"user","content":"who am I?"}]}'
+
+###
+
+curl -X POST \
+  https://api.cloudflare.com/client/v4/accounts/50735a4fcbf863170a565880ad8781a6/ai/run/@cf/meta/llama-2-7b-chat-int8 \
+  -H "Authorization: Bearer TuDwSkmIDdyetmVI019pF4Wbf1o__-pwX_zK8-2N" \
+  -d '{"messages":[{"role":"system","content":"You are a friendly assistant that helps write stories"},{"role":"user","content":"Write a short story about a llama that goes on a journey to find an orange cloud "}]}'
+
+###
+curl https://api.cloudflare.com/client/v4/accounts/50735a4fcbf863170a565880ad8781a6/ai/run/@cf/microsoft/resnet-50 \
+    -X POST \
+    -H "Authorization: Bearer TuDwSkmIDdyetmVI019pF4Wbf1o__-pwX_zK8-2N" \
+    --data-binary @orange-llama.png
+
