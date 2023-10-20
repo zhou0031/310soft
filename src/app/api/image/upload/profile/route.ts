@@ -70,7 +70,7 @@ async function isValidImage(image){
 async function CF_isAdult(imageBuffer){
   
   const AI_MODEL="@cf/microsoft/resnet-50"
-  const URL=path.join(process.env.CLOUDFLARE_AI_URL,process.env.CLOUDFLARE_ACCOUNT_ID,'ai/run',AI_MODEL)
+  const URL=path.join(process.env.CLOUDFLARE_AI_BASEURL,process.env.CLOUDFLARE_ACCOUNT_ID,'ai/run',AI_MODEL)
   
   const response= await axios.post(URL,imageBuffer,
   {

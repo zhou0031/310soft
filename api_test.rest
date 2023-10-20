@@ -6,20 +6,12 @@ Content-Type: application/json
 }
 ###
 
-curl -X POST "https:/api.cloudflare.com/client/v4/accounts/50735a4fcbf863170a565880ad8781a6/ai/run/@cf/meta/llama-2-7b-chat-int8" \
-     -H "Authorization: Bearer qraJu6Bl0e9URSi53z5EM-4WHnRZhu4aGH6IZPIu" \
-     -d '{"message":[{"role":"system","content":"assistant"},{"role":"user","content":"who am I?"}]}'
 
-###
 
 curl -X POST \
   https://api.cloudflare.com/client/v4/accounts/50735a4fcbf863170a565880ad8781a6/ai/run/@cf/meta/llama-2-7b-chat-int8 \
-  -H "Authorization: Bearer TuDwSkmIDdyetmVI019pF4Wbf1o__-pwX_zK8-2N" \
-  -d '{"messages":[{"role":"system","content":"You are a friendly assistant that helps write stories"},{"role":"user","content":"Write a short story about a llama that goes on a journey to find an orange cloud "}]}'
+  -H "Authorization: Bearer BkPOk75ZY6ZC51VIrtoNuFfJLEuousXpPK4kSlqx" \
+  -d '{"messages":[{"role":"system","content":"which place is mostly mentioned? provide your response in JSON format"},{"role":"user","content":"在哈马斯袭击超过20个以色列乡村社区和军事基地，杀死超过1300人并将150人绑架至加沙九天后，以色列举国坐立不安以色列人咬牙切齿，决意要进行这场在10月7日袭击后被普遍认为已经别无选择的战争，官方称那是以色列建国75年来——也是犹太大屠杀以来——犹太人死难最惨重的一天。他们在等待即将开始的地面进攻，入侵由哈马斯控制的巴勒斯坦飞地，尽管与黎巴嫩的北部边境气氛日趋紧张意味着可能需要在多个战线爆发漫长而惨烈的冲突"}]}'
 
-###
-curl https://api.cloudflare.com/client/v4/accounts/50735a4fcbf863170a565880ad8781a6/ai/run/@cf/microsoft/resnet-50 \
-    -X POST \
-    -H "Authorization: Bearer TuDwSkmIDdyetmVI019pF4Wbf1o__-pwX_zK8-2N" \
-    --data-binary @orange-llama.png
+
 
