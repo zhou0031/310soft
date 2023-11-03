@@ -36,4 +36,4 @@ next-env.d.ts
 
 .env
 
-.api_test.rest
+api_test.rest
