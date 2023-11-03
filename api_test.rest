@@ -1,17 +1,15 @@
 POST http://localhost:3000/api/cloudflare/verify HTTP/1.1
 Content-Type: application/json
-
 {
     email:"ryan.z.williams@gmail.com"
 }
 ###
 
-
-
 curl -X POST \
   https://api.cloudflare.com/client/v4/accounts/50735a4fcbf863170a565880ad8781a6/ai/run/@cf/meta/llama-2-7b-chat-int8 \
   -H "Authorization: Bearer BkPOk75ZY6ZC51VIrtoNuFfJLEuousXpPK4kSlqx" \
-  -d '{"messages":[{"role":"system","content":"which place is mostly mentioned? provide your response in JSON format"},{"role":"user","content":"在哈马斯袭击超过20个以色列乡村社区和军事基地，杀死超过1300人并将150人绑架至加沙九天后，以色列举国坐立不安以色列人咬牙切齿，决意要进行这场在10月7日袭击后被普遍认为已经别无选择的战争，官方称那是以色列建国75年来——也是犹太大屠杀以来——犹太人死难最惨重的一天。他们在等待即将开始的地面进攻，入侵由哈马斯控制的巴勒斯坦飞地，尽管与黎巴嫩的北部边境气氛日趋紧张意味着可能需要在多个战线爆发漫长而惨烈的冲突"}]}'
+  -H "Content-Type: application/json" \
+  -d '{"messages":[{"role":"user","content":"tell me the city name in the following content in 2 words"},{"role":"user","content":"在中国最高级别的女性政治会议上，人们看到和听到的大多是男性。国家领导人习近平坐在中国妇女第十三次全国代表大会开幕式主席台的正中央。中共党报第二天在头版刊登了他出席妇女大会的特写照片。大会本周一闭幕时，习近平坐在大型圆桌的上首对全国妇联新一届领导班子成员发表讲话。“要积极培育新型婚育文化”，习近平在讲话中说。他还表示，中共官员有责任“加强对年轻人婚恋观、生育观、家庭观的引导”。每五年举行一次的中国妇女全国代表大会长期以来一直是执政的中共向女性展示承诺的平台。虽然这个姿态主要是象征性的，但今年比以往任何时候都更能说明问题，中共的最高权力机构中20年来第一次没有女性成员。值得注意的是官员们已在淡化性别平等问题，而是将注意力放在用妇女大会来推行习近平为中国女性设立的目标上：结婚生子。以前，官员们曾触及女性在家庭和劳动大军中的作用。但在今年的讲话中，习近平没有提职场女性。中共迫切需要女性生更多孩子。由于出生率大幅下降，中国已陷入一场人口危机，人口自20世纪60年代以来首次出现了萎缩。当局正在想方设法扭转被专家们称为不可逆转的趋势，尝试了一个又一个方案，例如为鼓励生育发放现金、提供税收优惠。在人口危机、经济发展放缓，以及当局认为的女权主义执拗增长面前，中共的选择是把女性推回家庭，叫她们养儿育女、照管老人。用习近平的话说，这项工作“是中国式现代化的重要内容”。"}]}'
 
-
-
+###
+GET https://api.geoapify.com/v1/geocode/search?text=Yangtze River&apiKey=3988cb535943419589b986c45dcee8d1

@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 
 export default function News({ setNewsLocation }) {
   const newsLocations = [
-    { position: [24.796708, 176.277178], country: "China P.R" },
+    { position: [31.2323437, 121.4691024], country: "China P.R" },
     { position: [43.285203, 268.43397], country: "USA" },
     { position: [27.945886, 40.469359], country: "Africa" },
   ];
@@ -29,13 +29,10 @@ export default function News({ setNewsLocation }) {
 
   return (
     <>
-      <div className="flex gap-3 ">
+      <div className="flex gap-2 ">
         <div className="flex-none">新闻:</div>
         <div className="whitespace-nowrap font-thin text-ellipsis overflow-hidden">
-          中国正经历人才流失，美国并非理想目的地
-        </div>
-        <div className="whitespace-nowrap font-thin text-ellipsis overflow-hidden">
-          他们毕业于中国和西方的顶尖大学，曾在北京、上海、深圳过着中产阶级生活，为处于中美技术竞争中心的科技企业工作。
+          对于接下来的形势必须有一个共识，”拜登总统上周在谈到以色列与哈马斯之间的战争时表示。们的言论乍看上去像是一种倒退，
         </div>
       </div>
     </>
