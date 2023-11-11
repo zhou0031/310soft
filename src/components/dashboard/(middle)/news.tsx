@@ -21,8 +21,8 @@ export default function News({ setNewsLocation }) {
 
       socket.onmessage = async (e) => {
         const json = await JSON.parse(e.data);
-        setNewsLocation({ place: json.place, position: json.coordinates });
-        setContent((prevContent) => json.news.content);
+        setNewsLocation({ place: json?.place, position: json?.coordinates });
+        setContent((prevContent) => json?.news.content);
       };
 
       socket.onerror = (error) => {
