@@ -1,9 +1,10 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 
 export default function News({ setNewsLocation }) {
   const { status } = useSession();
+  const [content, setContent] = useState("");
 
   useEffect(() => {
     if (status === "authenticated") {
@@ -18,8 +19,10 @@ export default function News({ setNewsLocation }) {
         );
       };
 
-      socket.onmessage = (e) => {
-        console.log(e.data);
+      socket.onmessage = async (e) => {
+        const json = await JSON.parse(e.data);
+        setNewsLocation({ place: json.place, position: json.coordinates });
+        setContent((prevContent) => json.news.content);
       };
 
       socket.onerror = (error) => {
@@ -34,13 +37,16 @@ export default function News({ setNewsLocation }) {
         socket.close();
       };
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
 
   return (
     <>
       <div className="flex gap-2 ">
-        <div className="flex-none">新闻:</div>
-        <div className="whitespace-nowrap font-thin text-ellipsis overflow-hidden"></div>
+        <div className="flex-none font-bold">新闻:</div>
+        <div className="whitespace-nowrap font-normal text-ellipsis overflow-hidden">
+          {content}
+        </div>
       </div>
     </>
   );

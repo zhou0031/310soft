@@ -12,7 +12,7 @@ const OpenStreetMap = dynamic(
 function Dashboard() {
   const [newsLocation, setNewsLocation] = useState({
     place: "",
-    position: "",
+    position: null,
   });
 
   return (
