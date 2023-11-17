@@ -18,7 +18,7 @@ export default function OpenStreetMap({ newsLocation }) {
         doubleClickZoom={false}
         attributionControl={false}
       >
-        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+        <TileLayer url="https://map.310soft.com/{z}/{x}/{y}.png" />
         {newsLocation.position && (
           <CircleMarker
             center={newsLocation.position}
