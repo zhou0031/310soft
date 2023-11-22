@@ -1,8 +1,6 @@
 "use client";
 import dynamic from "next/dynamic";
-import { useState } from "react";
 import Welcome from "../../../components/dashboard/(middle)/welcome";
-import News from "../../../components/dashboard/(middle)/news";
 
 const OpenStreetMap = dynamic(
   () => import("../../../components/dashboard/(middle)/openstreetmap"),
@@ -10,17 +8,10 @@ const OpenStreetMap = dynamic(
 );
 
 function Dashboard() {
-  const [newsLocation, setNewsLocation] = useState({
-    place: "",
-    position: null,
-  });
-
   return (
     <>
       <div className="flex flex-col">
         <Welcome />
-        <OpenStreetMap newsLocation={newsLocation} />
-        <News setNewsLocation={setNewsLocation} />
       </div>
     </>
   );

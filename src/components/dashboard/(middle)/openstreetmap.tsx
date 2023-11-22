@@ -1,7 +1,6 @@
 "use client";
 import "leaflet/dist/leaflet.css";
 import "/public/openstreetmap/style.css";
-
 import { MapContainer, TileLayer, CircleMarker } from "react-leaflet";
 
 export default function OpenStreetMap({ newsLocation }) {
@@ -18,7 +17,9 @@ export default function OpenStreetMap({ newsLocation }) {
         doubleClickZoom={false}
         attributionControl={false}
       >
-        <TileLayer url="https://map.310soft.com/{z}/{x}/{y}.png" />
+        <TileLayer
+          url={`https://image.310soft.com/?url=https://tile.openstreetmap.org/{z}/{x}/{y}.png`}
+        />
         {newsLocation.position && (
           <CircleMarker
             center={newsLocation.position}
