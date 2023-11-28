@@ -1,3 +1,11 @@
+import NewsLayout from "./(user)/news/layout";
+import News from "./(user)/news/page";
 export default function Home() {
-  return <>Home</>;
+  return (
+    <>
+      <NewsLayout>
+        <News />
+      </NewsLayout>
+    </>
+  );
 }
