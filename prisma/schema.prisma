@@ -93,3 +93,22 @@ enum Role {
   USER
   ADMIN
 }
+
+model News {
+  id           String    @id @default(uuid())
+  title        String
+  content      String
+  published_at DateTime
+  photos       String[]
+  publisher    Publisher @relation(fields: [publisherId], references: [id])
+  publisherId  Int       @unique
+
+  @@index([title], name: "index_title")
+}
+
+model Publisher {
+  id      Int     @id @default(autoincrement())
+  name    String
+  contact String?
+  news    News?
+}
