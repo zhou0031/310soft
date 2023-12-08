@@ -101,7 +101,7 @@ model News {
   published_at DateTime
   photos       String[]
   publisher    Publisher @relation(fields: [publisherId], references: [id])
-  publisherId  Int       @unique
+  publisherId  Int
 
   @@index([title], name: "index_title")
 }
@@ -110,5 +110,5 @@ model Publisher {
   id      Int     @id @default(autoincrement())
   name    String
   contact String?
-  news    News?
+  news    News[]
 }
