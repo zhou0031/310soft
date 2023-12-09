@@ -10,6 +10,9 @@ npx prisma migrate dev --name init
 npx prisma generate
 
 
+npx prisma migrate save --name add_index_content
+npx prisma migrate up
+
 
 openssl rand -base64 32
 
