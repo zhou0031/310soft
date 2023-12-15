@@ -3,9 +3,7 @@ import News from "./(user)/news/page";
 export default function Home() {
   return (
     <>
-      <NewsLayout>
-        <News />
-      </NewsLayout>
+      <News />
     </>
   );
 }

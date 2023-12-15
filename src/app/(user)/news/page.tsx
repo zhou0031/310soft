@@ -1,30 +1,39 @@
 import Link from "next/link";
-import axios from "axios";
+import { prisma } from "../../../prismaDB";
+import NewsLayout from "./layout";
 
-async function getToken() {
-  const respons = await axios.get("https://token.310soft.com/getToken");
-  return respons.data;
-}
-
-export async function getNews() {
-  const news_token = await getToken();
-  const response = await axios.get("https://cfnews.310soft.com/latestNews", {
-    headers: { Authorization: `Bearer ${news_token}` },
+async function getNews() {
+  const news = await prisma.news.findMany({
+    orderBy: {
+      published_at: "desc",
+    },
+    take: 10,
+    include: {
+      publisher: {
+        select: {
+          name: true,
+        },
+      },
+    },
   });
-  return response.data;
+  return news;
 }
 
 export default async function News() {
   const news = await getNews();
   return (
     <>
-      <ul>
-        {news.map((p) => (
-          <li key={p.news_id}>
-            <Link href={`/news/${p.news_id}`}>{p.title}</Link>
-          </li>
-        ))}
-      </ul>
+      <NewsLayout>
+        <ul>
+          {news.map((p) => (
+            <li key={p.id}>
+              <Link href={`/news/${p.id}`}>
+                {p.title}-{p.published_at.toDateString()}-{p.publisher.name}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </NewsLayout>
     </>
   );
 }
