@@ -9,13 +9,13 @@ export default function newsCard(news) {
 
   return (
     <>
-      <div className="w-48 h-fit bg-white border border-gray-200 rounded-lg shadow">
+      <div className="w-52 h-fit bg-white border border-gray-200 rounded-lg shadow">
         <Link href={`/news/${news.id}`}>
           {obj && (
             <Image
               src={`https://image.310soft.com?url=${obj.src}`}
-              width={350}
-              height={250}
+              width={150}
+              height={100}
               alt={obj.alt}
             />
           )}
@@ -26,9 +26,18 @@ export default function newsCard(news) {
               {news.title}
             </h5>
           </Link>
-          <p className="mb-3 text-sm text-gray-400 whitespace-nowrap text-ellipsis overflow-hidden">
-            {news.content}
+          <p className="mb-3 text-sm text-gray-400">
+            {news.content.toString().slice(0, 50)}
           </p>
+          <time
+            className="text-xs text-gray-500"
+            dateTime={`${news.published_at}`}
+          >
+            {news.published_at.toLocaleString("zh-CN", {
+              month: "long",
+              day: "numeric",
+            })}
+          </time>
         </div>
       </div>
     </>
