@@ -31,6 +31,12 @@ const nextConfig = {
                 hostname:'r2.310soft.com',
                 port:'',
                 pathname:'/**'
+            },
+            {
+                protocol:'https',
+                hostname:'image.310soft.com',
+                port:'',
+                pathname:'/**'
             }
         ]
     },
