@@ -1,5 +1,5 @@
-import NewsLayout from "./(user)/news/layout";
-import News from "./(user)/news/page";
+import NewsLayout from "./(public)/news/layout";
+import News from "./(public)/news/page";
 export default function Home() {
   return (
     <>

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 
-export default function newsCard(news) {
+export default function NewsCard(news) {
   let obj;
   if (typeof news.photos[0] !== "undefined") {
     obj = JSON.parse(news.photos[0]);

@@ -1,7 +1,6 @@
-import Link from "next/link";
 import { prisma } from "../../../prismaDB";
 import NewsLayout from "./layout";
-import newsCard from "./newCard";
+import NewsCard from "./newCard";
 
 async function getNews() {
   const news = await prisma.news.findMany({
@@ -24,7 +23,11 @@ export default async function News() {
   const news = await getNews();
   return (
     <>
-      <NewsLayout>{news.map((p) => newsCard(p))}</NewsLayout>
+      <NewsLayout>
+        {news.map((p) => (
+          <NewsCard key={p.id} {...p} />
+        ))}
+      </NewsLayout>
     </>
   );
 }
