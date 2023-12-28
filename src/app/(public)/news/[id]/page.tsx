@@ -10,5 +10,9 @@ async function getNewsById(id) {
 export default async function Page({ params }) {
   const { id } = params;
   const data = await getNewsById(id);
-  return <>{data.content}</>;
+  return (
+    <>
+      <div className="">{data.content}</div>
+    </>
+  );
 }

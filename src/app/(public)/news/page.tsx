@@ -1,13 +1,13 @@
 import { prisma } from "../../../prismaDB";
 import NewsLayout from "./layout";
-import NewsCard from "./newCard";
+import NewsCard from "./newsCard";
 
 async function getNews() {
   const news = await prisma.news.findMany({
     orderBy: {
       published_at: "desc",
     },
-    take: 10,
+    take: 14,
     include: {
       publisher: {
         select: {
