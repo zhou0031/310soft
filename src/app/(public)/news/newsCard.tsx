@@ -4,17 +4,22 @@ import styles from "../../../../styles/scrollbar.module.css";
 
 export default function NewsCard(news) {
   let obj;
-  if (typeof news.photos[0] !== "undefined") {
-    obj = JSON.parse(news.photos[0]);
+  if (typeof news.photos !== "undefined" && news.photos.length > 0) {
+    for (let i = 0; i < news.photos.length; i++) {
+      const photoObj = JSON.parse(news.photos[i]);
+      if (photoObj.src) {
+        obj = photoObj;
+        break;
+      }
+    }
   }
-
   return (
     <>
       <div
         className={`w-52 h-96 bg-white border border-gray-200 rounded-lg shadow overflow-auto ${styles["my-custom-scrollbar"]}`}
       >
         <Link href={`/news/${news.id}`}>
-          {obj && (
+          {obj?.src && (
             <Image
               src={`https://image.310soft.com?url=${obj.src}`}
               width={150}
