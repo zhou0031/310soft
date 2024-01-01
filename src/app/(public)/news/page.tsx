@@ -1,25 +1,26 @@
-import { prisma } from "../../../prismaDB";
 import NewsCard from "./newsCard";
+import { prisma } from "../../../prismaDB";
 
 async function getNews() {
-  const news = await prisma.news.findMany({
-    orderBy: {
-      published_at: "desc",
-    },
-    take: 14,
-    include: {
-      publisher: {
-        select: {
-          name: true,
-        },
-      },
-    },
-  });
-  return news;
+  try {
+    const response = await fetch("http://127.0.0.1:3000/api/news", {
+      //cache: "force-cache", //SSG-Static Site Generation
+      cache: "no-store", //SSR-Server Side Rendering
+      /*
+      next: {
+        revalidate: 10, //ISR-Incremental Static Rengenration
+      },*/
+    });
+
+    return await response.json();
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 export default async function News() {
   const news = await getNews();
+
   return (
     <>
       {news.map((p) => (

@@ -42,7 +42,8 @@ export default function NewsCard(news) {
             className="text-xs text-gray-500"
             dateTime={`${news.published_at}`}
           >
-            {news.published_at.toLocaleString("zh-CN", {
+            {new Date(news.published_at).toLocaleString("zh-CN", {
+              year: "numeric",
               month: "long",
               day: "numeric",
             })}
