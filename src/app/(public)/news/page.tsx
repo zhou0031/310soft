@@ -1,5 +1,4 @@
 import NewsCard from "./newsCard";
-import { prisma } from "../../../prismaDB";
 
 async function getNews() {
   try {
