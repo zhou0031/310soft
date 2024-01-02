@@ -4,11 +4,11 @@ async function getNews() {
   try {
     const response = await fetch("http://127.0.0.1:3000/api/news", {
       //cache: "force-cache", //SSG-Static Site Generation
-      cache: "no-store", //SSR-Server Side Rendering
-      /*
+      //cache: "no-store", //SSR-Server Side Rendering
+
       next: {
-        revalidate: 10, //ISR-Incremental Static Rengenration
-      },*/
+        revalidate: 20, //ISR-Incremental Static Rengenration
+      },
     });
 
     return await response.json();
