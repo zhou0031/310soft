@@ -9,7 +9,7 @@ async function getNews() {
       //cache: "force-cache", //SSG-Static Site Generation
       //cache: "no-store", //SSR-Server Side Rendering
       next: {
-        revalidate: 10, //ISR-Incremental Static Rengenration
+        revalidate: 20, //ISR-Incremental Static Rengenration
       },
     });
 
