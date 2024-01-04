@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import styles from "../../../../styles/scrollbar.module.css";
+import styles from "../../../styles/scrollbar.module.css";
 
 export default function NewsCard(news) {
   let obj;

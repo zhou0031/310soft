@@ -1,13 +1,15 @@
-import NewsCard from "./newsCard";
+import NewsCard from "../../../components/news/newsCard";
+
+export const dynamic = "force-dynamic";
 
 async function getNews() {
   try {
-    const response = await fetch("http://127.0.0.1:3000/api/news", {
+    const response = await fetch("http://localhost:3000/api/news", {
+      method: "PUT",
       //cache: "force-cache", //SSG-Static Site Generation
       //cache: "no-store", //SSR-Server Side Rendering
-
       next: {
-        revalidate: 20, //ISR-Incremental Static Rengenration
+        revalidate: 10, //ISR-Incremental Static Rengenration
       },
     });
 
@@ -18,13 +20,8 @@ async function getNews() {
 }
 
 export default async function News() {
-  const news = await getNews();
+  const response = await getNews();
+  const news = response?.body?.data;
 
-  return (
-    <>
-      {news.map((p) => (
-        <NewsCard key={p.id} {...p} />
-      ))}
-    </>
-  );
+  return <>{news && news.map((p) => <NewsCard key={p.id} {...p} />)}</>;
 }
