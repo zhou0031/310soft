@@ -2,6 +2,21 @@ import NewsCard from "../../../components/news/newsCard";
 
 export const dynamic = "force-dynamic";
 
+export async function generateStaticParams() {
+  const response = await fetch("http://localhost:3000/api/news", {
+    method: "PUT",
+  });
+  const json = await response.json();
+  const news = json?.body?.data;
+
+  return (
+    news &&
+    news.map((i) => ({
+      id: i.id,
+    }))
+  );
+}
+
 async function getNews() {
   try {
     const response = await fetch("http://localhost:3000/api/news", {
@@ -9,7 +24,7 @@ async function getNews() {
       //cache: "force-cache", //SSG-Static Site Generation
       //cache: "no-store", //SSR-Server Side Rendering
       next: {
-        revalidate: 20, //ISR-Incremental Static Rengenration
+        revalidate: 300, //ISR-Incremental Static Rengenration
       },
     });
 
