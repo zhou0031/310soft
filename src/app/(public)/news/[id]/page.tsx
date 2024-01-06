@@ -1,8 +1,23 @@
 import { NextResponse } from "next/server";
 import { prisma } from "../../../../prismaDB";
 
+export async function generateStaticParams() {
+  const response = await fetch("http://localhost:3000/api/news", {
+    method: "PUT",
+  });
+  const json = await response.json();
+  const news = json?.body?.data;
+
+  return (
+    news &&
+    news.map((i) => ({
+      id: i.id,
+    }))
+  );
+}
+
 async function getNewsById(id) {
-  "use server";
+  ("use server");
   try {
     const response = await prisma.news.findUnique({
       where: { id: id },

@@ -2,21 +2,6 @@ import NewsCard from "../../../components/news/newsCard";
 
 export const dynamic = "force-dynamic";
 
-export async function generateStaticParams() {
-  const response = await fetch("http://localhost:3000/api/news", {
-    method: "PUT",
-  });
-  const json = await response.json();
-  const news = json?.body?.data;
-
-  return (
-    news &&
-    news.map((i) => ({
-      id: i.id,
-    }))
-  );
-}
-
 async function getNews() {
   try {
     const response = await fetch("http://localhost:3000/api/news", {
