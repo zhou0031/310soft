@@ -49,7 +49,26 @@ export default async function Page({ params }) {
   const news = json?.body?.data;
   return (
     <>
-      <div className="">{JSON.stringify(news)}</div>
+      <div className="w-full flex justify-center">
+        <div className="w-1/3  flex flex-col ">
+          <h1 className="text-3xl font-semibold">{news.title}</h1>
+          <time className="my-3 text-slate-500" dateTime={news.published_at}>
+            {new Date(news.published_at).toLocaleString("zh-CN", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
+          </time>
+
+          <div>
+            {news.content.map((p, index) => (
+              <p key={index} className="my-3">
+                {p}
+              </p>
+            ))}
+          </div>
+        </div>
+      </div>
     </>
   );
 }
