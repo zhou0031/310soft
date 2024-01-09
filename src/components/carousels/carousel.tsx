@@ -5,7 +5,17 @@ export default function Carousel({ images }) {
     <>
       {images.map((img, index) => {
         const obj = JSON.parse(img);
-        return <p key={index}>{obj.src}</p>;
+        return (
+          <Image
+            key={index}
+            loading="lazy"
+            src={`https://image.310soft.com?url=${obj.src}`}
+            alt={obj.alt}
+            height={1000}
+            width={1000}
+            className="w-full"
+          />
+        );
       })}
     </>
   );

@@ -60,7 +60,7 @@ export default async function Page({ params }) {
               day: "numeric",
             })}
           </time>
-          <Carousel images={news.photos} />
+          {news.photos && <Carousel images={news.photos} />}
           <div>
             {news.content.map((p, index) => (
               <p key={index} className="my-3">
