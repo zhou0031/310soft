@@ -50,20 +50,20 @@ export default async function Page({ params }) {
   const news = json?.body?.data;
   return (
     <>
-      <div className="flex justify-evenly">
+      <div className="flex justify-evenly p-5">
         <div className="w-1/3 flex flex-col items-center max-lg:hidden">
           asdasdsa
         </div>
-        <div className="w-1/3  flex flex-col ">
-          <h1 className="text-3xl font-semibold">{news.title}</h1>
-          <time className="my-3 text-slate-500" dateTime={news.published_at}>
-            {new Date(news.published_at).toLocaleString("zh-CN", {
+        <div className="w-1/3 flex flex-col max-lg:w-full">
+          <h1 className="text-3xl font-semibold">{news?.title}</h1>
+          <time className="my-3 text-slate-500" dateTime={news?.published_at}>
+            {new Date(news?.published_at).toLocaleString("zh-CN", {
               year: "numeric",
               month: "long",
               day: "numeric",
             })}
           </time>
-          {news.photos && <Carousel images={news.photos} />}
+          {news.photos && <Carousel images={news?.photos} />}
           <div>
             {news.content.map((p, index) => (
               <p key={index} className="my-3">
