@@ -13,7 +13,7 @@ export default function Carousel({ images }) {
             alt={obj.alt}
             height={1000}
             width={1000}
-            className="w-fit h-fit"
+            className="w-full"
           />
         );
       })}
