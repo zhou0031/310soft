@@ -50,7 +50,10 @@ export default async function Page({ params }) {
   const news = json?.body?.data;
   return (
     <>
-      <div className="w-full flex justify-center">
+      <div className="flex justify-evenly">
+        <div className="w-1/3 flex flex-col items-center max-lg:hidden">
+          asdasdsa
+        </div>
         <div className="w-1/3  flex flex-col ">
           <h1 className="text-3xl font-semibold">{news.title}</h1>
           <time className="my-3 text-slate-500" dateTime={news.published_at}>
@@ -68,6 +71,9 @@ export default async function Page({ params }) {
               </p>
             ))}
           </div>
+        </div>
+        <div className="w-1/3 flex flex-col items-center max-lg:hidden">
+          commenting section
         </div>
       </div>
     </>

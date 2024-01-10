@@ -24,7 +24,7 @@ export default function NewsCard(news) {
               src={`https://image.310soft.com?url=${obj.src}`}
               width={150}
               height={100}
-              className="w-full "
+              className="w-full"
               alt={obj.alt}
             />
           )}
