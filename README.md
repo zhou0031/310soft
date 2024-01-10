@@ -17,7 +17,6 @@ npx prisma migrate up
 openssl rand -base64 32
 
 
-
-ln -s ~/Desktop/images/profile/ /public/images/profile
+ln -s /mnt/disk1/Cache .next/cache
 
 npm i next@latest react@latest react-dom@latest eslint-config-next@latest
