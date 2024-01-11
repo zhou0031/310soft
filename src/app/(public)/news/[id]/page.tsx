@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "../../../../prismaDB";
-import Carousel from "../../../../components/carousels/carousel";
+import Slide from "../../../../components/slide/slide";
 
 export async function generateStaticParams() {
   const response = await fetch("http://localhost:3000/api/news", {
@@ -64,10 +64,10 @@ export default async function Page({ params }) {
             })}
           </time>
 
-          {news?.photos && <Carousel images={news?.photos} />}
+          {news?.photos && <Slide images={news?.photos} />}
 
           <div>
-            {news.content.map((p, index) => (
+            {news?.content.map((p, index) => (
               <p key={index} className="my-3">
                 {p}
               </p>
