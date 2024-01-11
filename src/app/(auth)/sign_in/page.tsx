@@ -92,64 +92,65 @@ export default function Index() {
         async
         defer
       ></Script>
+      <div className="h-screen flex items-center">
+        <div className="flex flex-col items-center max-w-fit p-10 bg-gray-200">
+          <header>
+            <h1 className="text-2xl mb-2">登陆</h1>
+          </header>
+          <GoPerson size={100} />
+          <div className="flex flex-col gap-2">
+            <form className="flex flex-col gap-3" ref={formRef}>
+              <Email
+                email={email}
+                onChange={(e: any) => setEmail(e.currentTarget.value)}
+              />
+              <Password
+                password={password}
+                onChange={(e: any) => setPassword(e.currentTarget.value)}
+              />
 
-      <div className="flex flex-col items-center max-w-fit mx-auto m-auto p-10 bg-gray-200">
-        <header>
-          <h1 className="text-2xl mb-2">登陆</h1>
-        </header>
-        <GoPerson size={100} />
-        <div className="flex flex-col gap-2">
-          <form className="flex flex-col gap-3" ref={formRef}>
-            <Email
-              email={email}
-              onChange={(e: any) => setEmail(e.currentTarget.value)}
-            />
-            <Password
-              password={password}
-              onChange={(e: any) => setPassword(e.currentTarget.value)}
-            />
+              <div
+                className="cf-turnstile"
+                data-sitekey={process.env.CLOUDFLARE_SITE}
+                data-theme="light"
+                data-language="zh-cn"
+              ></div>
 
-            <div
-              className="cf-turnstile"
-              data-sitekey={process.env.CLOUDFLARE_SITE}
-              data-theme="light"
-              data-language="zh-cn"
-            ></div>
+              <button
+                disabled={disabled}
+                onClick={(e) => {
+                  handleSignIn(e, email, password);
+                }}
+                type="submit"
+                className="w-full font-sans bg-slate-500 hover:bg-slate-400 text-white font-thin py-1 px-4 rounded"
+              >
+                登入
+              </button>
+              <div id="error" className="text-red-700 font-medium">
+                {errorMessage}
+              </div>
+            </form>
 
-            <button
-              disabled={disabled}
-              onClick={(e) => {
-                handleSignIn(e, email, password);
-              }}
-              type="submit"
-              className="w-full font-sans bg-slate-500 hover:bg-slate-400 text-white font-thin py-1 px-4 rounded"
+            <Link
+              href="#"
+              className="flex justify-end font-sans font-extralight text-slate-700"
             >
-              登入
-            </button>
-            <div id="error" className="text-red-700 font-medium">
-              {errorMessage}
-            </div>
-          </form>
+              忘记密码?
+            </Link>
+
+            <hr className="h-px border-0 dark:bg-gray-400"></hr>
+
+            <Google />
+            <Facebook />
+          </div>
 
           <Link
-            href="#"
-            className="flex justify-end font-sans font-extralight text-slate-700"
+            href="/sign_up"
+            className="mt-10 font-sans font-extralight text-slate-700"
           >
-            忘记密码?
+            创建账户
           </Link>
-
-          <hr className="h-px border-0 dark:bg-gray-400"></hr>
-
-          <Google />
-          <Facebook />
         </div>
-
-        <Link
-          href="/sign_up"
-          className="mt-10 font-sans font-extralight text-slate-700"
-        >
-          创建账户
-        </Link>
       </div>
     </>
   );
