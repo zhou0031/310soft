@@ -64,7 +64,7 @@ export default async function Page({ params }) {
             })}
           </time>
 
-          {news?.photos && <Slide images={news?.photos} />}
+          {news?.photos.length > 0 && <Slide images={news?.photos} />}
 
           <div>
             {news?.content.map((p, index) => (
