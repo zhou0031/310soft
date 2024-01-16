@@ -67,7 +67,7 @@ export default async function Page({ params }) {
 
           {news?.photos.length > 0 && <Slide images={news?.photos} />}
 
-          <div className="min-w-96">
+          <div>
             {news?.content.map((p, index) => (
               <p key={index} className="my-3">
                 {p}
