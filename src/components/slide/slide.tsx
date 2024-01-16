@@ -18,6 +18,7 @@ export default function Slide({ images }) {
                 alt={obj.alt}
                 height={800}
                 width={600}
+                style={{ objectFit: "contain" }}
                 className="w-fit h-96"
               />
             </SplideSlide>
