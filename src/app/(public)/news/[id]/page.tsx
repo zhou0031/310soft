@@ -50,7 +50,7 @@ export default async function Page({ params }) {
   const news = json?.body?.data;
   return (
     <>
-      <div className="flex p-5">
+      <div className="flex p-5 gap-5">
         <div className="w-1/3 flex flex-col items-center max-lg:hidden">
           asdasdsa
         </div>
@@ -75,6 +75,7 @@ export default async function Page({ params }) {
             ))}
           </div>
         </div>
+
         <div className="w-1/3 flex flex-col items-center max-lg:hidden">
           commenting section
         </div>
