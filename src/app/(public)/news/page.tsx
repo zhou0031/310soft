@@ -1,4 +1,5 @@
 import NewsCard from "../../../components/news/newsCard";
+import NewsScroll from "../../../components/news/newsScroll";
 
 export const dynamic = "force-dynamic";
 
@@ -28,6 +29,7 @@ export default async function News() {
       <div className="flex flex-wrap justify-between min-w-[100rem] max-w-[100rem] gap-2 p-5">
         {news && news.map((p) => <NewsCard key={p.id} {...p} />)}
       </div>
+      <NewsScroll />
     </>
   );
 }
