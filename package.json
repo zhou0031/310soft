@@ -23,7 +23,6 @@
     "eslint": "8.43.0",
     "eslint-config-next": "^13.4.19",
     "file-type": "^18.5.0",
-    "git": "^0.1.5",
     "jose": "^4.14.4",
     "jsonwebtoken": "^9.0.2",
     "lodash.debounce": "^4.0.8",
