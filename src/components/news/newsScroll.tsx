@@ -1,4 +1,5 @@
 "use client";
+import debounce from "lodash.debounce";
 import NewsCard from "./newsCard";
 import axios from "axios";
 import { useState, useEffect, useRef } from "react";
@@ -24,30 +25,37 @@ export default function NewsScroll() {
   }, [page]);
 
   const handleScroll = () => {
-    const scrollPosition = window.innerHeight + window.scrollY;
+    const scrollPosition = window.scrollY;
+    const windowHeight = window.innerHeight;
     const documentHeight = document.body.scrollHeight;
-    if (
-      scrollPosition >= documentHeight &&
-      scrollPosition + window.innerHeight >= documentHeight
-    ) {
+    if (scrollPosition + windowHeight >= documentHeight && scrollPosition > 0) {
       setPage((prevPage) => prevPage + 1);
     }
   };
 
+  const debouncedHandleScroll = useRef(debounce(handleScroll, 300)).current;
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    // Set isMounted to true when the component mounts
+    window.addEventListener("scroll", debouncedHandleScroll);
     isMounted.current = true;
+
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("scroll", debouncedHandleScroll);
     };
-  }, []);
+  }, [debouncedHandleScroll]);
 
   return (
     <>
-      <div className="flex flex-wrap justify-between min-w-[100rem] max-w-[100rem] gap-2 p-5">
-        {data && data.map((p) => <NewsCard key={p.id} {...p} />)}
+      <div className="flex flex-wrap justify-between min-w-[100rem] max-w-[100rem] gap-2 px-5">
+        {data && data.map((p, index) => <NewsCard key={p.id} {...p} />)}
       </div>
+
+      <span
+        className="text-zinc-700 cursor-pointer underline p-5"
+        onClick={() => setPage((prevPage) => prevPage + 1)}
+      >
+        更多新闻
+      </span>
+
     </>
   );
 }
