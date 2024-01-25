@@ -25,7 +25,7 @@ export default function NewsCard(news) {
               width={150}
               height={100}
               className="w-full"
-              alt={obj.alt}
+              alt={obj.alt || news.title}
             />
           )}
         </Link>
