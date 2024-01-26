@@ -45,7 +45,6 @@ export default function NewsScroll() {
     const windowHeight = window.innerHeight;
     const documentHeight = document.body.scrollHeight;
     if (scrollPosition + windowHeight >= documentHeight && scrollPosition > 0) {
-      //setPage((prevPage) => prevPage + 1);
       setPage((prevPage) => {
         const currentPage = isKeyInLocalStorage("newsPage") ? parseInt(localStorage.getItem("newsPage")) : 1;
         const updatedPage = currentPage + 1;
