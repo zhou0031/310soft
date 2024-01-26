@@ -20,6 +20,7 @@ export default function NewsScroll() {
     setData((prevData) => [...prevData, ...news]);
     // Save data to local storage
     localStorage.setItem("newsData", JSON.stringify([...data, ...news]));
+    localStorage.setItem("newsPage", page)
   };
 
   useEffect(() => {
@@ -34,12 +35,21 @@ export default function NewsScroll() {
     if (page > 1) loadData(page);
   }, [page]);
 
+  function isKeyInLocalStorage(key) {
+    return localStorage.getItem(key) !== null;
+  }
+
   const handleScroll = () => {
     const scrollPosition = window.scrollY;
     const windowHeight = window.innerHeight;
     const documentHeight = document.body.scrollHeight;
     if (scrollPosition + windowHeight >= documentHeight && scrollPosition > 0) {
-      setPage((prevPage) => prevPage + 1);
+      //setPage((prevPage) => prevPage + 1);
+      setPage((prevPage) => {
+        const currentPage = isKeyInLocalStorage("newsPage") ? parseInt(localStorage.getItem("newsPage")) : 1;
+        const updatedPage = currentPage + 1;
+        return updatedPage;
+      });
     }
   };
 
