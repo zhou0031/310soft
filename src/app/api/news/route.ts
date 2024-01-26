@@ -6,9 +6,10 @@ export async function PUT(req:NextRequest){
   try{
     
     const news = await prisma.news.findMany({
-        orderBy: {
-          published_at: "desc",
-        },
+      orderBy: [
+        {published_at: "desc"},
+        { id: "asc" }, 
+        ],
         take: 14,
         include: {
           publisher: {
