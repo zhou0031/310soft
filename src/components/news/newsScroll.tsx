@@ -33,6 +33,7 @@ export default function NewsScroll() {
 
   useEffect(() => {
     if (page > 1) loadData(page);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   function isKeyInLocalStorage(key) {
