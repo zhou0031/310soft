@@ -18,10 +18,20 @@ export default function NewsScroll() {
     );
     const { news } = await response.data;
     setData((prevData) => [...prevData, ...news]);
+    // Save data to local storage
+    localStorage.setItem("newsData", JSON.stringify([...data, ...news]));
   };
 
   useEffect(() => {
-    if (isMounted.current && page > 1) loadData(page);
+    // Check local storage for cached data
+    const cachedData = localStorage.getItem("newsData");
+    if (isMounted.current && cachedData) {
+      setData((prevData) => [...prevData, ...JSON.parse(cachedData)]);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (page > 1) loadData(page);
   }, [page]);
 
   const handleScroll = () => {

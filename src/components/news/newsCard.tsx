@@ -16,7 +16,7 @@ export default function NewsCard(news) {
   return (
     <>
       <div
-        className={`w-52 h-96 bg-white border border-gray-200 rounded-lg shadow overflow-auto ${styles["my-custom-scrollbar"]}`}
+        className={`w-52 h-96 bg-slate-100 border border-gray-200 rounded-lg shadow overflow-auto ${styles["my-custom-scrollbar"]}`}
       >
         <Link href={`/news/${news.id}`}>
           {obj?.src && (
