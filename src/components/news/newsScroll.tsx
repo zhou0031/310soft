@@ -19,40 +19,27 @@ export default function NewsScroll() {
     const { news } = await response.data;
     setData((prevData) => [...prevData, ...news]);
     // Save data to local storage
-    localStorage.setItem("newsData", JSON.stringify([...data, ...news]));
-    localStorage.setItem("newsPage", page)
+    localStorage.setItem("newsData", JSON.stringify([...data]));
   };
 
   useEffect(() => {
-    // Check local storage for cached data
-    const cachedData = localStorage.getItem("newsData");
-    if (isMounted.current && cachedData) {
-      setData((prevData) => [...prevData, ...JSON.parse(cachedData)]);
+    if (page > 1) {
+      loadData(page);
+      localStorage.setItem("newsPage", page.toString())
     }
-  }, []);
-
-  useEffect(() => {
-    if (page > 1) loadData(page);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
-  function isKeyInLocalStorage(key) {
-    return localStorage.getItem(key) !== null;
-  }
-
+  /******** handle scrolling **********/
   const handleScroll = () => {
     const scrollPosition = window.scrollY;
     const windowHeight = window.innerHeight;
     const documentHeight = document.body.scrollHeight;
     if (scrollPosition + windowHeight >= documentHeight && scrollPosition > 0) {
-      setPage((prevPage) => {
-        const currentPage = isKeyInLocalStorage("newsPage") ? parseInt(localStorage.getItem("newsPage")) : 1;
-        const updatedPage = currentPage + 1;
-        return updatedPage;
-      });
+      setPage((prevPage) => prevPage + 1);
     }
   };
-
+  /********* add scrolling ************/
   const debouncedHandleScroll = useRef(debounce(handleScroll, 300)).current;
   useEffect(() => {
     window.addEventListener("scroll", debouncedHandleScroll);
@@ -62,7 +49,17 @@ export default function NewsScroll() {
       window.removeEventListener("scroll", debouncedHandleScroll);
     };
   }, [debouncedHandleScroll]);
+  /***********************************/
+  useEffect(() => {
+    const cachedData = localStorage.getItem("newsData");
+    const cachedPage = localStorage.getItem("newsPage")
 
+    if (isMounted.current && cachedData && cachedPage) {
+      setData((prevData) => [...JSON.parse(cachedData)]);
+      setPage(parseInt(cachedPage))
+    }
+  }, []);
+  /**********************************/
   return (
     <>
       <div className="flex flex-wrap justify-between min-w-[100rem] max-w-[100rem] gap-2 px-5">
