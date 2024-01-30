@@ -5,6 +5,7 @@ import axios from "axios";
 import { useState, useEffect, useRef } from "react";
 
 const TAKE = 14;
+const SESSION_STORAGE_LIMIT = 200
 
 export default function NewsScroll() {
   const [data, setData] = useState([]);
@@ -18,14 +19,16 @@ export default function NewsScroll() {
     );
     const { news } = await response.data;
     setData((prevData) => [...prevData, ...news]);
-    // Save data to local storage
-    localStorage.setItem("newsData", JSON.stringify([...data]));
+    // Save data to session storage 
+    //if the page is less than SESSION_STORAGE_LIMIT to prevent session storage full
+    if (page <= SESSION_STORAGE_LIMIT) sessionStorage.setItem("newsData", JSON.stringify([...data]));
   };
 
   useEffect(() => {
     if (page > 1) {
       loadData(page);
-      localStorage.setItem("newsPage", page.toString())
+      //if the page is less than SESSION_STORAGE_LIMIT to prevent session storage full
+      if (page <= SESSION_STORAGE_LIMIT) sessionStorage.setItem("newsPage", page.toString())
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
@@ -51,8 +54,8 @@ export default function NewsScroll() {
   }, [debouncedHandleScroll]);
   /***********************************/
   useEffect(() => {
-    const cachedData = localStorage.getItem("newsData");
-    const cachedPage = localStorage.getItem("newsPage")
+    const cachedData = sessionStorage.getItem("newsData");
+    const cachedPage = sessionStorage.getItem("newsPage")
 
     if (isMounted.current && cachedData && cachedPage) {
       setData((prevData) => [...JSON.parse(cachedData)]);
