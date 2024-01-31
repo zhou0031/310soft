@@ -46,6 +46,7 @@ export default function NewsCard(news) {
               year: "numeric",
               month: "long",
               day: "numeric",
+              timeZone: "UTC",
             })}
           </time>
         </div>
