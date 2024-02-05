@@ -102,6 +102,7 @@ model News {
   photos       String[]
   publisher    Publisher @relation(fields: [publisherId], references: [id])
   publisherId  Int
+  reads        Int  @default(0)
 
   @@index([title], name: "index_title")
 }

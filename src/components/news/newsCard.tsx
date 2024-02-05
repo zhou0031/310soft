@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import styles from "../../../styles/scrollbar.module.css";
-import Reads from "./reads";
 
 export default function NewsCard(news) {
   let obj;
@@ -37,7 +36,7 @@ export default function NewsCard(news) {
             </h5>
           </Link>
           <p className="mb-3 text-sm text-gray-400">
-            {news.content.toString().slice(0, 80)}
+            {news.content.toString().slice(0, 70)}
           </p>
           <div className="flex-grow"></div>
           <div className="flex justify-between text-xs text-gray-500">
@@ -49,7 +48,7 @@ export default function NewsCard(news) {
                 timeZone: "UTC",
               })}
             </time>
-            <Reads number={1} />
+            <p>已读{news.reads}次</p>
           </div>
         </div>
       </div>

@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "News" ADD COLUMN     "reads" INTEGER NOT NULL DEFAULT 0;
