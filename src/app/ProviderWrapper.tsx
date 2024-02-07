@@ -1,5 +1,8 @@
 "use client";
 import { SessionProvider } from "next-auth/react";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient();
 
 export default function ProviderWrapper({
   children,
@@ -8,8 +11,7 @@ export default function ProviderWrapper({
 }) {
   return (
     <SessionProvider>
-      {children}
-      {/*entire app has access to NextAuth*/}
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     </SessionProvider>
   );
 }

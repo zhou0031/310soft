@@ -5,7 +5,7 @@ import axios from "axios";
 import { useState, useEffect, useRef } from "react";
 
 const TAKE = 14;
-const SESSION_STORAGE_LIMIT = 200
+const SESSION_STORAGE_LIMIT = 200;
 
 export default function NewsScroll() {
   const [data, setData] = useState([]);
@@ -19,16 +19,18 @@ export default function NewsScroll() {
     );
     const { news } = await response.data;
     setData((prevData) => [...prevData, ...news]);
-    // Save data to session storage 
+    // Save data to session storage
     //if the page is less than SESSION_STORAGE_LIMIT to prevent session storage full
-    if (page <= SESSION_STORAGE_LIMIT) sessionStorage.setItem("newsData", JSON.stringify([...data]));
+    if (page <= SESSION_STORAGE_LIMIT)
+      sessionStorage.setItem("newsData", JSON.stringify([...data]));
   };
 
   useEffect(() => {
     if (page > 1) {
       loadData(page);
       //if the page is less than SESSION_STORAGE_LIMIT to prevent session storage full
-      if (page <= SESSION_STORAGE_LIMIT) sessionStorage.setItem("newsPage", page.toString())
+      if (page <= SESSION_STORAGE_LIMIT)
+        sessionStorage.setItem("newsPage", page.toString());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
@@ -55,11 +57,11 @@ export default function NewsScroll() {
   /***********************************/
   useEffect(() => {
     const cachedData = sessionStorage.getItem("newsData");
-    const cachedPage = sessionStorage.getItem("newsPage")
+    const cachedPage = sessionStorage.getItem("newsPage");
 
     if (isMounted.current && cachedData && cachedPage) {
       setData((prevData) => [...JSON.parse(cachedData)]);
-      setPage(parseInt(cachedPage))
+      setPage(parseInt(cachedPage));
     }
   }, []);
   /**********************************/
@@ -75,7 +77,6 @@ export default function NewsScroll() {
       >
         更多新闻
       </span>
-
     </>
   );
 }
