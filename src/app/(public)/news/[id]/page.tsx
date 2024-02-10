@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "../../../../prismaDB";
 import Slide from "../../../../components/slide/slide";
 import Reads from "../../../../components/news/reads";
+import Comments from "../../../../components/news/comments";
 
 export async function generateStaticParams() {
   const response = await fetch("http://localhost:3000/api/news", {
@@ -79,7 +80,7 @@ export default async function Page({ params }) {
         </div>
 
         <div className="w-1/3 flex flex-col items-center max-lg:hidden">
-          commenting section
+          <Comments newsId={id} />
         </div>
       </div>
     </>
