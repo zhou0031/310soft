@@ -27,7 +27,7 @@ export default function DashboardLayout({ children }) {
   return (
     <>
       <div className="flex flex-col justify-center items-center h-screen w-full">
-        <div className="flex justify-between rounded-lg w-5/6 h-5/6 max-lg:w-full max-lg:h-full p-5 overflow-hidden bg-white gap-2">
+        <div className="flex justify-between rounded-lg w-5/6 max-lg:w-full max-lg:h-full p-5 overflow-hidden bg-white gap-2">
           <Context.Provider
             value={{
               formData,
