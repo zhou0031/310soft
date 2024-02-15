@@ -20,7 +20,7 @@ export default function Sidebar() {
         <Setting />
         {session?.user.provider == "credentials" && <Password />}
         <Help />
-        <div className="grow h-[16rem]"></div>
+        <div className="grow h-[25rem]"></div>
         <Ad_Admin />
         <Logout />
       </div>
