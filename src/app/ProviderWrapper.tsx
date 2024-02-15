@@ -1,6 +1,7 @@
 "use client";
 import { SessionProvider } from "next-auth/react";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { NextUIProvider } from "@nextui-org/react";
 
 const queryClient = new QueryClient();
 
@@ -11,7 +12,11 @@ export default function ProviderWrapper({
 }) {
   return (
     <SessionProvider>
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+      <NextUIProvider>
+        <QueryClientProvider client={queryClient}>
+          {children}
+        </QueryClientProvider>
+      </NextUIProvider>
     </SessionProvider>
   );
 }

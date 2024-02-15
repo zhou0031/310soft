@@ -79,7 +79,7 @@ export default async function Page({ params }) {
           </div>
         </div>
 
-        <div className="w-1/3 flex flex-col items-center max-lg:hidden">
+        <div className="w-1/3 flex flex-col max-lg:hidden">
           <Comments newsId={id} />
         </div>
       </div>

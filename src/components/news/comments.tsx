@@ -27,5 +27,10 @@ export default function Comments({ newsId }) {
     };
   }, [newsId]);
 
-  return <>{session?.user?.id}</>;
+  return (
+    <>
+      <div className="text-lg font-bold text-gray-500">1983 条评论</div>
+      <div className="w-full h-3/5 min-h-[620px] max-h-[860px]"></div>
+    </>
+  );
 }

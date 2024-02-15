@@ -11,6 +11,7 @@
   "dependencies": {
     "@aws-sdk/client-s3": "^3.400.0",
     "@aws-sdk/signature-v4-crt": "^3.398.0",
+    "@nextui-org/react": "^2.2.9",
     "@prisma/client": "^5.7.1",
     "@splidejs/react-splide": "^0.7.12",
     "@types/node": "20.3.1",
@@ -24,6 +25,7 @@
     "eslint": "8.43.0",
     "eslint-config-next": "^13.4.19",
     "file-type": "^18.5.0",
+    "framer-motion": "^11.0.5",
     "jose": "^4.14.4",
     "jsonwebtoken": "^9.0.2",
     "lodash.debounce": "^4.0.8",
