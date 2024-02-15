@@ -1,7 +1,16 @@
 "use client";
 import { useSession } from "next-auth/react";
+import { DefaultSession } from "next-auth";
 import { useEffect } from "react";
 import io from "socket.io-client";
+
+declare module "next-auth" {
+  interface Session {
+    user: {
+      id: string;
+    } & DefaultSession["user"];
+  }
+}
 
 export default function Comments({ newsId }) {
   const { data: session, status } = useSession();
@@ -18,5 +27,5 @@ export default function Comments({ newsId }) {
     };
   }, [newsId]);
 
-  return <>ID:{session?.user?.id}</>;
+  return <>{session?.user?.id}</>;
 }
