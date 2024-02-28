@@ -35,8 +35,8 @@ export default function NewsCard(news) {
               {news.title}
             </h5>
           </Link>
-          <p className="mb-3 text-sm text-gray-400">
-            {news.content.toString().slice(0, 70)}
+          <p className="mb-3 text-sm text-gray-400 line-clamp-5">
+            {news.content.toString()}
           </p>
           <div className="flex-grow"></div>
           <div className="flex justify-between text-xs text-gray-500">
