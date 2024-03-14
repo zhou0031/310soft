@@ -1,5 +1,6 @@
 "use client";
 import styles from "../../../styles/scrollbar.module.css";
+import Loading from "../../app/(user)/dashboard/loading";
 import { useSession } from "next-auth/react";
 import { DefaultSession } from "next-auth";
 import { useEffect } from "react";
@@ -40,7 +41,7 @@ export default function Comments({ newsId }) {
 
   }, [newsId]);
   */
-  if (isPending) return "读取中 ...";
+  if (isPending) return <Loading />;
   if (error) return `${error.message} 读取失败`;
   return (
     <>
